@@ -16,18 +16,19 @@ Hoy es viernes 30 de octubre: quedan cuatro días. Por eso el alcance es el mín
 | **Lun 2** | Ensayo y respaldo | Ensayo cronometrado (≤ 13:00) con el equipo; render del video de respaldo; copia offline |
 | **Mar 3** | Presentación | Prueba técnica en la sala antes de empezar |
 
-## Reparto sugerido (según los aportes del Miro)
+## Reparto (una escena por persona)
 
-| Parte | Responsable | Por qué |
+| Escena | Responsable | Texto |
 | --- | --- | --- |
-| Actos 5–6 (cliente y tienda) | Marcelo + Lázaro | Pedidos y reservas; catálogo y UX |
-| Acto 7 (decisiones, Grafana) | Marco + Jorge | Grafana, Umami, Festividades, Neurolab |
-| Acto 8 (seguridad) | Luis Ángel (+ Marcelo, Marco) | Auditoría, logs, Sentry, IAP |
-| Marketing y avisos en el relato | Julián | Campañas, correos, mapas |
-| Disclaimer UI/UX | Lázaro | Autor del diseño |
-| Modelado 3D y montaje | Claude (Blender vía MCP) + revisión del equipo | Acordado |
+| 1 · El antes | Julián | [personas/01-julian.md](personas/01-julian.md) |
+| 2 · Cliente encuentra y elige + Cierre | Lázaro | [personas/02-lazaro.md](personas/02-lazaro.md) |
+| 3 · Cliente compra con confianza | Jorge | [personas/03-jorge.md](personas/03-jorge.md) |
+| 4 · Pedido a la tienda y datos centralizados | Marcelo | [personas/04-marcelo.md](personas/04-marcelo.md) |
+| 5 · La administradora decide | Marco | [personas/05-marco.md](personas/05-marco.md) |
+| 6 · El miedo a que lo hackeen | Luis Ángel | [personas/06-luis-angel.md](personas/06-luis-angel.md) |
+| Modelado 3D y montaje | Claude (Blender vía MCP) + revisión del equipo | |
 
-Narramos nosotros, sin actuación. Cada persona dice su parte de unos 90 s: con 6 integrantes y 13 min se reparten bien. Tarjetas de guion por persona: pendiente de armar tras aprobar `02`.
+Narramos nosotros, sin actuación. Los textos están en primera persona para que los adapten con sus palabras.
 
 ## Prioridades si falta tiempo
 

@@ -6,10 +6,23 @@ Cada acto cambia **quién mira**. El hilo es una sola compra: la misma botella r
 
 **Formato: narramos nosotros, no es una actuación.** No hay diálogos ni actores. Tres figuras low-poly ilustran lo que contamos: **el cliente** (Don Rafael), **la empleada** (Ana) y **la administradora** (Mónica); son nombres de apoyo para el relato, no personas reales. Producto hilo: una botella de whisky 12 años. La bodega aparece con su **nombre y logo** reales (autorizado).
 
-## Tabla de tiempos
+## Orden final de escenas (una por persona)
 
-| Acto | Tema | Perspectiva | Tiempo | Acumulado |
+Los actos de abajo son el contenido; **cada persona narra su escena** (texto en [`personas/`](personas/README.md)). El orden de presentación es este:
+
+| Escena | Actos que cubre | Narra | Tiempo | Acumulado |
 | --- | --- | --- | --- | --- |
+| 1 · El antes | 0, 1, 2, 3 | Julián | 2:30 | 2:30 |
+| 2 · El cliente encuentra y elige | 5 (catálogo, búsqueda, oferta) | Lázaro | 1:30 | 4:00 |
+| 3 · El cliente compra con confianza | 5 (carrito, reserva, recomendaciones) | Jorge | 1:30 | 5:30 |
+| 4 · El pedido llega a la tienda y los datos se juntan | 6 y 4 (puente) | Marcelo | 2:00 | 7:30 |
+| 5 · La administradora decide | 7 | Marco (con 30 s de Jorge) | 2:45 | 10:15 |
+| 6 · El miedo a que lo hackeen | 8 | Luis Ángel | 2:00 | 12:15 |
+| 7 · Cierre y disclaimer | 9 | Lázaro, con todos | 0:45 | 13:00 |
+
+El **puente** (acto 4) pasa a la escena de Marcelo: el pedido llega a la tienda y de ahí los datos se juntan, que es justo la transición hacia lo que decide la administradora. Los tiempos por acto de más abajo son indicativos; mandan los de esta tabla.
+
+--- | --- | --- | --- | --- |
 | 0 | Gancho | Teléfono que no para | 0:30 | 0:30 |
 | 1 | Antes | Cliente | 1:00 | 1:30 |
 | 2 | Antes | Tienda | 0:45 | 2:15 |

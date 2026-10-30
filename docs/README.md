@@ -17,6 +17,7 @@ Presentación 3D que cuenta, como historia de usuario, todo lo que resolvimos: d
 | [05-uiux-y-disclaimer.md](05-uiux-y-disclaimer.md) | Diseño de la presentación y disclaimer de UI/UX de Lázaro |
 | [06-direccion-3d-y-blender.md](06-direccion-3d-y-blender.md) | Mundo 3D, assets, stack técnico, cámara |
 | [07-plan-de-trabajo.md](07-plan-de-trabajo.md) | Calendario hasta el martes y reparto |
+| [personas/README.md](personas/README.md) | **Guion por persona**: una escena cada uno, con texto y tiempos |
 | [08-capturas-y-material-visual.md](08-capturas-y-material-visual.md) | Imágenes de la web por escena y cómo tomarlas |
 
 ## Decisiones tomadas
