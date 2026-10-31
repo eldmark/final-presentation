@@ -19,6 +19,7 @@ Presentación 3D que cuenta, como historia de usuario, todo lo que resolvimos: d
 | [07-plan-de-trabajo.md](07-plan-de-trabajo.md) | Calendario hasta el martes y reparto |
 | [personas/README.md](personas/README.md) | **Guion por persona**: una escena cada uno, con texto y tiempos |
 | [09-rubrica-y-cobertura.md](09-rubrica-y-cobertura.md) | **Rúbrica** cruzada con el plan: cobertura, evidencias y pendientes |
+| [10-citas-de-entrevistas.md](10-citas-de-entrevistas.md) | Citas textuales de las entrevistas y en qué punto de la historia van |
 | [08-capturas-y-material-visual.md](08-capturas-y-material-visual.md) | Imágenes de la web por escena y cómo tomarlas |
 
 ## Decisiones tomadas

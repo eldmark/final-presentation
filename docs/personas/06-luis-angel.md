@@ -9,7 +9,7 @@ Las demostraciones corren **solo en local o staging propio**.
 
 ## Texto (≈ 300 palabras)
 
-**[0:00 · el miedo]** "En las entrevistas, los administradores nos dijeron qué les daba miedo de vender en línea: **la extorsión, las estafas y que usurparan la empresa**. Hay pedidos, NIT y datos personales. Lo trabajamos en **capas**, y lo hicimos visible."
+**[0:00 · el miedo]** "En las entrevistas, los administradores nos dijeron qué les daba miedo de vender en línea: **la extorsión, las estafas y que usurparan la empresa**. *(citas C11 y C12 en pantalla, Administrador: "Estafas, extorción." / "Robo o usurpación de empresa.")* Hay pedidos, NIT y datos personales. Lo trabajamos en **capas**, y lo hicimos visible."
 
 **[0:20 · intento 1]** "Primer intento: un usuario manda un pedido ya marcado como **entregado** y con una fecha pasada. El servidor lo ignora. **Todo pedido nace pendiente y con la fecha del servidor.** Siempre."
 

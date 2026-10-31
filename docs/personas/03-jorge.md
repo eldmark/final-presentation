@@ -15,11 +15,15 @@
 
 **[0:25]** "Mientras compra, la plataforma le sugiere qué más le puede interesar. Eso sale de un análisis de **coocurrencia**, lo que llamamos *Basket Analysis*: mira qué productos suelen comprarse juntos y recomienda según eso. Lo diseñamos desde el algoritmo hasta los servicios, lo optimizamos para producción en **GCP** y lo conectamos con el carrito y con los productos más populares."
 
-**[0:55 · resultados UX · 0:45 min]** "No quisimos suponer qué le funciona al usuario, lo **medimos**. En el **Neurolab** analizamos la **respuesta galvánica**, el **seguimiento ocular** y el comportamiento de personas usando la plataforma."
+**[0:55 · resultados UX · 0:45 min]** "No quisimos suponer qué le funciona al usuario, lo **medimos**. El **25 de septiembre** hicimos pruebas en el **NeuroLab de la UVG** con **eye tracking, un sensor de actividad electrodérmica y encuestas**. Seis personas hicieron tres tareas: buscar un producto, agregarlo al carrito y reservarlo."
 
-"Esto fue lo que encontramos: **[Hallazgo 1: qué se midió y qué se vio]**, y por eso **[cambio hecho en el producto]**. **[Hallazgo 2 y su cambio]**. **[Hallazgo 3 y su cambio]**."
+"Primer hallazgo: **la búsqueda se llevó el 63.8 % del tiempo**. Buscar tomó una mediana de **113 segundos**; agregar al carrito, **12**. Cuatro de cinco encuestados describieron dificultades al buscar. Por eso incorporamos una **búsqueda tolerante a errores de escritura**, con trigramas."
 
-"Además lo probamos con **lector de pantalla y con teclado**, y revisamos la accesibilidad de forma automática en cada integración."
+"Segundo: en **2 de 5 videos** la gente **confundió comprar con reservar**. Ya tenemos la mejora definida: etiquetas distintas, 'Reservar para recoger' y 'Comprar y pagar'."
+
+"Tercero: el **botón flotante del chat tapaba la paginación**, y lo corregimos. Además, la actividad electrodérmica subió al **escribir**, en los 5 casos analizables, así que mejoramos los mensajes de validación."
+
+"Probamos también con **lector de pantalla y teclado**."
 
 **[1:45 · pasa la palabra]** "Cuando el cliente confirma, el pedido tiene que llegar a la tienda. Marcelo."
 
@@ -28,11 +32,20 @@
 - Recomendaciones por coocurrencia, similares, por categoría y populares, con caché (`RecommendationService`).
 - Aportes de Jorge según el Miro: recomendación y Basket Analysis, carrito, reservas, dashboard en Grafana, análisis del Neurolab, accesibilidad con lectores de pantalla y teclado.
 
-## Lo que necesito de ti (criterio con más peso de la rúbrica: 32 %)
-Los tres hallazgos del Neurolab, cada uno con **qué se midió, qué se vio y qué cambio se hizo**. Eso no está en los repos. Sin ese insumo este bloque queda vacío. Entrégalo hoy para armarlo con su captura.
+## Evidencia: Informe NeuroLab (`Informe_oficial_NeuroLab_APA7.pdf`)
+- Fecha y lugar: 25 de septiembre de 2026, NeuroLab UVG. Eye Tracking Smart Eye AI-X, Shimmer GSR e iMotions. **Sin EEG.**
+- Muestra: **6 registros** (conveniencia, 18–20 años), 5 videos revisados y 5 encuestas. Se dice tal cual: es un estudio exploratorio.
+- **Búsqueda:** 518 de 812 s observados (63.8 %). Mediana T1 = 113 s; T2 (agregar) = 12 s; T3 (reservar) = 20 s (mediana de las tres completadas: 19 s).
+- **Encuesta:** 4 de 5 con dificultades de búsqueda; 4 de 5 consideraron suficiente la información del catálogo.
+- **Compra vs. reserva:** 2 de 5 videos; uno rectificó (reserva a los 2:39) y otro no completó.
+- **GSR:** más picos tras eventos de escritura en 5 de 5 casos analizables (+3.99 picos/min de mediana; p = .0625, exploratorio). No hay un aumento general en la reserva.
+- **Decisiones:** búsqueda tolerante por trigramas (sprints 8 y 9, ya en el código); diferenciar compra y reserva (propuesta); evitar colisión chatbot/paginación (corregida en sprints 8 y 9); teléfono e idioma; agregado rápido y estado del carrito.
+- El efecto cuantitativo de los cambios se medirá en una **segunda medición**: no se afirma una mejora medida.
 
 ## No digas
-- Resultados numéricos del Neurolab que no estén en tu informe. Sin nombres ni datos de personas.
+- Que los cambios "mejoraron" una cifra: el informe dice que falta la segunda medición.
+- Nombres o datos de los participantes. Son P01–P06 y no se mencionan.
+- Que la diferenciación 'Reservar para recoger' / 'Comprar y pagar' ya está en el producto: hoy es **propuesta**. **[confirmar]** si ya se aplicó.
 - El detalle de permisos de empleados (no entra en esta escena).
 
 ## Pasa la palabra

@@ -34,10 +34,9 @@ Lo que más pesa es el criterio 4 (casi un tercio de la nota): pide **flujos rea
 - El chatbot recomendador se validó en 4 iteraciones de prototipo con el Product Owner.
 - Guía de pruebas dinámicas (QA manual) y pruebas automáticas de accesibilidad (axe) sobre 11 rutas.
 
-**Lo que NO está en los repos y hace falta:**
-- **Resultados del Neurolab** (respuesta galvánica, seguimiento ocular, comportamiento): aparecen solo en la nota de Jorge del Miro. Sin esos resultados no hay "pruebas con usuarios" de nivel excelente.
+**Ya incorporado:** el **Informe NeuroLab** (`Informe_oficial_NeuroLab_APA7.pdf`, 25 de septiembre de 2026): 6 registros, 5 videos y 5 encuestas; hallazgos de búsqueda, compra vs. reserva, chatbot/paginación y actividad electrodérmica, con las decisiones aplicadas en los sprints 8 y 9. Resumen en `personas/03-jorge.md`.
 
-> **Para Jorge, antes de mañana:** 3 hallazgos concretos del Neurolab, cada uno con (a) qué se midió, (b) qué se vio, (c) **qué cambio se hizo en el producto** como consecuencia. Una captura o gráfica sin datos de personas. Si hay otras pruebas con usuarios (Lázaro, Julián), súmenlas igual.
+> **Para Jorge:** confirmar si 'Reservar para recoger' / 'Comprar y pagar' ya está aplicado (en el código no encontré esas etiquetas) y preparar una figura del informe (tiempos por tarea) como captura.
 
 ---
 
@@ -171,7 +170,7 @@ Margen: 30 s.
 
 ## Pendientes críticos (en orden)
 
-1. **Jorge:** hallazgos del Neurolab y el cambio hecho por cada uno (criterio 4).
+1. **Jorge:** confirmar qué cambios del Neurolab ya están aplicados (criterio 4).
 2. **Marco:** números reales anonimizados de uso (criterio 3).
 3. **Equipo:** costo mensual del sistema y alternativas realmente evaluadas (criterios 3 y 5).
 4. **Todos:** grabar el flujo real completo de la botella (criterio 4).

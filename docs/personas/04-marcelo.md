@@ -16,11 +16,11 @@
 
 "Cada cambio de estado **avisa al cliente por correo**. Nadie tiene que llamar para saber cómo va. Y cada empleado ve **lo de su sucursal**, no lo de las demás."
 
-**[0:35 · las personas]** "Para quien compra seguido, hay **Easy Orders**: repite su compra anterior en un clic, y guarda sus **productos favoritos**."
+**[0:35 · las personas]** *(cita C9, Cliente: "Pedidos a domicilio.")* "Para quien compra seguido, hay **Easy Orders**: repite su compra anterior en un clic, y guarda sus **productos favoritos**."
 
 **[0:50 · el puente]** "Ahora, el problema de fondo. Las ventas estaban **dispersas**, cada sucursal con su sistema. Lo que hicimos fue conectar el sistema que ya usaba la bodega, **Almacén 3.1**, a nuestra plataforma con una **sincronización de solo lectura** a través de una conexión remota segura con **Tailscale**. Es de solo lectura: **leemos, no modificamos** el sistema de la tienda."
 
-**[1:20 · centralizado]** "De ahí, todo cae en **una sola base de datos**. Los productos, el stock por sucursal, las ventas históricas. Las imágenes de los productos viven en **Cloudflare R2**: al subirlas se les quita el fondo y se convierten a WebP, para que carguen rápido."
+**[1:20 · centralizado]** *(cita C10, Empleado: "Por medio del sistema [...] nos ahorramos tiempo de subir a bodega a verificar si tenemos tal producto.")* "De ahí, todo cae en **una sola base de datos**. Los productos, el stock por sucursal, las ventas históricas. Las imágenes de los productos viven en **Cloudflare R2**: al subirlas se les quita el fondo y se convierten a WebP, para que carguen rápido."
 
 **[1:40 · el servidor y el por qué]** "Todo corre en **Google Cloud**, con nuestro dominio, y protegido con **IAP**, que verifica la identidad antes de dejar pasar a nadie. ¿Por qué estas tecnologías? **Vue** porque es más simple que React; **Express** porque comparte lenguaje con el frontend; **PostgreSQL** por las relaciones entre productos, sucursales y pedidos; y **Tailscale** para no exponer nunca la base de la tienda a internet."
 

@@ -12,9 +12,9 @@
 
 ## Texto (≈ 220 palabras)
 
-**[0:00]** "Esto es lo que ve ahora un cliente. Escribe lo que busca y la plataforma le **sugiere** mientras escribe. Filtra por **categoría, precio y disponibilidad**, y ordena como prefiera."
+**[0:00]** *(cita C7, Empleado: "Dándoles información de una página web donde puedan informarse y ver los productos y precios.")* "Esto es lo que pidieron en las entrevistas, y esto es lo que ve ahora un cliente. Escribe lo que busca y la plataforma le **sugiere** mientras escribe. Filtra por **categoría, precio y disponibilidad**, y ordena como prefiera."
 
-"Y lo que antes eran una llamada y un viaje en vano ahora es una sola pantalla: **el precio y cuántas botellas hay en cada sucursal**. Si hay, va. Si no, ni sale de su casa."
+"Y lo que antes eran una llamada y un viaje en vano ahora es una sola pantalla: **el precio y cuántas botellas hay en cada sucursal**. Si hay, va. Si no, ni sale de su casa." *(cita C8, Cliente: "Qué sucursal me queda más cerca.", sobre el mapa y el stock por sucursal)*
 
 **[0:35]** "Las ofertas ya no se mandan por mensaje. La bodega las diseña ella misma en un **editor visual, parecido a Canva**, para el carrusel de inicio y para la oferta del modal. Y se ve bien en escritorio y en teléfono."
 

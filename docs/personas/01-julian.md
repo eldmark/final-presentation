@@ -16,13 +16,13 @@
 
 "Esa pregunta llegaba por **WhatsApp**, por **llamada** o en persona. Y cada una de esas preguntas era una venta."
 
-**[0:30 · el cliente]** "Imaginen a un cliente. Escribe por WhatsApp y espera la respuesta. Llama a otra sucursal. Al final se sube al carro, va a la tienda y descubre que **no había**. Perdió su tiempo y la bodega perdió la venta."
+**[0:30 · el cliente]** *(cita C1 en pantalla, Administrador: "Escriben vía WhatsApp para cotizaciones, consulta de precios o existencias de productos. Todos los días.")* "Imaginen a un cliente. Escribe por WhatsApp y espera la respuesta. Llama a otra sucursal. Al final se sube al carro, va a la tienda y descubre que **no había**. Perdió su tiempo y la bodega perdió la venta."
 
 "Y lo peor: **nadie supo que esa venta existió**. Esa pregunta no quedaba registrada en ningún lado."
 
-**[1:20 · la tienda]** "Del otro lado del mostrador, el personal atendía a la persona que tenía enfrente, contestaba el teléfono y respondía mensajes, todo al mismo tiempo. Las ventas sí se registraban, pero **en el sistema de cada sucursal**. Cada una era una isla."
+**[1:20 · la tienda]** *(citas C3 y C4, Empleado: "En otros casos nos llegamos a comunicar en las otras sucursales preguntando si tienen el producto." / "Tengo [que] consultarlo con mi encargado.")* "Del otro lado del mostrador, el personal atendía a la persona que tenía enfrente, contestaba el teléfono y respondía mensajes, todo al mismo tiempo. Las ventas sí se registraban, pero **en el sistema de cada sucursal**. Cada una era una isla."
 
-**[1:55 · la administradora]** "Y la persona que tenía que decidir qué comprar, cuándo hacer una oferta o qué no se estaba moviendo, se encontraba con **reportes separados** y sin una visión del conjunto. Decidía con intuición."
+**[1:55 · la administradora]** *(citas C5 y C2, Administrador: "Se puede llegar a dar el caso de no concretar una venta por falta de producto." / sobre el tiempo de cada consulta: "Mínimo 10 minutos.")* "Y la persona que tenía que decidir qué comprar, cuándo hacer una oferta o qué no se estaba moviendo, se encontraba con **reportes separados** y sin una visión del conjunto. Decidía con intuición."
 
 **[2:20 · giro]** "Entonces nos hicimos una pregunta: **¿y si cada pregunta de un cliente fuera un dato?**"
 
@@ -34,7 +34,7 @@ Dilo como "en nuestras entrevistas del Corte 1, a 4 administradores, 4 empleados
 - **3 de 3** clientes querían ver precios y productos en línea; **2 de 3** ya habían llamado antes de ir.
 - Los clientes pedían **domicilio** y saber **qué sucursal les queda más cerca**.
 - Cuando no había producto, el personal llamaba a otras sucursales para trasladarlo.
-Sin nombres. Una diapositiva con 3 números grandes.
+Sin nombres. Una diapositiva con 3 números grandes. Las citas textuales están en [`../10-citas-de-entrevistas.md`](../10-citas-de-entrevistas.md); se leen en pantalla, no se recitan.
 
 ## Datos que respaldan lo que dices
 - El negocio operaba solo de forma presencial; clientes llamaban o iban a la tienda por precio y disponibilidad, lo que saturaba al personal y perdía ventas. (Entregables del curso, `PROYECTO.md`.)
@@ -55,7 +55,7 @@ Mapa de sucursales y "cómo llegar" (Lázaro lo muestra), correos de pedidos y r
 
 # Escena 7 · Valor e impacto (0:45, antes del cierre)
 
-**Se ve:** la mesa del inicio, ahora con el teléfono en silencio y el tablero encendido. Tres tarjetas grandes: *antes*, *métrica*, *beneficiarios*.
+**Se ve:** la mesa del inicio (cita C2 pequeña: "Mínimo 10 minutos."), ahora con el teléfono en silencio y el tablero encendido. Tres tarjetas grandes: *antes*, *métrica*, *beneficiarios*.
 
 **Texto (≈ 110 palabras):**
 "¿Cuánto vale esto? Antes, de cada dos días a todos los días, una consulta de precio o existencia le quitaba entre uno y diez minutos o más al personal. Nuestra métrica es **minutos de personal liberados por semana**: las consultas que la web resuelve por sí sola, por el tiempo que cada una tomaba. Sale de los datos de la propia plataforma. [**Cifra real de Marco**: x consultas por semana ≈ y horas.] El supuesto lo decimos claro: no todas sustituyen una llamada, por eso lo mostramos en escenarios. Gana el **cliente**, que no viaja en vano; el **empleado**, que no se interrumpe; y la **administradora**, que decide con datos. Y comparamos con la alternativa: seguir con llamadas o con un catálogo de WhatsApp, que no deja datos."
