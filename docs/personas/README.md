@@ -1,6 +1,6 @@
 # Guion por persona
 
-Una escena por persona, narrada por quien la construyó. Total **13:00** de 14:00.
+Una escena por persona, narrada por quien la construyó. Total **13:30** de 14:00.
 
 | Orden | Escena | Quién | Tiempo | Archivo |
 | --- | --- | --- | --- | --- |

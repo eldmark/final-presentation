@@ -46,4 +46,4 @@ Probar en local cada intento y comprobar que se comporta como dice el texto. Si 
 Deja solo los intentos 1 y 2, el panel en tiempo real y el bloqueo de IP. Quita los intentos 3 y 4 del texto de arriba.
 
 ## Pasa la palabra
-"Ese es el cierre de la historia. Lázaro." (Lázaro hace el cierre con todos en pantalla.)
+"Todo esto tiene un valor medible. Julián." (Julián presenta valor e impacto y luego Lázaro cierra.)
