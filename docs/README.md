@@ -3,7 +3,7 @@
 Presentación 3D que cuenta, como historia de usuario, todo lo que resolvimos: del **cliente que preguntaba precios por WhatsApp, llamada o visita** a **la plataforma e-commerce con reportería**, cambiando en cada acto de quién se cuenta la historia.
 
 - **Fecha:** martes 3 de noviembre de 2026.
-- **Duración:** 14 min como máximo (el guion está armado para 13 min, con 1 min de margen).
+- **Duración:** 14 min como máximo (el guion está armado para 13:30, con 30 s de margen).
 - **Estado:** solo documentación. El modelado en Blender se hará después, vía MCP de Blender.
 
 ## Índice
@@ -18,6 +18,7 @@ Presentación 3D que cuenta, como historia de usuario, todo lo que resolvimos: d
 | [06-direccion-3d-y-blender.md](06-direccion-3d-y-blender.md) | Mundo 3D, assets, stack técnico, cámara |
 | [07-plan-de-trabajo.md](07-plan-de-trabajo.md) | Calendario hasta el martes y reparto |
 | [personas/README.md](personas/README.md) | **Guion por persona**: una escena cada uno, con texto y tiempos |
+| [09-rubrica-y-cobertura.md](09-rubrica-y-cobertura.md) | **Rúbrica** cruzada con el plan: cobertura, evidencias y pendientes |
 | [08-capturas-y-material-visual.md](08-capturas-y-material-visual.md) | Imágenes de la web por escena y cómo tomarlas |
 
 ## Decisiones tomadas

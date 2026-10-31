@@ -29,7 +29,7 @@
 **Se ve:** la ciudad 3D vista desde arriba, las tres sucursales conectadas y el tablero. Debajo, el disclaimer de UI/UX en tarjeta.
 
 **Texto (≈ 110 palabras):**
-"Antes, cada pregunta de un cliente era una llamada perdida. **Ahora cada pregunta es un dato con el que decidimos.**"
+"Al principio vimos un teléfono que no paraba de sonar. **Nuestro propósito fue reducir llamadas y visitas, y convertir cada pregunta en un dato.** Hoy el teléfono está en silencio y el tablero, encendido."
 
 "Un último aviso sobre lo que vieron. Las pantallas son el diseño de la plataforma: un solo estilo en todo el panel, menú agrupado con las ventas primero, versión para teléfono, texto al 200 %, contraste 4.5:1, foco visible, botones de 44 píxeles y uso completo con teclado. Muestran datos reales **anonimizados**. Usamos el nombre y el logo de la bodega **con su autorización**. Y los modelos 3D son una representación artística, no el local real. Gracias."
 

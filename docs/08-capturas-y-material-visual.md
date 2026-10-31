@@ -44,6 +44,20 @@ Resolución: 1920×1080 de escritorio y 390×844 de móvil. Tema claro y, donde 
 | 23 | Sentry con trazabilidad por solicitud | Sentry | 8 |
 | 24 | Matriz de roles y permisos | panel | 8 |
 
+## Flujos reales grabados (criterio 4 de la rúbrica)
+
+La rúbrica pide **flujos reales integrados a la historia**. Además de las capturas, se graban en video (30–45 s cada uno) **el mismo flujo con la misma botella**, y se reproducen como textura en las pantallas del 3D:
+
+| Flujo | Dónde se reproduce |
+| --- | --- |
+| Buscar, ver stock por sucursal y elegir | Laptop del cliente (Lázaro) |
+| Agregar al carrito, reservar y recomendaciones | Laptop del cliente (Jorge) |
+| Empleada cambia el estado y llega el correo | Tablet de la sucursal (Marcelo) |
+| Administradora abre Reportes y toma una decisión (con acción) | Pared de monitores (Marco) |
+| Intentos de ataque rechazados en el panel de Seguridad | Pantalla de la sala de datos (Luis Ángel) |
+
+Se graba con Playwright o el navegador, con datos anonimizados y sin mostrar barras de usuario.
+
 ## Marca
 
 Con autorización de la bodega se usan su nombre y su logo completos, en fachada, mostrador, pantallas y créditos. Archivos copiados en `assets/marca/`: `logobodega.svg`, `logoclaro.svg`, `logoclaro3.svg`, `Logo.webp` y `hero.webp`.

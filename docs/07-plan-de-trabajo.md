@@ -1,14 +1,14 @@
 # 07 · Plan de trabajo hasta el martes
 
 **Presentación:** martes 3 de noviembre de 2026 · **14 min máximo** (guion de 13 min).
-Hoy es viernes 30 de octubre: quedan cuatro días. Por eso el alcance es el mínimo que se ve bien.
+Hoy es sábado 31 de octubre: quedan tres días. Por eso el alcance es el mínimo que se ve bien.
 
 ## Calendario
 
 | Día | Entregable | Tareas |
 | --- | --- | --- |
-| **Vie 30** (hoy) | Documentación aprobada | Revisar `02` con el equipo; confirmar créditos por persona; conectar el MCP de Blender; reunir assets de marca (ya copiados) |
-| **Sáb 31** | Material visual | Levantar el stack local con datos reales anonimizados; tomar las capturas de `08`; revisión entre el equipo de que no se vea ningún dato personal |
+| **Sáb 31** (hoy) | Rúbrica cubierta | Pendientes críticos de `09`: hallazgos del Neurolab (Jorge), números de uso (Marco), costos y alternativas (equipo); conectar el MCP de Blender |
+| **Sáb 31** | Material visual | Levantar el stack local con datos reales anonimizados; capturas y **grabación de los 5 flujos reales** de `08`; revisión entre el equipo |
 | **Sáb 31** | Greybox 3D | Bloqueo de las estaciones en Blender (vía MCP) y recorrido de cámara de los 9 actos |
 | **Dom 1** | Assets prioridad A | Modelar, texturizar y exportar `.glb` de lo esencial (ver `06`) |
 | **Dom 1** | Integración | Three.js con cámara, subtítulos, pantallas con capturas, disclaimer y teclado |

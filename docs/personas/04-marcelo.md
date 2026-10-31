@@ -22,9 +22,9 @@
 
 **[1:20 · centralizado]** "De ahí, todo cae en **una sola base de datos**. Los productos, el stock por sucursal, las ventas históricas. Las imágenes de los productos viven en **Cloudflare R2**: al subirlas se les quita el fondo y se convierten a WebP, para que carguen rápido."
 
-**[1:40 · el servidor]** "Todo corre en un servidor en **Google Cloud**, con nuestro dominio, y protegido con **IAP, un proxy que verifica la identidad** antes de dejar pasar a nadie."
+**[1:40 · el servidor y el por qué]** "Todo corre en **Google Cloud**, con nuestro dominio, y protegido con **IAP**, que verifica la identidad antes de dejar pasar a nadie. ¿Por qué estas tecnologías? **Vue** porque es más simple que React; **Express** porque comparte lenguaje con el frontend; **PostgreSQL** por las relaciones entre productos, sucursales y pedidos; y **Tailscale** para no exponer nunca la base de la tienda a internet."
 
-**[1:55 · pasa la palabra]** "Con todos los datos en un solo lugar, ya se puede decidir. Marco."
+**[1:55 · pasa la palabra]** *(tarjeta de 10 s con la tabla de tecnología de `09`)* "Con todos los datos en un solo lugar, ya se puede decidir. Marco."
 
 ## Datos que respaldan lo que dices
 - Pedidos y reservas con estados y filtros por sucursal del empleado.

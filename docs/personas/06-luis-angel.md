@@ -1,4 +1,4 @@
-# 06 · Luis Ángel — El miedo a que lo hackeen (2:00)
+# 06 · Luis Ángel — El miedo a que lo hackeen (1:30)
 
 **Perspectivas:** la dueña (que tiene miedo) y el "atacante" (solo como ilustración).
 **Por qué tú:** APIs con validación y control de acceso, auditoría de la actividad administrativa, protección de datos en logs y telemetría, Sentry y trazabilidad por solicitud. Te acompañan Marcelo (IAP) y Marco (permisos, respaldos, CI).
@@ -9,7 +9,7 @@ Las demostraciones corren **solo en local o staging propio**.
 
 ## Texto (≈ 300 palabras)
 
-**[0:00 · el miedo]** "Cuando una bodega pasa a vender en línea, aparece un miedo muy lógico: **¿y si lo hackean?** Hay pedidos, NIT y datos personales. Nosotros lo trabajamos en **capas**, y lo hicimos visible."
+**[0:00 · el miedo]** "En las entrevistas, los administradores nos dijeron qué les daba miedo de vender en línea: **la extorsión, las estafas y que usurparan la empresa**. Hay pedidos, NIT y datos personales. Lo trabajamos en **capas**, y lo hicimos visible."
 
 **[0:20 · intento 1]** "Primer intento: un usuario manda un pedido ya marcado como **entregado** y con una fecha pasada. El servidor lo ignora. **Todo pedido nace pendiente y con la fecha del servidor.** Siempre."
 
@@ -42,8 +42,8 @@ Probar en local cada intento y comprobar que se comporta como dice el texto. Si 
 - Direcciones IP reales, dominios internos ni claves.
 - Nada de pruebas contra producción ni terceros.
 
-## Si te pasas de tiempo
-Deja solo los intentos 1, 2 y el bloqueo de IP.
+## Con 1:30
+Deja solo los intentos 1 y 2, el panel en tiempo real y el bloqueo de IP. Quita los intentos 3 y 4 del texto de arriba.
 
 ## Pasa la palabra
 "Ese es el cierre de la historia. Lázaro." (Lázaro hace el cierre con todos en pantalla.)

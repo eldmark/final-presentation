@@ -4,13 +4,16 @@ Una escena por persona, narrada por quien la construyó. Total **13:00** de 14:0
 
 | Orden | Escena | Quién | Tiempo | Archivo |
 | --- | --- | --- | --- | --- |
-| 1 | **El antes** (gancho + cliente, tienda y administradora) | Julián | 2:30 | [01-julian.md](01-julian.md) |
-| 2 | **El cliente encuentra y elige** (catálogo, búsqueda, oferta) | Lázaro | 1:30 | [02-lazaro.md](02-lazaro.md) |
-| 3 | **El cliente compra con confianza** (carrito, reserva, recomendaciones) | Jorge | 1:30 | [03-jorge.md](03-jorge.md) |
-| 4 | **El pedido llega a la tienda y los datos se juntan** | Marcelo | 2:00 | [04-marcelo.md](04-marcelo.md) |
-| 5 | **La administradora decide** (Grafana, Umami, exportes, campañas) | Marco | 2:45 | [05-marco.md](05-marco.md) |
-| 6 | **El miedo a que lo hackeen** | Luis Ángel | 2:00 | [06-luis-angel.md](06-luis-angel.md) |
-| 7 | **Cierre y disclaimer** | Lázaro, con todos en pantalla | 0:45 | dentro de `02-lazaro.md` |
+| 1 | **El antes**, con evidencia de las entrevistas | Julián | 2:30 | [01-julian.md](01-julian.md) |
+| 2 | **El cliente encuentra y elige** | Lázaro | 1:30 | [02-lazaro.md](02-lazaro.md) |
+| 3 | **Compra con confianza** + resultados UX | Jorge | 2:00 | [03-jorge.md](03-jorge.md) |
+| 4 | **Pedido a la tienda, datos juntos y stack** | Marcelo | 2:00 | [04-marcelo.md](04-marcelo.md) |
+| 5 | **La administradora decide** | Marco | 2:30 | [05-marco.md](05-marco.md) |
+| 6 | **El miedo a que lo hackeen** | Luis Ángel | 1:30 | [06-luis-angel.md](06-luis-angel.md) |
+| 7 | **Valor e impacto** | Julián | 0:45 | dentro de `01-julian.md` |
+| 8 | **Cierre y disclaimer** | Lázaro, con todos | 0:45 | dentro de `02-lazaro.md` |
+
+Total **13:30** de 14:00. Rúbrica y cobertura: [`../09-rubrica-y-cobertura.md`](../09-rubrica-y-cobertura.md).
 
 ## Cómo usar estos archivos
 
@@ -25,9 +28,9 @@ Una escena por persona, narrada por quien la construyó. Total **13:00** de 14:0
 
 | Persona | Si te pasas, recorta |
 | --- | --- |
-| Julián | El tramo de la administradora |
+| Julián | El tramo de la administradora (escena 1) |
 | Lázaro | La parte de accesibilidad (queda en el disclaimer del cierre) |
 | Jorge | Neurolab |
 | Marcelo | Easy Orders |
 | Marco | Umami (queda Grafana) |
-| Luis Ángel | Dos de las cuatro escenas de ataque |
+| Luis Ángel | Deja solo 2 intentos y el bloqueo de IP |

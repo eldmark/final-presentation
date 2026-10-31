@@ -1,4 +1,4 @@
-# 05 · Marco — La administradora decide (2:45)
+# 05 · Marco — La administradora decide (2:30)
 
 **Perspectiva:** la administradora, con todos los datos juntos. Es el corazón de la historia.
 **Por qué tú:** Grafana y Umami, exportes seguros, campañas de marketing, matriz de permisos, cimientos.
@@ -8,7 +8,7 @@ La pared de monitores de la oficina. Cada decisión es un monitor que se enciend
 
 ## Texto (≈ 400 palabras)
 
-**[0:00 · apertura]** "Antes, la administradora decidía con intuición. Hoy abre **Reportes**. Usamos **Grafana** para los datos del negocio y **Umami** para el tráfico web, y los dos viven dentro del panel de administración. Son ligeros y respetan la privacidad de los usuarios. Les voy a mostrar cinco decisiones."
+**[0:00 · apertura]** "Antes, la administradora decidía con intuición. Hoy abre **Reportes**. Usamos **Grafana** para los datos del negocio y **Umami** para el tráfico web, dentro del panel. Elegimos Grafana en lugar de Metabase porque usa unos 50 MB de memoria y no 1.5 GB; y Umami porque respeta la privacidad. Les voy a mostrar cinco decisiones."
 
 **[0:25 · 1 · qué dejar de comprar]** "Primera: **qué dejar de comprar**. El tablero de demanda muestra el **capital detenido**: cuánto dinero está en bodega en productos que no se venden. Si no se mueve, no se vuelve a pedir, o se **liquida con una promoción**."
 
@@ -38,6 +38,9 @@ La pared de monitores de la oficina. Cada decisión es un monitor que se enciend
 - Montos o porcentajes que no estén en tu captura revisada.
 - Nombres de clientes ni filas individuales de pedidos.
 - Ingresos del histórico de Almacén: ese histórico muestra **pedidos y unidades**, no ingresos.
+
+## Lo que necesito de ti (hoy)
+Sacar de la base y de Umami los **conteos semanales** de vistas de producto con stock, sesiones, pedidos y reservas, y búsquedas sin resultados, **anonimizados**. Con eso Julián cierra la escena de valor con números reales.
 
 ## Si te pasas de tiempo
 Corta Umami y la decisión 5, y deja las tres primeras.
