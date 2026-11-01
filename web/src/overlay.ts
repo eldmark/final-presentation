@@ -65,11 +65,11 @@ export class Overlay {
 
       <div class="title-card" hidden>
         <span class="tc-num"></span>
-        <div><h2 class="tc-title"></h2><p class="tc-who"></p></div>
+        <div><h2 class="tc-title"></h2></div>
       </div>
 
       <header class="pill" aria-live="polite">
-        <span class="pill-title"></span><em class="pill-who"></em>
+        <span class="pill-title"></span>
         <span class="dots" aria-hidden="true"></span>
       </header>
 
@@ -148,7 +148,7 @@ export class Overlay {
         </footer>
       </div>`;
 
-    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "tc-who", "pill", "pill-title", "pill-who", "dots", "quote", "card", "subtitle",
+    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "pill", "pill-title", "dots", "quote", "card", "subtitle",
       "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar", "curtain"]) {
       this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
@@ -162,8 +162,8 @@ export class Overlay {
       const b = document.createElement("button");
       b.className = "chapter";
       b.style.flexGrow = String(c.end - c.start);
-      b.innerHTML = `<b>${c.number}</b><span>${esc(c.title)}</span><em>${esc(c.speaker)}</em>`;
-      b.title = `${c.number} · ${c.title} — ${c.speaker}`;
+      b.innerHTML = `<b>${c.number}</b><span>${esc(c.title)}</span>`;
+      b.title = `${c.number} · ${c.title}`;
       b.addEventListener("click", () => h.onChapter(c.firstSeg));
       this.el.chapters.appendChild(b);
       this.chapterEls.push(b);
@@ -274,7 +274,6 @@ export class Overlay {
     const card = this.el["title-card"];
     this.el["tc-num"].textContent = String(chapter.number);
     this.el["tc-title"].textContent = chapter.title;
-    this.el["tc-who"].textContent = chapter.speaker;
     card.hidden = false;
     card.classList.remove("play");
     void card.offsetWidth; // reinicia la animación
@@ -315,7 +314,6 @@ export class Overlay {
     if (this.started) this.lastChapter = chapter.number;
 
     this.el["pill-title"].textContent = `${chapter.number} · ${chapter.title}`;
-    this.el["pill-who"].textContent = chapter.speaker;
     // con muchos pasos, una barrita en vez de puntos
     this.el.dots.innerHTML =
       s.stepsInSeg <= 12

@@ -17,6 +17,16 @@ interface Notes {
   handoff: string;
 }
 
+/** Idea clave: la frase inicial (hasta «:») va en negrita y todo con resaltador. Admite **negrita** manual. */
+const idea = (t: string): string => {
+  const manual = /\*\*(.+?)\*\*/.test(t);
+  let html = esc(t).replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+  if (!manual) {
+    const k = t.indexOf(":");
+    if (k > 0 && k < 64) html = `<strong>${esc(t.slice(0, k))}</strong>${esc(t.slice(k))}`;
+  }
+  return `<li><mark>${html}</mark></li>`;
+};
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 const clock = (s: number): string => `${String(Math.floor(Math.max(0, s) / 60)).padStart(2, "0")}:${String(Math.floor(Math.max(0, s) % 60)).padStart(2, "0")}`;
 
@@ -67,31 +77,34 @@ async function main(): Promise<void> {
 
     <main class="grid">
       <section class="col main">
+        <div class="speaker">
+          <small>Habla ahora</small>
+          <b data-speaker>—</b>
+          <span class="after" data-after></span>
+        </div>
         <div class="now">
           <p class="eyebrow" data-eyebrow></p>
           <h2 data-title></h2>
-          <p class="onscreen" data-onscreen></p>
         </div>
-        <details class="box ideas" open><summary>Ideas clave</summary><ul data-ideas></ul></details>
-        <div class="two">
-          <details class="box data" ${isRemote ? "" : "open"}><summary>Datos que puedes citar</summary><ul data-data></ul></details>
-          <details class="box avoid" ${isRemote ? "" : "open"}><summary>No digas</summary><ul data-avoid></ul></details>
-        </div>
+        <div class="box ideas"><h3>Ideas clave</h3><ul data-ideas></ul></div>
         <div class="box handoff"><h3>Relevo</h3><p data-handoff></p></div>
       </section>
 
       <aside class="col side">
         <div class="box next"><h3>Lo que viene</h3><p data-next></p></div>
-        <details class="box steps" ${isRemote ? "" : "open"}><summary>Pasos de la escena</summary><ol data-steps></ol></details>
-        <details class="box scenes" ${isRemote ? "" : "open"}><summary>Escenas</summary><ol data-scenes></ol></details>
-        <details class="box phone" ${isRemote ? "hidden" : ""}>
+        <p class="onscreen" data-onscreen></p>
+        <details class="box notes"><summary>Datos que puedes citar</summary><ul data-data></ul></details>
+        <details class="box notes avoid"><summary>No digas</summary><ul data-avoid></ul></details>
+        <details class="box notes steps"><summary>Pasos de la escena</summary><ol data-steps></ol></details>
+        <details class="box notes scenes"><summary>Escenas</summary><ol data-scenes></ol></details>
+        <details class="box notes phone" ${isRemote ? "hidden" : ""}>
           <summary>Controlar desde el celular</summary>
           <div class="phone-body">
             <img data-qr alt="QR del control remoto" />
             <div>
               <p class="small" data-phone-msg></p>
               <label class="small">Dirección de este equipo en la red
-                <input data-host placeholder="http://192.168.1.20:8080" />
+                <input data-host placeholder="http://192.168.1.20:8088" />
               </label>
             </div>
           </div>
@@ -211,10 +224,13 @@ async function main(): Promise<void> {
     sc.classList.toggle("over", state.sceneElapsed > budget * 1.25);
 
     q("[data-eyebrow]").textContent = `Escena ${chapter.number} de ${chapters.length} · paso ${idxInScene + 1} de ${inScene.length}`;
-    q("[data-title]").innerHTML = `${esc(chapter.title)} <em>${esc(chapter.speaker)}</em>`;
-    q("[data-onscreen]").textContent = state.started ? `En pantalla: ${describeStep(step).replace(/\n/g, " · ")}` : "La presentación aún no empieza: pulsa Siguiente para iniciarla.";
+    q("[data-title]").textContent = chapter.title;
+    q("[data-speaker]").textContent = chapter.speaker;
+    const nextCh = chapters[chapters.indexOf(chapter) + 1];
+    q("[data-after]").textContent = nextCh ? `Después: ${nextCh.speaker} · ${nextCh.title}` : "Última escena";
+    q("[data-onscreen]").textContent = state.started ? `En pantalla ahora: ${describeStep(step).replace(/\n/g, " · ")}` : "La presentación aún no empieza: pulsa Siguiente para iniciarla.";
 
-    q("[data-ideas]").innerHTML = (notes?.ideas ?? []).map((t) => `<li>${esc(t)}</li>`).join("");
+    q("[data-ideas]").innerHTML = (notes?.ideas ?? []).map(idea).join("");
     q("[data-data]").innerHTML = (notes?.data ?? []).map((t) => `<li>${esc(t)}</li>`).join("") || "<li class='none'>—</li>";
     q("[data-avoid]").innerHTML = (notes?.avoid ?? []).map((t) => `<li>${esc(t)}</li>`).join("");
     q("[data-handoff]").textContent = notes?.handoff ?? "";

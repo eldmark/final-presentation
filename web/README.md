@@ -77,7 +77,9 @@ estaciones pasan a ser cortes.
 Una segunda ventana, sincronizada en vivo con la presentación (mismo navegador, sin servidor):
 
 - Se abre con la tecla **P**, con el botón **Presentador** de la barra, o en `presenter.html`.
-- Muestra la escena actual, las **ideas clave** de quien habla, los **datos que puede citar**, lo que **no debe decir** y la **frase de relevo**.
+- Muestra en **grande el nombre de quien habla** (el nombre **no** aparece en la presentación pública) y quién sigue.
+- Las **ideas clave** van con alto contraste y resaltadas; el resto (datos, «no digas», pasos, escenas) queda plegado y atenuado para no hacer ruido.
+- También muestra la **frase de relevo**.
 - Muestra **lo que viene** en el siguiente paso y avisa cuando cambia de escena y de persona.
 - Dos relojes: el **total** contra los 14:00 y el de **esta escena** contra su tiempo (ámbar al pasarse, rojo al pasarse un 25 %).
 - Controla la presentación: Siguiente, Anterior, escena anterior o siguiente, modo, y clic en cualquier paso o escena.

@@ -116,3 +116,35 @@ body.remote .controls .mode { grid-column: span 2; min-height: 44px; font-size: 
   .clocks { margin-left: 0; width: 100%; justify-content: space-between; }
   .top .logo, .top h1 { display: none; }
 }
+
+
+/* ================= v2: quién habla y qué decir ================= */
+.speaker { display: grid; gap: 2px; padding: 14px 22px 16px; border-radius: 18px; background: linear-gradient(135deg, #841c26, #5a0f18); border: 1px solid rgba(255, 209, 102, 0.35); }
+.speaker small { font-size: 13px; letter-spacing: 0.22em; text-transform: uppercase; color: #ffd166; font-weight: 600; }
+.speaker b { font-family: "Playfair Display", Georgia, serif; font-size: clamp(54px, 8vw, 132px); line-height: 1; letter-spacing: 0.01em; text-transform: uppercase; color: #fff; }
+.speaker .after { font-size: clamp(14px, 1.3vw, 19px); color: rgba(255, 255, 255, 0.82); }
+.now h2 { font-size: clamp(22px, 2.2vw, 32px); margin: 2px 0 0; font-family: "Poppins", sans-serif; font-weight: 600; color: rgba(245, 240, 235, 0.8); }
+.now h2 em { display: none; }
+.eyebrow { font-size: 13px; }
+
+/* ideas clave: lo único que hay que leer */
+.box.ideas { background: #12070a; border: 2px solid #ffd166; padding: 20px 26px 24px; }
+.box.ideas h3 { color: #ffd166; opacity: 1; font-size: 13px; }
+.ideas ul { gap: 14px; }
+.ideas li { padding-left: 0; font-size: clamp(25px, 2.6vw, 42px); line-height: 1.38; font-weight: 600; color: #fff; }
+.ideas li::before { content: none; }
+.ideas mark { color: #fff; background: linear-gradient(180deg, transparent 52%, rgba(255, 209, 102, 0.5) 52%); padding: 0 0.12em; border-radius: 3px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.ideas strong { color: #fff; font-weight: 700; }
+.handoff { background: rgba(255, 209, 102, 0.1); border-color: rgba(255, 209, 102, 0.35); }
+.handoff p { font-size: clamp(20px, 1.9vw, 28px); }
+
+/* lo demás: notas atenuadas */
+.onscreen { margin: 0; padding: 8px 12px; border-radius: 10px; background: rgba(245, 240, 235, 0.06); font-size: 13px; line-height: 1.4; opacity: 0.75; }
+.box.next p { font-size: 16px; }
+details.notes { opacity: 0.72; background: transparent; }
+details.notes[open] { opacity: 0.9; }
+details.notes li { font-size: 14px; }
+
+body.remote .speaker b { font-size: clamp(48px, 15vw, 84px); }
+body.remote .ideas li { font-size: 24px; }
