@@ -30,12 +30,14 @@ Tiempos por escena (suman 13:30; el límite es 14:00):
 | --- | --- | --- | --- |
 | 1 · El antes | Julián | 2:30 | 20 |
 | 2 · El cliente encuentra y elige | Lázaro | 1:30 | 5 |
-| 3 · Compra con confianza | Jorge | 2:00 | 14 |
-| 4 · Pedido, datos y stack | Marcelo | 2:00 | 11 |
+| 3 · Compra con confianza | Jorge | 2:00 | 6 |
+| 4 · Pedido, datos y stack | Marcelo | 2:00 | 8 |
 | 5 · La administradora decide | Marco | 2:30 | 9 |
 | 6 · El miedo a que lo hackeen | Luis Ángel | 1:30 | 6 |
-| 7 · Valor e impacto | Julián | 0:45 | 5 |
+| 7 · Valor e impacto | Julián | 0:45 | 6 |
 | 8 · Cierre y disclaimer | Lázaro | 0:45 | 2 |
+
+Son **62 pasos** en total. La escena 1 tiene 20 (por las burbujas de chat) y la 2 solo 5: quien las presente puede acelerar o frenar el ritmo de pulsaciones, pero conviene que cada paso lleve una idea.
 
 Reglas del ensayo:
 1. **Primer ensayo con el guion en mano**, para fijar cuántos pasos se dicen en cada pulsación.
