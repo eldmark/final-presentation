@@ -465,7 +465,7 @@
             {
               "name": "Vue 3",
               "src": "logos/vuedotjs.svg",
-              "use": "Framework del frontend: catálogo, carrito, panel de la administradora y editor de ofertas."
+              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel de la administradora y editor de ofertas."
             },
             {
               "name": "Vite",
@@ -505,12 +505,7 @@
             {
               "name": "PostgreSQL",
               "src": "logos/postgresql.svg",
-              "use": "Una sola base de datos central para todas las sucursales."
-            },
-            {
-              "name": "Redis",
-              "src": "logos/redis.svg",
-              "use": "Caché y control de uso (cuotas y límites) para respuestas rápidas."
+              "use": "Una sola base central para todas las sucursales: constraints, transacciones y búsqueda difusa (pg_trgm)."
             },
             {
               "name": "Docker",
@@ -525,7 +520,12 @@
             {
               "name": "Google Cloud",
               "src": "logos/googlecloud.svg",
-              "use": "Infraestructura en producción: servidores, IAP y almacenamiento de imágenes."
+              "use": "Infraestructura en producción: servidores y acceso protegido por IAP."
+            },
+            {
+              "name": "Cloudflare R2",
+              "src": "logos/cloudflare.svg",
+              "use": "Almacena las imágenes de los productos y de las ofertas (compatible con S3, sin costo de salida)."
             },
             {
               "name": "GitHub",

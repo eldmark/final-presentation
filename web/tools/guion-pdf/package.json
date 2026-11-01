@@ -1,0 +1,1 @@
+{ "name": "guion-pdf", "private": true, "type": "module", "description": "Genera docs/guion-completo.pdf: capturas de cada paso + guion + tecnologías", "dependencies": { "marked": "^16.0.0", "playwright-core": "^1.50.0" } }

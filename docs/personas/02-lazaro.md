@@ -34,8 +34,10 @@
 3. La tienda atiende sus pedidos y reservas sin interrupciones.
 4. La administradora decide con datos, no con intuición.
 5. Y la seguridad se ve, se mide y se audita.
-6. **Síntesis de tecnologías:** cuadrícula con los logos de todo lo que usamos (Vue, Vite, Node.js, Prisma, PostgreSQL, Redis, Docker, Google Cloud, Clerk, Sentry, Grafana, Umami, Playwright, OWASP ZAP, Figma, Miro, Jira, Blender, Three.js…).
+6. **Síntesis de tecnologías:** cuadrícula con los logos de todo lo que usamos (Vue, Vite, Node.js, Prisma, PostgreSQL, Docker, Google Cloud, Cloudflare R2, Clerk, Sentry, Grafana, Umami, Playwright, OWASP ZAP, Figma, Miro, Jira, Blender, Three.js…).
 7. **Pruébenlo ahora** (QR) · gracias.
+
+> Si alguien pregunta por una tecnología, en la slide de logos se pasa el cursor (o la rueda del mouse) sobre cada una y sale para qué se usó. Las ventajas frente a la competencia están en [`../12-tecnologias-y-ventajas.md`](../12-tecnologias-y-ventajas.md).
 
 **Texto (≈ 110 palabras):**
 "Al principio vimos un teléfono que no paraba de sonar. Nuestro propósito fue **reducir llamadas y visitas, y convertir cada pregunta en un dato**. Estas son las conclusiones: el cliente **encuentra, reserva y compra** sin tener que llamar; la tienda atiende **sus pedidos y reservas sin interrupciones**; la administradora **decide con datos, no con intuición**; y la seguridad **se ve, se mide y se audita**. Y esto fue todo lo que utilizamos para lograrlo. Y no tienen que creernos: escaneen el código y **pruébenlo ahora en producción**. Gracias."
