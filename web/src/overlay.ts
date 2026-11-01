@@ -247,6 +247,11 @@ export class Overlay {
     }, 1500);
   }
 
+  /** Tras el mapa no hay telón que esperar: la cinta de la escena 1 sale enseguida. */
+  skipTitleDelay(): void {
+    this.firstTitle = false;
+  }
+
   /** Salta la portada y el telón (para ensayos con ?autoplay=1). */
   skipIntro(): void {
     this.el.curtain.hidden = true;

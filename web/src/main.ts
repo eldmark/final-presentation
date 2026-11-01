@@ -13,6 +13,7 @@ import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
 import { Overlay, type Cover } from "./overlay";
+import { MapIntro, type MapCfg } from "./mapintro";
 import { buildChapters, buildSteps } from "./steps";
 import { Link, readToken, type Msg, type StateMsg } from "./sync";
 import type { ContentData, TourData } from "./types";
@@ -60,11 +61,18 @@ async function main(): Promise<void> {
 
   /** Portada → telón → inicio. Todo inicio (botón, teclado, celular) pasa por aquí. */
   const startShow = (auto: boolean) => overlay.playIntro(() => begin(auto));
-  const begin = (auto: boolean) => {
+  const begin = (auto: boolean, withMap = true) => {
     overlay.hideStart();
     tour.auto = auto;
-    tour.playing = auto;
     startedAt = performance.now();
+    if (map && withMap) {
+      // intro con mapa: el recorrido espera a que el mapa se disuelva en el render de la tienda
+      tour.playing = false;
+      map.start(auto, () => {
+        overlay.skipTitleDelay();
+        tour.playing = tour.auto;
+      });
+    } else tour.playing = auto;
   };
   const toggleMode = () => {
     tour.auto = !tour.auto;
@@ -74,8 +82,10 @@ async function main(): Promise<void> {
     if (document.fullscreenElement) void document.exitFullscreen();
     else void document.documentElement.requestFullscreen();
   };
-  const next = () => tour.next();
-  const prev = () => tour.prev();
+  const next = () => (map?.active ? map.advance() : tour.next());
+  const prev = () => {
+    if (!map?.active) tour.prev();
+  };
 
   const overlay = new Overlay(
     document.getElementById("overlay")!,
@@ -98,6 +108,8 @@ async function main(): Promise<void> {
     },
     cover,
   );
+  const mapCfg = await json<MapCfg>("data/map.json").catch(() => null);
+  const map = mapCfg ? new MapIntro(document.getElementById("overlay")!, mapCfg) : null;
 
   // ---- precarga: modelo, imágenes, QR, shaders y texturas, para que nada se trabe durante la presentación ----
   overlay.setProgress(0.04);
@@ -116,9 +128,10 @@ async function main(): Promise<void> {
       return f ? [f] : [];
     }),
   ];
+  if (map) await map.preload((d, t) => overlay.setProgress(0.3 + (0.1 * d) / t));
   const totalWork = images.size + warmPoses.length + 1;
   let done = 0;
-  const tick = () => overlay.setProgress(0.3 + (0.7 * ++done) / totalWork);
+  const tick = () => overlay.setProgress(0.4 + (0.6 * ++done) / totalWork);
   await document.fonts.ready;
   for (const src of images) {
     const img = new Image();
@@ -178,6 +191,7 @@ async function main(): Promise<void> {
   link.onMessage((msg: Msg) => {
     if (msg.type === "hello") return broadcast(true);
     if (msg.type !== "cmd") return;
+    if (map?.active && !["next", "toggleMode", "resetTimer", "start"].includes(msg.cmd)) return;
     switch (msg.cmd) {
       case "start":
         if (!overlay.started) startShow(false);
@@ -225,16 +239,18 @@ async function main(): Promise<void> {
       case "ArrowDown":
       case "PageDown":
         e.preventDefault();
-        if (e.shiftKey) tour.jumpScene(1);
-        else next();
+        if (e.shiftKey) {
+          if (!map?.active) tour.jumpScene(1);
+        } else next();
         break;
       case "ArrowLeft":
       case "ArrowUp":
       case "PageUp":
       case "Backspace":
         e.preventDefault();
-        if (e.shiftKey) tour.jumpScene(-1);
-        else prev();
+        if (e.shiftKey) {
+          if (!map?.active) tour.jumpScene(-1);
+        } else prev();
         break;
       case " ":
       case "Enter":
@@ -243,7 +259,7 @@ async function main(): Promise<void> {
         else next();
         break;
       case "Home":
-        tour.goToStart();
+        if (!map?.active) tour.goToStart();
         break;
       case "m":
       case "M":
@@ -297,7 +313,7 @@ async function main(): Promise<void> {
   if (params.has("t")) tour.seek(Number(params.get("t")));
   if (params.get("autoplay") === "1" || params.get("mode") === "auto") {
     overlay.skipIntro();
-    begin(params.get("mode") === "auto");
+    begin(params.get("mode") === "auto", params.get("map") === "1");
     if (params.get("pause") === "1") tour.playing = false;
   }
   if (params.get("large") === "1") overlay.toggleLargeText(true);
@@ -343,7 +359,7 @@ async function main(): Promise<void> {
 
     bubbles.update(tour.time);
     const { index, total } = tour.stepsInChapter();
-    overlay.update({
+    if (!map?.active) overlay.update({
       step: tour.step,
       segIndex: tour.segmentIndex,
       stepInSeg: index,

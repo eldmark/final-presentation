@@ -1,0 +1,14 @@
+{
+  "zoomStart": 7.2,
+  "zoomCity": 12.4,
+  "zoomCluster": 14.2,
+  "zoomEnd": 16.4,
+  "center": { "lat": 14.8523, "lng": -91.5365 },
+  "focus": { "lat": 14.84819167, "lng": -91.52179722 },
+  "attribution": "© colaboradores de OpenStreetMap",
+  "branches": [
+    { "id": "zona3", "name": "Sucursal Zona 3", "address": "8a Calle 18-04", "note": "Sede de despacho principal", "lat": 14.84819167, "lng": -91.52179722, "photo": "map/zona3.webp", "card": "right" },
+    { "id": "zona9", "name": "Sucursal Zona 9", "address": "0 Calle 8-97", "note": "", "lat": 14.86138889, "lng": -91.55388056, "photo": "map/zona9.webp", "card": "left" },
+    { "id": "calvario", "name": "Sucursal El Calvario", "address": "4a Calle 21A-44", "note": "", "lat": 14.83751944, "lng": -91.52680833, "photo": "map/calvario.webp", "card": "left" }
+  ]
+}
