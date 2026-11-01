@@ -34,10 +34,11 @@
 3. La tienda atiende sus pedidos y reservas sin interrupciones.
 4. La administradora decide con datos, no con intuición.
 5. Y la seguridad se ve, se mide y se audita.
-6. **Pruébenlo ahora** (QR) · gracias.
+6. **Síntesis de tecnologías:** cuadrícula con los logos de todo lo que usamos (Vue, Vite, Node.js, Prisma, PostgreSQL, Redis, Docker, Google Cloud, Clerk, Sentry, Grafana, Umami, Playwright, OWASP ZAP, Figma, Miro, Jira, Blender, Three.js…).
+7. **Pruébenlo ahora** (QR) · gracias.
 
 **Texto (≈ 110 palabras):**
-"Al principio vimos un teléfono que no paraba de sonar. Nuestro propósito fue **reducir llamadas y visitas, y convertir cada pregunta en un dato**. Estas son las conclusiones: el cliente **encuentra, reserva y compra** sin tener que llamar; la tienda atiende **sus pedidos y reservas sin interrupciones**; la administradora **decide con datos, no con intuición**; y la seguridad **se ve, se mide y se audita**. Y no tienen que creernos: escaneen el código y **pruébenlo ahora en producción**. Gracias."
+"Al principio vimos un teléfono que no paraba de sonar. Nuestro propósito fue **reducir llamadas y visitas, y convertir cada pregunta en un dato**. Estas son las conclusiones: el cliente **encuentra, reserva y compra** sin tener que llamar; la tienda atiende **sus pedidos y reservas sin interrupciones**; la administradora **decide con datos, no con intuición**; y la seguridad **se ve, se mide y se audita**. Y esto fue todo lo que utilizamos para lograrlo. Y no tienen que creernos: escaneen el código y **pruébenlo ahora en producción**. Gracias."
 
 **El disclaimer ya no se lee en la presentación.** El diseño, los datos anonimizados, la marca y los modelos 3D están en la pestaña **«Acerca de»** (tecla `I`). Basta mencionarlo en una frase.
 

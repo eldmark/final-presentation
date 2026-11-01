@@ -10,7 +10,7 @@ interface Ev {
   cue?: string;
   focus?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: import("./types").Fact[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
+  card?: { image?: string; facts?: import("./types").Fact[]; logos?: { name: string; src: string }[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
   bubble?: string;
 }
 
@@ -32,7 +32,7 @@ export function buildSteps(
     const evs: Ev[] = [];
     c?.cues.forEach((x) => evs.push({ at: x.at, cue: x.text, focus: x.focus }));
     c?.quotes.forEach((x) => evs.push({ at: x.at, quote: { who: x.who, text: x.text } }));
-    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, qr: x.qr, layout: x.layout, caption: x.caption } }));
+    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, logos: x.logos, qr: x.qr, layout: x.layout, caption: x.caption } }));
     const segBubbles = retimed.filter((b) => b.at >= seg.start && b.at < seg.end);
     segBubbles.forEach((b) => evs.push({ at: b.at, bubble: b.text }));
     evs.sort((a, b) => a.at - b.at);

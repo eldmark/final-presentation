@@ -448,12 +448,147 @@
           "text": "Y la seguridad se ve, se mide y se audita"
         },
         {
+          "at": 796.5,
+          "text": "Esto fue todo lo que utilizamos"
+        },
+        {
           "at": 800,
           "text": "Pruébenlo ahora · gracias"
         }
       ],
       "quotes": [],
       "cards": [
+        {
+          "at": 796.5,
+          "layout": "large",
+          "logos": [
+            {
+              "name": "Vue 3",
+              "src": "logos/vuedotjs.svg"
+            },
+            {
+              "name": "Vite",
+              "src": "logos/vite.svg"
+            },
+            {
+              "name": "Pinia",
+              "src": "logos/pinia.svg"
+            },
+            {
+              "name": "TypeScript",
+              "src": "logos/typescript.svg"
+            },
+            {
+              "name": "Leaflet",
+              "src": "logos/leaflet.svg"
+            },
+            {
+              "name": "Node.js",
+              "src": "logos/nodedotjs.svg"
+            },
+            {
+              "name": "Express",
+              "src": "logos/express.svg"
+            },
+            {
+              "name": "Prisma",
+              "src": "logos/prisma.svg"
+            },
+            {
+              "name": "PostgreSQL",
+              "src": "logos/postgresql.svg"
+            },
+            {
+              "name": "Redis",
+              "src": "logos/redis.svg"
+            },
+            {
+              "name": "Docker",
+              "src": "logos/docker.svg"
+            },
+            {
+              "name": "Nginx",
+              "src": "logos/nginx.svg"
+            },
+            {
+              "name": "Google Cloud",
+              "src": "logos/googlecloud.svg"
+            },
+            {
+              "name": "GitHub",
+              "src": "logos/github.svg"
+            },
+            {
+              "name": "Clerk",
+              "src": "logos/clerk.svg"
+            },
+            {
+              "name": "Resend",
+              "src": "logos/resend.svg"
+            },
+            {
+              "name": "Sentry",
+              "src": "logos/sentry.svg"
+            },
+            {
+              "name": "Grafana",
+              "src": "logos/grafana.svg"
+            },
+            {
+              "name": "Umami",
+              "src": "logos/umami.svg"
+            },
+            {
+              "name": "Vitest",
+              "src": "logos/vitest.svg"
+            },
+            {
+              "name": "Jest",
+              "src": "logos/jest.svg"
+            },
+            {
+              "name": "Playwright",
+              "src": "logos/playwright.svg"
+            },
+            {
+              "name": "ESLint",
+              "src": "logos/eslint.svg"
+            },
+            {
+              "name": "OWASP ZAP",
+              "src": "logos/owasp.svg"
+            },
+            {
+              "name": "Figma",
+              "src": "logos/figma.svg"
+            },
+            {
+              "name": "Canva",
+              "src": "logos/canva.svg"
+            },
+            {
+              "name": "Miro",
+              "src": "logos/miro.svg"
+            },
+            {
+              "name": "Jira",
+              "src": "logos/jira.svg"
+            },
+            {
+              "name": "Three.js",
+              "src": "logos/threedotjs.svg"
+            },
+            {
+              "name": "Blender",
+              "src": "logos/blender.svg"
+            },
+            {
+              "name": "OpenStreetMap",
+              "src": "logos/openstreetmap.svg"
+            }
+          ],
+          "caption": "Tecnologías de Bodega de Licores"
+        },
         {
           "at": 800,
           "layout": "large",

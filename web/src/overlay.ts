@@ -78,6 +78,7 @@ export class Overlay {
         <img alt="" />
         <img class="qr" alt="Código QR" hidden />
         <div class="facts" hidden></div>
+        <ul class="logos" hidden></ul>
         <figcaption></figcaption>
       </figure>
       <p class="subtitle" aria-live="polite" hidden></p>
@@ -352,13 +353,16 @@ export class Overlay {
     this.el.card.hidden = !card;
     this.el.dimmer.hidden = !large;
     if (card) {
-      const img = this.el.card.querySelector<HTMLImageElement>("img:not(.qr)")!;
+      const img = this.el.card.querySelector<HTMLImageElement>(":scope > img:not(.qr)")!;
       const qr = this.el.card.querySelector<HTMLImageElement>("img.qr")!;
       const facts = this.el.card.querySelector<HTMLElement>(".facts")!;
       this.el.card.className = `card layout-${card.layout ?? "left"}`;
       img.hidden = !card.image;
       facts.hidden = !card.facts;
       qr.hidden = !card.qr;
+      const logos = this.el.card.querySelector<HTMLElement>(".logos")!;
+      logos.hidden = !card.logos;
+      if (card.logos) logos.innerHTML = card.logos.map((l) => `<li><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`).join("");
       if (card.image) img.setAttribute("src", card.image);
       if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
       if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));

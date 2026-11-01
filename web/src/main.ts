@@ -119,7 +119,10 @@ async function main(): Promise<void> {
   overlay.setProgress(0.3);
 
   const images = new Set<string>();
-  for (const s of steps) if (s.card?.image) images.add(s.card.image);
+  for (const s of steps) {
+    if (s.card?.image) images.add(s.card.image);
+    s.card?.logos?.forEach((l) => images.add(l.src));
+  }
   const focusNames = new Set(steps.map((s) => s.focus).filter((f): f is string => Boolean(f)));
   const warmPoses = [
     ...tourData.keys.map((k) => ({ pos: new THREE.Vector3(k.pos[0], k.pos[2], -k.pos[1]), aim: new THREE.Vector3(k.aim[0], k.aim[2], -k.aim[1]) })),
