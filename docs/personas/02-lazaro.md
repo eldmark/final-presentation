@@ -24,14 +24,22 @@
 
 ---
 
-## Cierre y disclaimer (0:45 · al final de la presentación, con todos en pantalla)
+## Conclusiones (0:45 · al final de la presentación)
 
-**Se ve:** la ciudad 3D vista desde arriba, las tres sucursales conectadas y el tablero. Debajo, el disclaimer de UI/UX en tarjeta.
+**Se ve:** los tres maniquíes de espaldas mirando el logo, y los pasos de las conclusiones. En el último, un **QR** grande a `bodegadelicores.app`.
+
+**Pasos (cada uno una pulsación):**
+1. Cada pregunta del cliente ahora es un dato.
+2. El cliente encuentra, reserva y compra sin tener que llamar.
+3. La tienda atiende sus pedidos y reservas sin interrupciones.
+4. La administradora decide con datos, no con intuición.
+5. Y la seguridad se ve, se mide y se audita.
+6. **Pruébenlo ahora** (QR) · gracias.
 
 **Texto (≈ 110 palabras):**
-"Al principio vimos un teléfono que no paraba de sonar. **Nuestro propósito fue reducir llamadas y visitas, y convertir cada pregunta en un dato.** Hoy el teléfono está en silencio y el tablero, encendido."
+"Al principio vimos un teléfono que no paraba de sonar. Nuestro propósito fue **reducir llamadas y visitas, y convertir cada pregunta en un dato**. Estas son las conclusiones: el cliente **encuentra, reserva y compra** sin tener que llamar; la tienda atiende **sus pedidos y reservas sin interrupciones**; la administradora **decide con datos, no con intuición**; y la seguridad **se ve, se mide y se audita**. Y no tienen que creernos: escaneen el código y **pruébenlo ahora en producción**. Gracias."
 
-"Un último aviso sobre lo que vieron. Las pantallas son el diseño de la plataforma: un solo estilo en todo el panel, menú agrupado con las ventas primero, versión para teléfono, texto al 200 %, contraste 4.5:1, foco visible, botones de 44 píxeles y uso completo con teclado. Muestran datos reales **anonimizados**. Usamos el nombre y el logo de la bodega **con su autorización**. Y los modelos 3D son una representación artística, no el local real. Gracias."
+**El disclaimer ya no se lee en la presentación.** El diseño, los datos anonimizados, la marca y los modelos 3D están en la pestaña **«Acerca de»** (tecla `I`). Basta mencionarlo en una frase.
 
 ## Datos que respaldan lo que dices
 - Catálogo con filtros, búsqueda con sugerencias y orden; carga progresiva y modo oscuro.

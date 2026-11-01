@@ -19,7 +19,7 @@ Los actos de abajo son el contenido; **cada persona narra su escena** (texto en 
 | 5 · La administradora decide | 7 | Marco (con 30 s de Jorge opcional) | 2:30 | 10:30 |
 | 6 · El miedo a que lo hackeen | 8 | Luis Ángel | 1:30 | 12:00 |
 | 7 · Valor e impacto | nuevo | Julián | 0:45 | 12:45 |
-| 8 · Cierre y disclaimer | 9 | Lázaro, con todos | 0:45 | 13:30 |
+| 8 · Conclusiones (con QR a producción) | 9 | Lázaro | 0:45 | 13:30 |
 
 Ajustado según la rúbrica: ver [`09-rubrica-y-cobertura.md`](09-rubrica-y-cobertura.md). El **puente** (acto 4) pasa a la escena de Marcelo: el pedido llega a la tienda y de ahí los datos se juntan, que es justo la transición hacia lo que decide la administradora. Los tiempos por acto de más abajo son indicativos; mandan los de esta tabla.
 

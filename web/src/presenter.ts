@@ -4,9 +4,10 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/playfair-display/700.css";
 import "./presenter.css";
+import QRCode from "qrcode";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
 import { buildChapters, buildSteps } from "./steps";
-import { openChannel, type Cmd, type Msg, type StateMsg } from "./sync";
+import { Link, readToken, type Cmd, type Msg, type StateMsg } from "./sync";
 import type { Chapter, ContentData, Step, TourData } from "./types";
 
 interface Notes {
@@ -33,12 +34,17 @@ function describeStep(s: Step | undefined): string {
   if (s.cue) parts.push(`Subtítulo: ${s.cue}`);
   if (s.quote) parts.push(`Cita (${s.quote.who}): “${s.quote.text}”`);
   if (s.card) parts.push(`Tarjeta: ${s.card.caption}`);
+  if (s.focus) parts.push("La cámara se acerca a la pantalla");
   if (!parts.length) parts.push(s.arrival ? "La cámara llega a la estación" : "Siguiente paso");
   return parts.join("\n");
 }
 
 async function main(): Promise<void> {
   const app = document.getElementById("app")!;
+  const token = readToken();
+  const isRemote = location.pathname.replace(/\/$/, "").endsWith("/remote") || new URLSearchParams(location.search).has("remote");
+  document.body.classList.toggle("remote", isRemote);
+
   const [tour, content, notesFile] = await Promise.all([
     json<TourData>("data/tour.json"),
     json<ContentData>("data/content.json"),
@@ -51,11 +57,11 @@ async function main(): Promise<void> {
   app.innerHTML = `
     <header class="top">
       <img class="logo" src="logo.svg" alt="Bodega de Licores" />
-      <h1>Vista del presentador</h1>
-      <span class="conn" data-conn>● Esperando la ventana de la presentación…</span>
+      <h1>${isRemote ? "Control remoto" : "Vista del presentador"}</h1>
+      <span class="conn" data-conn>● Esperando la presentación…</span>
       <div class="clocks">
         <div class="clock" data-total><small>Total</small><b>00:00</b><span>/ 14:00</span></div>
-        <div class="clock" data-scene><small>Esta escena</small><b>00:00</b><span>/ 00:00</span></div>
+        <div class="clock" data-scene><small>Escena</small><b>00:00</b><span>/ 00:00</span></div>
       </div>
     </header>
 
@@ -66,37 +72,54 @@ async function main(): Promise<void> {
           <h2 data-title></h2>
           <p class="onscreen" data-onscreen></p>
         </div>
-        <div class="box ideas"><h3>Ideas clave</h3><ul data-ideas></ul></div>
+        <details class="box ideas" open><summary>Ideas clave</summary><ul data-ideas></ul></details>
         <div class="two">
-          <div class="box data"><h3>Datos que puedes citar</h3><ul data-data></ul></div>
-          <div class="box avoid"><h3>No digas</h3><ul data-avoid></ul></div>
+          <details class="box data" ${isRemote ? "" : "open"}><summary>Datos que puedes citar</summary><ul data-data></ul></details>
+          <details class="box avoid" ${isRemote ? "" : "open"}><summary>No digas</summary><ul data-avoid></ul></details>
         </div>
         <div class="box handoff"><h3>Relevo</h3><p data-handoff></p></div>
       </section>
 
       <aside class="col side">
         <div class="box next"><h3>Lo que viene</h3><p data-next></p></div>
-        <div class="box steps"><h3>Pasos de la escena</h3><ol data-steps></ol></div>
-        <div class="box scenes"><h3>Escenas</h3><ol data-scenes></ol></div>
+        <details class="box steps" ${isRemote ? "" : "open"}><summary>Pasos de la escena</summary><ol data-steps></ol></details>
+        <details class="box scenes" ${isRemote ? "" : "open"}><summary>Escenas</summary><ol data-scenes></ol></details>
+        <details class="box phone" ${isRemote ? "hidden" : ""}>
+          <summary>Controlar desde el celular</summary>
+          <div class="phone-body">
+            <img data-qr alt="QR del control remoto" />
+            <div>
+              <p class="small" data-phone-msg></p>
+              <label class="small">Dirección de este equipo en la red
+                <input data-host placeholder="http://192.168.1.20:8080" />
+              </label>
+            </div>
+          </div>
+        </details>
       </aside>
     </main>
 
     <footer class="controls">
-      <button data-cmd="prevScene" title="Escena anterior (Shift + ←)">⏮ Escena</button>
-      <button data-cmd="prev" class="big" title="Paso anterior (←)">‹ Anterior</button>
+      <button data-cmd="prevScene" class="small-btn" title="Escena anterior (Shift + ←)">⏮</button>
+      <button data-cmd="prev" class="big" title="Paso anterior (←)">‹ Atrás</button>
       <button data-cmd="next" class="big primary" title="Siguiente paso (→ o Espacio)">Siguiente ›</button>
-      <button data-cmd="nextScene" title="Escena siguiente (Shift + →)">Escena ⏭</button>
+      <button data-cmd="nextScene" class="small-btn" title="Escena siguiente (Shift + →)">⏭</button>
       <span class="spacer"></span>
       <button data-cmd="toggleMode" class="mode" title="Paso a paso o automático (M)">Paso a paso</button>
+      <button data-cmd="resetTimer" class="mode" title="Reiniciar el cronómetro total">↺ Reloj</button>
     </footer>`;
 
   const q = <T extends HTMLElement>(sel: string): T => app.querySelector<T>(sel)!;
   const conn = q("[data-conn]");
-  const chan = openChannel();
+  const link = new Link(token);
   let state: StateMsg | null = null;
   let lastSeen = 0;
+  let remoteOk = false;
 
-  const send = (cmd: Cmd, index?: number) => chan.postMessage({ type: "cmd", cmd, index } satisfies Msg);
+  const send = (cmd: Cmd, index?: number) => {
+    navigator.vibrate?.(18);
+    link.send({ type: "cmd", cmd, index });
+  };
 
   app.addEventListener("click", (e) => {
     const el = (e.target as HTMLElement).closest<HTMLElement>("[data-cmd],[data-step],[data-scene]");
@@ -110,7 +133,7 @@ async function main(): Promise<void> {
   });
 
   window.addEventListener("keydown", (e) => {
-    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    if (e.ctrlKey || e.metaKey || e.altKey || e.target instanceof HTMLInputElement) return;
     const k = e.key;
     if (k === "ArrowRight" || k === "ArrowDown" || k === "PageDown") (e.preventDefault(), send(e.shiftKey ? "nextScene" : "next"));
     else if (k === "ArrowLeft" || k === "ArrowUp" || k === "PageUp" || k === "Backspace") (e.preventDefault(), send(e.shiftKey ? "prevScene" : "prev"));
@@ -118,9 +141,54 @@ async function main(): Promise<void> {
     else if (k === "m" || k === "M") send("toggleMode");
   });
 
+  // ---- QR para conectar el celular (solo en la vista de escritorio) ----
+  if (!isRemote) {
+    const hostInput = q<HTMLInputElement>("[data-host]");
+    const qrImg = q<HTMLImageElement>("[data-qr]");
+    const msg = q("[data-phone-msg]");
+    const saved = localStorage.getItem("bodega-host");
+    let publicUrl = saved ?? "";
+    try {
+      if (!publicUrl) {
+        const info = await json<{ publicUrl?: string }>("api/info");
+        publicUrl = info.publicUrl ?? "";
+      }
+    } catch {
+      /* servidor de desarrollo: sin /api/info */
+    }
+    hostInput.value = publicUrl || location.origin;
+    const drawQr = async () => {
+      const base = hostInput.value.replace(/\/$/, "");
+      if (!token) {
+        msg.textContent = "Para usar el celular abre la presentación con ?k=TOKEN (lo imprime start.sh).";
+        qrImg.removeAttribute("src");
+        return;
+      }
+      if (/localhost|127\.0\.0\.1/.test(base)) {
+        msg.textContent = "Escribe la dirección de este equipo en la red (no localhost) para que el celular pueda abrirla.";
+      } else {
+        msg.textContent = "Escanéalo con el celular (misma red Wi-Fi). Para usarlo sin pasar por el escáner, abre /remote?k=…";
+      }
+      qrImg.src = await QRCode.toDataURL(`${base}/remote?k=${encodeURIComponent(token)}`, { margin: 1, width: 360, color: { dark: "#2b2020", light: "#ffffff" } });
+    };
+    hostInput.addEventListener("change", () => {
+      localStorage.setItem("bodega-host", hostInput.value);
+      void drawQr();
+    });
+    void drawQr();
+  }
+
+  // ---- el celular no debe apagar la pantalla mientras se presenta ----
+  if (isRemote && "wakeLock" in navigator) {
+    const lock = () => void navigator.wakeLock.request("screen").catch(() => undefined);
+    lock();
+    document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && lock());
+  }
+
   function render(): void {
     const live = Date.now() - lastSeen < 2500;
-    conn.textContent = !state ? "● Esperando la ventana de la presentación…" : live ? "● Conectado" : "● Sin señal de la presentación";
+    const via = remoteOk ? " (por red)" : "";
+    conn.textContent = !state ? "● Esperando la presentación…" : live ? `● Conectado${via}` : "● Sin señal de la presentación";
     conn.className = `conn ${state && live ? "ok" : "off"}`;
     if (!state) return;
 
@@ -172,16 +240,20 @@ async function main(): Promise<void> {
     q<HTMLElement>(".mode").textContent = state.auto ? "Automático" : "Paso a paso";
   }
 
-  chan.onmessage = (ev: MessageEvent<Msg>) => {
-    if (ev.data.type !== "state") return;
-    state = ev.data;
+  link.onMessage((m: Msg) => {
+    if (m.type !== "state") return;
+    state = m;
     lastSeen = Date.now();
     render();
-  };
-  chan.postMessage({ type: "hello" } satisfies Msg);
+  });
+  link.onStatus((ok) => {
+    remoteOk = ok;
+    render();
+  });
+  link.send({ type: "hello" });
   window.setInterval(() => {
     render();
-    if (!state || Date.now() - lastSeen > 2500) chan.postMessage({ type: "hello" } satisfies Msg);
+    if (!state || Date.now() - lastSeen > 2500) link.send({ type: "hello" });
   }, 1000);
   render();
 }

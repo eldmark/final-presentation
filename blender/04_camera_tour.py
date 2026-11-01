@@ -22,7 +22,7 @@ SCHEDULE = [
     ("decisiones",     6, 480, 630, "Marco",      "5 · La administradora decide"),
     ("seguridad",      7, 630, 720, "Luis Ángel", "6 · El miedo a que lo hackeen"),
     ("valor",          0, 720, 765, "Julián",     "7 · Valor e impacto"),
-    ("cierre",         8, 765, 810, "Lázaro",     "8 · Cierre y disclaimer"),
+    ("cierre",         8, 765, 810, "Lázaro",     "8 · Conclusiones"),
 ]
 TOTAL = SCHEDULE[-1][3]
 
@@ -80,7 +80,7 @@ for idx, (sid, st, t0, t1, who, scene_name) in enumerate(SCHEDULE):
     else:
         keys.append(key(t0, prev_end_pos, prev_end_aim))
         keys.append(key(t0 + TRAVEL, p0, a0))
-    amount = 0.10 if idx not in (3, 4) else 0.16
+    amount = 0.10 if idx not in (3, 4) else 0.04
     p1, a1 = drift(p0, a0, amount)
     last = idx == len(SCHEDULE) - 1
     t_end = t1 - PULLBACK if last else t1

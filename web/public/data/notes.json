@@ -14,7 +14,10 @@
         "3 de 4 reconocen ventas perdidas por falta de producto",
         "3 de 3 clientes querían ver precios en línea; 2 de 3 ya habían llamado antes de ir"
       ],
-      "avoid": ["Cifras de ventas perdidas en quetzales: no están medidas", "Decir que el WhatsApp no funcionaba"],
+      "avoid": [
+        "Cifras de ventas perdidas en quetzales: no están medidas",
+        "Decir que el WhatsApp no funcionaba"
+      ],
       "handoff": "Lo primero que cambió fue lo que ve el cliente. Lázaro."
     },
     "2": {
@@ -29,7 +32,9 @@
         "Contraste 4.5:1, foco visible, botones de 44 px, uso con teclado",
         "Accesibilidad revisada con axe en 11 rutas, tema claro y oscuro"
       ],
-      "avoid": ["Precios o nombres de producto sin revisar en las capturas"],
+      "avoid": [
+        "Precios o nombres de producto sin revisar en las capturas"
+      ],
       "handoff": "Con el producto elegido, el cliente tiene que comprarlo con confianza. Jorge."
     },
     "3": {
@@ -62,8 +67,14 @@
         "Una sola base de datos; imágenes en R2, sin fondo y en WebP",
         "Google Cloud con IAP. Por qué: Vue, Express, PostgreSQL y Tailscale"
       ],
-      "data": ["1 267 imágenes subidas a R2 en un sprint", "Pruebas de carga con Locust"],
-      "avoid": ["Nombres de tablas, IPs o rutas internas", "Decir que el sistema de la tienda se reemplazó: se complementa"],
+      "data": [
+        "1 267 imágenes subidas a R2 en un sprint",
+        "Pruebas de carga con Locust"
+      ],
+      "avoid": [
+        "Nombres de tablas, IPs o rutas internas",
+        "Decir que el sistema de la tienda se reemplazó: se complementa"
+      ],
       "handoff": "Con todos los datos en un solo lugar, ya se puede decidir. Marco."
     },
     "5": {
@@ -81,7 +92,11 @@
         "Festividades: Navidad 24 dic; Año Nuevo 29 dic al 4 ene; feria e Independencia 12 al 18 sep",
         "Exportes con rango de fechas, tope de filas, sin fórmulas maliciosas y auditados"
       ],
-      "avoid": ["Montos que no estén en una captura revisada", "Ingresos del histórico de Almacén (solo pedidos y unidades)", "Nombres de clientes"],
+      "avoid": [
+        "Montos que no estén en una captura revisada",
+        "Ingresos del histórico de Almacén (solo pedidos y unidades)",
+        "Nombres de clientes"
+      ],
       "handoff": "Con tanto dato valioso, hay que cuidarlo. Luis Ángel."
     },
     "6": {
@@ -97,7 +112,11 @@
         "OWASP ZAP, escaneo completo: 138 pruebas aprobadas, 0 fallos",
         "Señales: 401, 403, CORS, 429 e IP bloqueada"
       ],
-      "avoid": ["Decir 'es imposible hackearlo': di 'lo atacamos nosotros primero'", "IPs reales, dominios internos o claves", "Pruebas contra producción"],
+      "avoid": [
+        "Decir 'es imposible hackearlo': di 'lo atacamos nosotros primero'",
+        "IPs reales, dominios internos o claves",
+        "Pruebas contra producción"
+      ],
       "handoff": "Todo esto tiene un valor medible. Julián."
     },
     "7": {
@@ -107,20 +126,29 @@
         "Cota superior: de 3.8 a 38 horas, si cada evento hubiera sido una llamada de 1 a 10 minutos",
         "Gana el cliente, el empleado y la administradora"
       ],
-      "data": ["Umami: 2 440 vistas de página, rebote 17 %, visita de 6 min 17 s"],
-      "avoid": ["'Ahorramos X horas' o 'X %': es una cota con supuesto", "Presentarlo como tráfico de clientes: es piloto y pruebas del equipo"],
-      "handoff": "Lázaro cierra."
+      "data": [
+        "Umami: 2 440 vistas de página, rebote 17 %, visita de 6 min 17 s"
+      ],
+      "avoid": [
+        "'Ahorramos X horas' o 'X %': es una cota con supuesto",
+        "Presentarlo como tráfico de clientes: es piloto y pruebas del equipo"
+      ],
+      "handoff": "Lázaro, con las conclusiones."
     },
     "8": {
       "ideas": [
-        "El propósito: reducir llamadas y visitas, y convertir cada pregunta en un dato",
-        "El teléfono quedó en silencio y el tablero encendido",
-        "Mencionar el disclaimer: diseño, datos anonimizados, marca autorizada, 3D artístico",
-        "Gracias"
+        "Conclusión 1: cada pregunta del cliente ahora es un dato",
+        "El cliente encuentra, reserva y compra sin llamar",
+        "La tienda atiende sus pedidos y reservas sin interrupciones",
+        "La administradora decide con datos",
+        "La seguridad se ve, se mide y se audita",
+        "Invitar a probar la plataforma: QR a bodegadelicores.app"
       ],
       "data": [],
-      "avoid": ["Leer el disclaimer completo: basta con mencionarlo"],
-      "handoff": "Gracias."
+      "avoid": [
+        "Leer el disclaimer: el diseño, los datos y los modelos 3D están en la pestaña «Acerca de» (tecla I)"
+      ],
+      "handoff": "Gracias. Pueden probarlo ahora con el QR."
     }
   }
 }

@@ -5,24 +5,38 @@ import "@fontsource/poppins/700.css";
 import "@fontsource/playfair-display/600.css";
 import "@fontsource/playfair-display/700.css";
 import "./style.css";
+import * as THREE from "three";
 import { Stage } from "./stage";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
-import { Overlay } from "./overlay";
+import { Overlay, type Cover } from "./overlay";
 import { buildChapters, buildSteps } from "./steps";
-import { openChannel, type Msg, type StateMsg } from "./sync";
+import { Link, readToken, type Msg, type StateMsg } from "./sync";
 import type { ContentData, TourData } from "./types";
 
 async function json<T>(url: string): Promise<T> {
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`${url}: ${res.status}`);
+  if (!res.ok || !(res.headers.get("content-type") ?? "").includes("json")) throw new Error(`${url}: ${res.status}`);
   return (await res.json()) as T;
 }
 
+/** Portada opcional: public/portada/cover.json (o la carpeta que se monta en Docker). */
+async function loadCover(): Promise<Cover | null> {
+  try {
+    const c = await json<{ image?: string; title?: string; subtitle?: string }>("portada/cover.json");
+    return { ...c, image: c.image ? `portada/${c.image}` : undefined };
+  } catch {
+    return null;
+  }
+}
+
+const frame = (): Promise<void> => new Promise((r) => requestAnimationFrame(() => r()));
+
 async function main(): Promise<void> {
   const params = new URLSearchParams(location.search);
-  const [tourData, content] = await Promise.all([json<TourData>("data/tour.json"), json<ContentData>("data/content.json")]);
+  const token = readToken();
+  const [tourData, content, cover] = await Promise.all([json<TourData>("data/tour.json"), json<ContentData>("data/content.json"), loadCover()]);
 
   const stage = new Stage(document.getElementById("stage") as HTMLCanvasElement);
   const tour = new Tour(tourData);
@@ -30,13 +44,17 @@ async function main(): Promise<void> {
   tour.steps = steps;
   const chapters = buildChapters(tourData);
 
-  const root = await stage.loadModel("models/diorama.glb");
-  await stage.applyScreenOverrides(root);
-  const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
-
-  // cronómetro real de la presentación (los 14 minutos de la sala)
+  // cronómetro real de la presentación (los 14 minutos de la sala): solo se ve en la vista del presentador
   let startedAt = 0;
   const elapsed = (): number => (startedAt ? (performance.now() - startedAt) / 1000 : 0);
+
+  const link = new Link(token);
+  const presenterUrl = (): string => `presenter.html${token ? `?k=${encodeURIComponent(token)}` : ""}`;
+  const openPresenter = () => {
+    const w = window.open(presenterUrl(), "bodega-presentador", "popup,width=1180,height=840");
+    if (!w) overlay.toast("El navegador bloqueó la ventana. Permite las ventanas emergentes o abre presenter.html en otra pestaña.");
+  };
+  const openAbout = () => window.open("acerca.html", "_blank");
 
   const begin = (auto: boolean) => {
     overlay.hideStart();
@@ -54,25 +72,78 @@ async function main(): Promise<void> {
   };
   const next = () => tour.next();
   const prev = () => tour.prev();
-  const openPresenter = () => window.open("presenter.html", "bodega-presentador", "popup,width=1180,height=840");
 
-  const overlay = new Overlay(document.getElementById("overlay")!, tourData, content, chapters, {
-    onStartManual: () => begin(false),
-    onStartAuto: () => begin(true),
-    onNext: next,
-    onPrev: prev,
-    onChapter: (firstSeg) => {
-      const i = tour.steps.findIndex((s) => s.seg === firstSeg);
-      tour.seek(tour.steps[i].t);
+  const overlay = new Overlay(
+    document.getElementById("overlay")!,
+    tourData,
+    chapters,
+    {
+      onStartManual: () => begin(false),
+      onStartAuto: () => begin(true),
+      onNext: next,
+      onPrev: prev,
+      onChapter: (firstSeg) => {
+        const i = tour.steps.findIndex((s) => s.seg === firstSeg);
+        tour.seek(tour.steps[i].t);
+      },
+      onToggleMode: toggleMode,
+      onTogglePlay: () => (tour.playing = !tour.playing),
+      onFullscreen: fullscreen,
+      onPresenter: openPresenter,
+      onAbout: openAbout,
     },
-    onToggleMode: toggleMode,
-    onTogglePlay: () => (tour.playing = !tour.playing),
-    onFullscreen: fullscreen,
-    onPresenter: openPresenter,
-  });
+    cover,
+  );
 
-  // ---- vista del presentador: otra ventana del mismo origen, sincronizada por BroadcastChannel ----
-  const chan = openChannel();
+  // ---- precarga: modelo, imágenes, QR, shaders y texturas, para que nada se trabe durante la presentación ----
+  overlay.setProgress(0.04);
+  const root = await stage.loadModel("models/diorama.glb");
+  await stage.applyScreenOverrides(root);
+  const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
+  overlay.setProgress(0.3);
+
+  const images = new Set<string>();
+  for (const s of steps) if (s.card?.image) images.add(s.card.image);
+  const focusNames = new Set(steps.map((s) => s.focus).filter((f): f is string => Boolean(f)));
+  const warmPoses = [
+    ...tourData.keys.map((k) => ({ pos: new THREE.Vector3(k.pos[0], k.pos[2], -k.pos[1]), aim: new THREE.Vector3(k.aim[0], k.aim[2], -k.aim[1]) })),
+    ...[...focusNames].flatMap((n) => {
+      const f = stage.focusPose(root, n);
+      return f ? [f] : [];
+    }),
+  ];
+  const totalWork = images.size + warmPoses.length + 1;
+  let done = 0;
+  const tick = () => overlay.setProgress(0.3 + (0.7 * ++done) / totalWork);
+  await document.fonts.ready;
+  for (const src of images) {
+    const img = new Image();
+    img.src = src;
+    await img.decode().catch(() => undefined);
+    tick();
+  }
+  stage.renderer.compile(stage.scene, stage.camera);
+  bubbles.warm();
+  for (const p of warmPoses) {
+    stage.warm(p.pos, p.aim);
+    await frame();
+    tick();
+  }
+  bubbles.update(0);
+  overlay.setProgress(1);
+  overlay.setReady();
+
+  // ---- acercamiento de cámara a una pantalla del modelo ----
+  let focusName: string | null = null;
+  let focusBlend = 0;
+  const focusCache = new Map<string, { pos: THREE.Vector3; aim: THREE.Vector3 } | null>();
+  const focusPoseOf = (name: string) => {
+    if (!focusCache.has(name)) focusCache.set(name, stage.focusPose(root, name));
+    return focusCache.get(name) ?? null;
+  };
+  window.addEventListener("resize", () => focusCache.clear());
+
+  // ---- vista del presentador y celular ----
   let sceneNumber = -1;
   let sceneStartedAt = performance.now();
   let lastSent = "";
@@ -92,13 +163,15 @@ async function main(): Promise<void> {
     const sig = `${msg.started}|${msg.auto}|${msg.playing}|${msg.stepIndex}`;
     const now = performance.now();
     if (force || sig !== lastSent || now - lastSentAt > 500) {
-      chan.postMessage(msg);
+      link.send(msg);
       lastSent = sig;
       lastSentAt = now;
     }
   };
-  chan.onmessage = (ev: MessageEvent<Msg>) => {
-    const msg = ev.data;
+  link.onStatus((connected) => {
+    if (connected) broadcast(true);
+  });
+  link.onMessage((msg: Msg) => {
     if (msg.type === "hello") return broadcast(true);
     if (msg.type !== "cmd") return;
     switch (msg.cmd) {
@@ -124,8 +197,11 @@ async function main(): Promise<void> {
       case "goStep":
         if (msg.index !== undefined) tour.goStep(msg.index);
         break;
+      case "resetTimer":
+        startedAt = performance.now();
+        break;
     }
-  };
+  });
 
   window.addEventListener("keydown", (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -135,7 +211,7 @@ async function main(): Promise<void> {
     if (!overlay.started) {
       if (key === "Enter" || key === " ") {
         e.preventDefault();
-        begin(false);
+        if (!document.querySelector<HTMLButtonElement>('[data-act="start-manual"]')!.disabled) begin(false);
       }
       if (key === "h" || key === "H") overlay.toggleHelp();
       return;
@@ -190,6 +266,10 @@ async function main(): Promise<void> {
       case "P":
         openPresenter();
         break;
+      case "i":
+      case "I":
+        openAbout();
+        break;
       case "Escape":
         overlay.toggleHelp(false);
         tour.playing = false;
@@ -236,14 +316,26 @@ async function main(): Promise<void> {
     advance(Math.min(3, (now - last) / 1000));
     last = now;
   }, 200);
-  const frame = (now: number) => {
+
+  const loop = (now: number) => {
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
     advance(dt);
-    const { pos, aim } = tour.pose();
+
+    // cámara: recorrido + acercamiento a la pantalla del paso actual
+    const base = tour.pose();
+    const want = tour.step.focus ?? null;
+    if (want) focusName = want;
+    focusBlend += ((want ? 1 : 0) - focusBlend) * (1 - Math.exp(-dt * 3.2));
+    if (!want && focusBlend < 0.003) focusName = null;
+    const f = focusName ? focusPoseOf(focusName) : null;
+    const e = focusBlend * focusBlend * (3 - 2 * focusBlend);
+    const pos = f ? base.pos.clone().lerp(f.pos, e) : base.pos;
+    const aim = f ? base.aim.clone().lerp(f.aim, e) : base.aim;
     stage.camera.position.copy(pos);
     stage.camera.lookAt(aim);
     stage.followLight(aim);
+
     bubbles.update(tour.time);
     const { index, total } = tour.stepsInChapter();
     overlay.update({
@@ -257,9 +349,9 @@ async function main(): Promise<void> {
       elapsed: elapsed(),
     });
     stage.render();
-    requestAnimationFrame(frame);
+    requestAnimationFrame(loop);
   };
-  requestAnimationFrame(frame);
+  requestAnimationFrame(loop);
 }
 
 main().catch((err) => {

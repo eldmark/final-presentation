@@ -11,6 +11,37 @@ npm run build      # genera dist/ (se puede servir desde cualquier carpeta está
 npm run typecheck
 ```
 
+## Docker (recomendado para la sala)
+
+```bash
+cd web
+./start.sh          # construye la imagen, la levanta y muestra las direcciones
+docker compose down # para detenerla
+```
+
+`start.sh` crea `.env` con un **token** aleatorio, detecta la IP del equipo y arranca el contenedor
+(puerto **8088**, se cambia con `PORT` en `.env`). Imprime dos direcciones:
+
+| Dirección | Para qué |
+| --- | --- |
+| `http://localhost:8088/?k=TOKEN` | La presentación, en el equipo del proyector |
+| `http://IP:8088/remote?k=TOKEN` | El **control remoto del celular** |
+
+El contenedor sirve la presentación y retransmite los mensajes entre dispositivos (WebSocket en `/ws`).
+Todo funciona **sin internet**, pero el celular y el equipo deben estar en la **misma red Wi-Fi**.
+Sin el token nadie puede mover la presentación desde otro dispositivo. `.env` no se sube a git.
+
+### Control desde el celular
+
+En la vista del presentador (tecla **P**) abre «Controlar desde el celular»: ahí hay un **QR**.
+Si ves `localhost`, escribe la IP del equipo en el cuadro. El celular muestra las ideas clave de quien
+habla, lo que viene, los relojes y botones grandes de **Atrás / Siguiente**, y mantiene la pantalla encendida.
+
+### Portada
+
+Pon `cover.json` y la imagen en `web/portada/` (ver `portada/README.md`). Esa carpeta está montada en el
+contenedor: no hace falta reconstruir la imagen.
+
 ## Cómo se presenta
 
 Por omisión es **paso a paso**: quien presenta decide el ritmo. Cada pulsación lleva al siguiente paso
@@ -28,6 +59,8 @@ reproduce los 13:30 sin intervención.
 | A | Texto grande (para la sala) |
 | F | Pantalla completa |
 | H · ? | Ayuda |
+| P | Vista del presentador |
+| I | Acerca de (diseño, datos y modelos 3D, en otra pestaña) |
 | Inicio | Volver al principio |
 
 El control remoto de la sala suele mandar Av Pág / Re Pág: ya funcionan. Los controles se esconden solos

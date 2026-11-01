@@ -2,12 +2,14 @@
 
 ## Montaje (10 minutos antes)
 
-1. Llevar la carpeta `web/dist/` (generada con `npm run build`) **en el portátil y en una memoria USB**.
-   Funciona sin internet. Alternativa: `npm run dev` con el repo clonado.
+1. En el portátil: `cd web && ./start.sh` (Docker). Funciona sin internet. Respaldo: `web/dist/` en una memoria USB
+   (`npm run build`) y servirlo con `npm run preview`.
 2. Conectar el proyector como **pantalla extendida** (no duplicada).
 3. Abrir `index.html` (o `http://127.0.0.1:5180`) en Chrome y **moverlo al proyector**: pantalla completa (`F`).
 4. Pulsar **P** para abrir la vista del presentador y dejarla **en la pantalla del portátil**.
-5. Activar el cronómetro en la ventana principal (`T`) solo si se quiere que el público lo vea; en la vista del presentador ya está siempre.
+   Si el navegador bloquea la ventana, permitir las emergentes o abrir `presenter.html?k=TOKEN` en otra pestaña.
+   **Celular:** escanear el QR de la vista del presentador (misma red Wi-Fi) o abrir `/remote?k=TOKEN`.
+5. El cronómetro **no** se ve en la pantalla del público; está en la vista del presentador y en el celular.
 6. Probar **Siguiente** desde el portátil: la presentación debe avanzar un paso.
 7. Si hay control remoto, probar Av Pág y Re Pág.
 8. Texto grande (`A`) si la sala es grande.

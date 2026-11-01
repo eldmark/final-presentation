@@ -1,0 +1,14 @@
+:root { --burgundy: #841c26; --cream: #f5f0eb; --ink: #2b2020; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cream); color: var(--ink); font-family: "Poppins", system-ui, sans-serif; line-height: 1.55; }
+header { display: flex; align-items: center; gap: 24px; padding: 24px clamp(20px, 6vw, 80px); background: #fff; border-bottom: 6px solid var(--burgundy); flex-wrap: wrap; }
+header img { height: 64px; }
+h1 { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: clamp(26px, 3vw, 40px); }
+main { max-width: 900px; margin: 0 auto; padding: 28px clamp(20px, 5vw, 40px) 60px; display: grid; gap: 22px; }
+section { background: #fff; border-radius: 16px; padding: 20px 26px; box-shadow: 0 6px 22px rgba(43, 32, 32, 0.08); }
+h2 { margin: 0 0 8px; color: var(--burgundy); font-family: "Playfair Display", Georgia, serif; font-size: 24px; }
+p { margin: 0 0 10px; font-size: 17px; }
+table { width: 100%; border-collapse: collapse; }
+th, td { text-align: left; padding: 8px 10px; border-top: 1px solid rgba(43, 32, 32, 0.12); vertical-align: top; font-size: 15px; }
+th { white-space: nowrap; font-weight: 600; width: 1%; }
+.foot { text-align: center; opacity: 0.6; font-size: 14px; }

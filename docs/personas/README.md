@@ -11,7 +11,7 @@ Una escena por persona, narrada por quien la construyó. Total **13:30** de 14:0
 | 5 | **La administradora decide** | Marco | 2:30 | [05-marco.md](05-marco.md) |
 | 6 | **El miedo a que lo hackeen** | Luis Ángel | 1:30 | [06-luis-angel.md](06-luis-angel.md) |
 | 7 | **Valor e impacto** | Julián | 0:45 | dentro de `01-julian.md` |
-| 8 | **Cierre y disclaimer** | Lázaro, con todos | 0:45 | dentro de `02-lazaro.md` |
+| 8 | **Conclusiones** y QR a la página en producción | Lázaro | 0:45 | dentro de `02-lazaro.md` |
 
 Total **13:30** de 14:00. Rúbrica y cobertura: [`../09-rubrica-y-cobertura.md`](../09-rubrica-y-cobertura.md).
 

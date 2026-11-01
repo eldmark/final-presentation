@@ -25,6 +25,8 @@ export interface Cue {
   at: number; // segundo absoluto de la presentación
   dur?: number; // solo informativo
   text: string;
+  /** nombre del objeto de pantalla del modelo (scr_*) al que la cámara se acerca mientras dure este subtítulo */
+  focus?: string;
 }
 
 export interface Quote {
@@ -39,12 +41,16 @@ export interface Fact {
   label: string;
 }
 
-/** Tarjeta con una imagen o con cifras destacadas. */
+export type CardLayout = "left" | "right" | "large";
+
+/** Tarjeta con una imagen, cifras destacadas o un código QR. */
 export interface ImageCard {
   at: number;
   dur?: number;
   image?: string;
   facts?: Fact[];
+  qr?: string; // URL que se codifica en un QR
+  layout?: CardLayout; // left por omisión; large = imagen grande al centro; right = panel a la derecha
   caption: string;
 }
 
@@ -75,7 +81,8 @@ export interface Step {
   seg: number; // índice de segmento (estación)
   cue?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: Fact[]; caption: string };
+  card?: { image?: string; facts?: Fact[]; qr?: string; layout?: CardLayout; caption: string };
+  focus?: string; // pantalla a la que se acerca la cámara
   label?: string; // resumen corto del paso para la vista del presentador
   bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)
   arrival?: boolean;

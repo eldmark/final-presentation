@@ -1,0 +1,15 @@
+services:
+  presentacion:
+    build: .
+    image: bodega-presentacion
+    ports:
+      - "${PORT:-8088}:8080"
+    environment:
+      # Token del control remoto: quien no lo tenga no puede mover la presentación desde otro dispositivo.
+      PRESENTER_TOKEN: ${PRESENTER_TOKEN:?ejecuta ./start.sh o define PRESENTER_TOKEN en .env}
+      # Dirección de este equipo en la red (para el QR del celular), p. ej. http://192.168.1.20:8080
+      PUBLIC_URL: ${PUBLIC_URL:-}
+    volumes:
+      # Portada: deja ahí cover.json y la imagen, sin tener que reconstruir la imagen (ver portada/README.md)
+      - ./portada:/app/dist/portada:ro
+    restart: unless-stopped

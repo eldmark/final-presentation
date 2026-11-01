@@ -91,6 +91,15 @@ export class Bubbles {
     }
   }
 
+  /** Muestra todas las burbujas un instante (precarga de texturas); `update` las vuelve a ocultar. */
+  warm(): void {
+    for (const { sprite, origin } of this.items) {
+      sprite.visible = true;
+      sprite.material.opacity = 1;
+      sprite.position.copy(origin);
+    }
+  }
+
   update(t: number): void {
     for (const { spec, sprite, origin, ratio } of this.items) {
       const into = (t - spec.at) / 0.55;

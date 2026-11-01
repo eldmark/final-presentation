@@ -62,11 +62,12 @@ body.idle { cursor: none; }
   pointer-events: none !important; text-wrap: balance; transition: bottom 0.35s ease; }
 .subtitle.pop { animation: pop 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.2); }
 body.idle .subtitle { bottom: 4.5vh; }
+.subtitle.dim { opacity: 0.62; background: rgba(26, 12, 15, 0.5); font-size: calc(var(--fs-sub) * 0.82); padding: 10px 24px; }
 
 /* ---------- cita de entrevista ---------- */
-.quote { position: absolute; right: 28px; top: 92px; width: min(500px, 38vw); background: var(--cream); color: var(--ink);
+.quote { position: absolute; left: 24px; top: 92px; width: min(500px, 38vw); background: var(--cream); color: var(--ink);
   border-radius: 18px; padding: 20px 26px 18px 26px; box-shadow: 0 18px 50px rgba(0, 0, 0, 0.4); pointer-events: none !important;
-  border-top: 7px solid var(--burgundy); animation: slide-r 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+  border-top: 7px solid var(--burgundy); animation: slide-l 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .quote .qm { position: absolute; top: -10px; left: 18px; font-family: var(--font-display); font-size: 92px; line-height: 1; color: var(--burgundy); opacity: 0.22; }
 .quote blockquote { margin: 0 0 12px; font-family: var(--font-display); font-weight: 600; font-size: var(--fs-quote); line-height: 1.28; position: relative; }
 .quote small { display: block; color: var(--burgundy); text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.7em; font-weight: 700; }
@@ -77,6 +78,16 @@ body.idle .subtitle { bottom: 4.5vh; }
   animation: slide-l 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
 .card img { display: block; width: 100%; height: auto; }
 .card figcaption { padding: 12px 18px 14px; font-weight: 600; font-size: clamp(14px, 1.2vw, 21px); border-top: 5px solid var(--burgundy); }
+
+/* diseños de tarjeta */
+.card.layout-right { left: auto; right: 24px; width: min(560px, 40vw); animation-name: slide-r; }
+.card.layout-right img { max-height: 30vh; object-fit: cover; object-position: top; }
+.card.layout-large { left: 50%; top: 47%; right: auto; width: min(1180px, 78vw); max-height: 74vh; display: flex; flex-direction: column;
+  transform: translate(-50%, -50%); animation: zoom-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both; border-radius: 20px; }
+.card.layout-large img:not(.qr) { width: 100%; max-height: 62vh; object-fit: contain; background: #15090c; }
+.card.layout-large figcaption { font-size: clamp(16px, 1.6vw, 28px); text-align: center; }
+.card .qr { width: min(360px, 40vh); margin: 24px auto 10px; border-radius: 12px; }
+.dimmer { position: absolute; inset: 0; background: rgba(12, 5, 7, 0.55); pointer-events: none !important; animation: fade 0.4s ease both; }
 
 /* tarjeta con cifras */
 .facts { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: rgba(43, 32, 32, 0.12); }
@@ -97,7 +108,6 @@ body.idle .subtitle { bottom: 4.5vh; }
 .timer.on { opacity: 0.9; }
 .timer.warn { background: #6b4b00; }
 .timer.over { background: var(--burgundy-2); }
-body:not(.idle) .timer { opacity: 0.9; }
 
 /* ---------- controles ---------- */
 .dock { position: absolute; left: 0; right: 0; bottom: 0; height: var(--dock-h); padding: 10px 20px 12px; display: grid; gap: 8px;
@@ -163,3 +173,15 @@ body.idle .dock { opacity: 0; transform: translateY(14px); pointer-events: none;
   .chapter span, .chapter em { display: none; }
   .quote, .card { width: 46vw; }
 }
+
+/* ---------- portada, carga y avisos ---------- */
+.start .cover { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; z-index: 0; }
+.start-card { position: relative; z-index: 1; }
+.loadbar { width: min(420px, 70vw); height: 6px; border-radius: 3px; background: rgba(245, 240, 235, 0.16); overflow: hidden; transition: opacity 0.5s; }
+.loadbar i { display: block; height: 100%; width: 0; background: #ffd166; transition: width 0.25s; }
+.loadbar.done { opacity: 0; }
+.go:disabled { opacity: 0.55; cursor: progress; }
+.toast { position: absolute; left: 50%; top: 84px; transform: translateX(-50%); max-width: min(640px, 90vw); padding: 12px 20px; border-radius: 12px;
+  background: #ffd166; color: #2b2020; font-weight: 600; font-size: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4); pointer-events: none !important; }
+@keyframes zoom-in { from { opacity: 0; transform: translate(-50%, -50%) scale(0.94); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes fade { from { opacity: 0; } to { opacity: 1; } }

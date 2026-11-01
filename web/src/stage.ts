@@ -104,6 +104,33 @@ export class Stage {
     return applied;
   }
 
+  /** Pose de cámara que encuadra de frente una pantalla (objeto scr_*) del modelo. */
+  focusPose(root: THREE.Object3D, name: string): { pos: THREE.Vector3; aim: THREE.Vector3 } | null {
+    const obj = root.getObjectByName(name) as THREE.Mesh | undefined;
+    if (!obj?.isMesh) return null;
+    obj.updateWorldMatrix(true, false);
+    const box = new THREE.Box3().setFromObject(obj);
+    const center = box.getCenter(new THREE.Vector3());
+    const size = box.getSize(new THREE.Vector3());
+    const normalAttr = obj.geometry.attributes.normal;
+    const normal = normalAttr
+      ? new THREE.Vector3().fromBufferAttribute(normalAttr, 0).transformDirection(obj.matrixWorld)
+      : new THREE.Vector3(0, 0, 1);
+    const w = Math.max(size.x, size.z);
+    const h = Math.hypot(size.y, Math.min(size.x, size.z));
+    const tanV = Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2);
+    const d = Math.max(h / 2 / tanV, w / 2 / (tanV * this.camera.aspect)) * 1.18;
+    return { pos: center.clone().add(normal.multiplyScalar(d)), aim: center };
+  }
+
+  /** Dibuja desde una pose sin que se vea, para que el navegador compile shaders y suba texturas antes de empezar. */
+  warm(pos: THREE.Vector3, aim: THREE.Vector3): void {
+    this.camera.position.copy(pos);
+    this.camera.lookAt(aim);
+    this.followLight(aim);
+    this.renderer.render(this.scene, this.camera);
+  }
+
   render(): void {
     this.renderer.render(this.scene, this.camera);
   }

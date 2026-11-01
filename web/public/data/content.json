@@ -68,7 +68,7 @@
           "at": 104,
           "dur": 8,
           "who": "Empleado",
-          "text": "Tengo [que] consultarlo con mi encargado."
+          "text": "Tengo que consultarlo con mi encargado."
         }
       ],
       "cards": []
@@ -112,7 +112,8 @@
         {
           "at": 176,
           "dur": 10,
-          "text": "Sugerencias · filtros · stock por sucursal"
+          "text": "Sugerencias · filtros · stock por sucursal",
+          "focus": "scr_laptop_catalogo"
         },
         {
           "at": 200,
@@ -170,10 +171,13 @@
           "at": 301,
           "dur": 16,
           "image": "cards/s8_p13_neurolab_fotos.png",
-          "caption": "Pruebas de experiencia de usuario en el NeuroLab"
+          "caption": "Pruebas de experiencia de usuario en el NeuroLab",
+          "layout": "left"
         },
         {
           "at": 319,
+          "layout": "right",
+          "image": "cards/catalogo.jpg",
           "facts": [
             {
               "value": "63.8 %",
@@ -192,7 +196,7 @@
               "label": "videos: confundieron comprar con reservar"
             }
           ],
-          "caption": "Hallazgos del NeuroLab · 25 de septiembre de 2026 · 6 registros"
+          "caption": "NeuroLab · 25 de septiembre de 2026 · 6 registros"
         }
       ]
     },
@@ -217,7 +221,14 @@
           "text": "Pedidos a domicilio."
         }
       ],
-      "cards": []
+      "cards": [
+        {
+          "at": 363,
+          "layout": "large",
+          "image": "cards/pedidos.jpg",
+          "caption": "Panel de pedidos de la sucursal · estados y avisos al cliente"
+        }
+      ]
     },
     "datos_juntos": {
       "cues": [
@@ -242,10 +253,16 @@
           "at": 424,
           "dur": 10,
           "who": "Empleado",
-          "text": "Por medio del sistema [...] nos ahorramos tiempo de subir a bodega a verificar si tenemos tal producto."
+          "text": "Por medio del sistema que tiene la empresa, nos ahorramos tiempo de subir a bodega a verificar si tenemos tal producto."
         }
       ],
       "cards": [
+        {
+          "at": 413,
+          "layout": "large",
+          "image": "cards/almacen.jpg",
+          "caption": "Almacén 3.1 · sincronización de solo lectura (12 segundos, 0 errores)"
+        },
         {
           "at": 464,
           "dur": 14,
@@ -348,7 +365,7 @@
           "at": 634,
           "dur": 8,
           "who": "Administrador",
-          "text": "Estafas, extorción."
+          "text": "Estafas, extorsión."
         },
         {
           "at": 643,
@@ -397,28 +414,53 @@
         {
           "at": 738,
           "image": "cards/umami_overview.jpg",
-          "caption": "Umami · últimos 90 días (piloto y pruebas del equipo)"
+          "caption": "Umami · últimos 90 días (piloto y pruebas del equipo)",
+          "layout": "large"
         },
         {
           "at": 746,
           "image": "cards/umami_events.jpg",
-          "caption": "Umami · eventos PRODUCT_VIEW, SEARCH y ADD_TO_CART"
+          "caption": "Umami · eventos PRODUCT_VIEW, SEARCH y ADD_TO_CART",
+          "layout": "large"
         }
       ]
     },
     "cierre": {
       "cues": [
         {
-          "at": 767,
-          "text": "Reducir llamadas y visitas · convertir cada pregunta en un dato"
+          "at": 769,
+          "text": "Cada pregunta del cliente ahora es un dato"
         },
         {
-          "at": 790,
-          "text": "Gracias"
+          "at": 775,
+          "text": "El cliente encuentra, reserva y compra sin tener que llamar"
+        },
+        {
+          "at": 781,
+          "text": "La tienda atiende sus pedidos y reservas sin interrupciones"
+        },
+        {
+          "at": 787,
+          "text": "La administradora decide con datos, no con intuición"
+        },
+        {
+          "at": 793,
+          "text": "Y la seguridad se ve, se mide y se audita"
+        },
+        {
+          "at": 800,
+          "text": "Pruébenlo ahora · gracias"
         }
       ],
       "quotes": [],
-      "cards": []
+      "cards": [
+        {
+          "at": 800,
+          "layout": "large",
+          "qr": "https://bodegadelicores.app",
+          "caption": "bodegadelicores.app"
+        }
+      ]
     }
   }
 }

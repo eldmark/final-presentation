@@ -1,4 +1,5 @@
-import type { Chapter, ContentData, Step, TourData } from "./types";
+import QRCode from "qrcode";
+import type { Chapter, Step, TourData } from "./types";
 
 const clock = (s: number): string => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
@@ -13,6 +14,7 @@ export interface OverlayHandlers {
   onTogglePlay: () => void;
   onFullscreen: () => void;
   onPresenter: () => void;
+  onAbout: () => void;
 }
 
 export interface OverlayState {
@@ -26,23 +28,34 @@ export interface OverlayState {
   elapsed: number; // segundos reales desde que se empezó
 }
 
+export interface Cover {
+  image?: string;
+  title?: string;
+  subtitle?: string;
+}
+
 /** Capa HTML encima del 3D. Todo el texto que ve el público pasa por aquí. */
 export class Overlay {
   private readonly el: Record<string, HTMLElement> = {};
   private lastKey = "";
   private lastChapter = -1;
   private titleTimer = 0;
+  private toastTimer = 0;
   private chapterEls: HTMLElement[] = [];
+  private qrCache = new Map<string, string>();
 
   constructor(
     private readonly root: HTMLElement,
     private readonly tour: TourData,
-    private readonly content: ContentData,
     private readonly chapters: Chapter[],
     h: OverlayHandlers,
+    cover: Cover | null,
   ) {
+    const title = cover?.title ?? "Del “¿cuánto cuesta?” al dato con el que decidimos";
+    const subtitle = cover?.subtitle ?? "Proyecto de Ingeniería de Software · Grupo 7 · UVG";
     root.innerHTML = `
       <div class="vignette"></div>
+      <div class="dimmer" hidden></div>
 
       <div class="title-card" hidden>
         <span class="tc-num"></span>
@@ -55,11 +68,16 @@ export class Overlay {
       </header>
 
       <aside class="quote" hidden></aside>
-      <figure class="card" hidden><img alt="" /><div class="facts" hidden></div><figcaption></figcaption></figure>
+      <figure class="card" hidden>
+        <img alt="" />
+        <img class="qr" alt="Código QR" hidden />
+        <div class="facts" hidden></div>
+        <figcaption></figcaption>
+      </figure>
       <p class="subtitle" aria-live="polite" hidden></p>
-      <section class="disclaimer" hidden></section>
 
       <div class="timer" title="Tiempo real de la presentación (T para ocultar)"></div>
+      <div class="toast" role="status" hidden></div>
 
       <footer class="dock">
         <nav class="chapters" aria-label="Escenas"></nav>
@@ -70,8 +88,9 @@ export class Overlay {
           <span class="spacer"></span>
           <button data-act="mode" class="wide" aria-label="Cambiar entre paso a paso y automático" title="Modo (M)"></button>
           <button data-act="play" aria-label="Pausar o reanudar" title="Pausa (Espacio)" hidden>⏸</button>
-          <button data-act="text" aria-label="Texto grande" aria-pressed="false" title="Texto grande (A)">A²</button>
           <button data-act="presenter" class="wide" aria-label="Abrir la vista del presentador" title="Vista del presentador (P)">Presentador</button>
+          <button data-act="about" class="wide" aria-label="Acerca del diseño, los datos y los modelos" title="Acerca de (I)">Acerca de</button>
+          <button data-act="text" aria-label="Texto grande" aria-pressed="false" title="Texto grande (A)">A²</button>
           <button data-act="help" aria-label="Ayuda de teclado" title="Ayuda (H)">?</button>
           <button data-act="full" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
         </div>
@@ -84,36 +103,41 @@ export class Overlay {
           <dt>← · Re Pág</dt><dd>Paso anterior</dd>
           <dt>Shift + → / ←</dt><dd>Escena siguiente / anterior</dd>
           <dt>M</dt><dd>Paso a paso ↔ automático</dd>
+          <dt>P</dt><dd>Vista del presentador (segunda ventana)</dd>
+          <dt>I</dt><dd>Acerca de: diseño, datos y modelos 3D</dd>
           <dt>T</dt><dd>Mostrar u ocultar el cronómetro</dd>
           <dt>A</dt><dd>Texto grande</dd>
           <dt>F</dt><dd>Pantalla completa</dd>
           <dt>Inicio</dt><dd>Volver al principio</dd>
-          <dt>P</dt><dd>Abrir la vista del presentador (segunda ventana)</dd>
           <dt>H · ?</dt><dd>Esta ayuda</dd>
         </dl>
-        <p>El control remoto de la sala suele enviar Av Pág y Re Pág: ya funcionan.</p>
+        <p>El control remoto de la sala suele enviar Av Pág y Re Pág: ya funcionan. También se puede controlar desde el celular (ver la vista del presentador).</p>
       </section>
 
       <div class="start" role="dialog" aria-modal="true" aria-label="Inicio">
+        ${cover?.image ? `<img class="cover" src="${esc(cover.image)}" alt="" />` : ""}
         <div class="start-card">
           <img class="logo" src="logo.svg" alt="Bodega de Licores" />
-          <h1>Del “¿cuánto cuesta?” al dato con el que decidimos</h1>
-          <p class="sub">Proyecto de Ingeniería de Software · Grupo 7 · UVG</p>
-          ${content.disclaimer.map((d) => `<p class="legal">${esc(d)}</p>`).join("")}
+          <h1>${esc(title)}</h1>
+          <p class="sub">${esc(subtitle)}</p>
           <div class="start-actions">
-            <button class="go" data-act="start-manual">Presentar paso a paso</button>
-            <button class="go ghost" data-act="start-auto">Reproducción automática</button>
+            <button class="go" data-act="start-manual" disabled>Preparando…</button>
+            <button class="go ghost" data-act="start-auto" disabled>Reproducción automática</button>
           </div>
+          <div class="loadbar"><i></i></div>
           <p class="hint">Enter inicia · → avanza · H muestra los atajos</p>
+          <p class="legal">Datos reales anonimizados · marca usada con autorización · más en «Acerca de» (tecla I)</p>
         </div>
       </div>`;
 
-    for (const k of ["title-card", "tc-num", "tc-title", "tc-who", "pill", "pill-title", "pill-who", "dots", "quote", "card", "subtitle",
-      "disclaimer", "timer", "dock", "chapters", "step-info", "help", "start"]) {
+    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "tc-who", "pill", "pill-title", "pill-who", "dots", "quote", "card", "subtitle",
+      "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar"]) {
       this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
     this.el.modeBtn = root.querySelector<HTMLElement>('[data-act="mode"]')!;
     this.el.playBtn = root.querySelector<HTMLElement>('[data-act="play"]')!;
+    this.el.startManual = root.querySelector<HTMLElement>('[data-act="start-manual"]')!;
+    this.el.startAuto = root.querySelector<HTMLElement>('[data-act="start-auto"]')!;
 
     // capítulos: una pastilla por escena, ancho proporcional a su duración
     this.chapters.forEach((c) => {
@@ -139,7 +163,28 @@ export class Overlay {
       else if (act === "text") this.toggleLargeText();
       else if (act === "help") this.toggleHelp();
       else if (act === "presenter") h.onPresenter();
+      else if (act === "about") h.onAbout();
     });
+  }
+
+  /** Avance de la precarga (0 a 1). Hasta que llega a 1 no se puede empezar. */
+  setProgress(p: number): void {
+    const pct = Math.round(p * 100);
+    this.el.loadbar.querySelector<HTMLElement>("i")!.style.width = `${pct}%`;
+    if (p < 1) this.el.startManual.textContent = `Preparando… ${pct} %`;
+  }
+
+  setReady(): void {
+    this.el.loadbar.classList.add("done");
+    for (const b of [this.el.startManual, this.el.startAuto]) (b as HTMLButtonElement).disabled = false;
+    this.el.startManual.textContent = "Presentar paso a paso";
+  }
+
+  toast(msg: string): void {
+    this.el.toast.textContent = msg;
+    this.el.toast.hidden = false;
+    window.clearTimeout(this.toastTimer);
+    this.toastTimer = window.setTimeout(() => (this.el.toast.hidden = true), 5000);
   }
 
   toggleLargeText(force?: boolean): void {
@@ -183,6 +228,14 @@ export class Overlay {
     this.titleTimer = window.setTimeout(() => (card.hidden = true), 2800);
   }
 
+  private async qrFor(url: string): Promise<string> {
+    const hit = this.qrCache.get(url);
+    if (hit) return hit;
+    const data = await QRCode.toDataURL(url, { margin: 1, width: 640, color: { dark: "#2b2020", light: "#ffffff" } });
+    this.qrCache.set(url, data);
+    return data;
+  }
+
   update(s: OverlayState): void {
     const seg = this.tour.segments[s.segIndex];
     const chapter = this.chapters.find((c) => parseInt(seg.scene, 10) === c.number)!;
@@ -195,7 +248,7 @@ export class Overlay {
     (this.el.playBtn as HTMLButtonElement).hidden = !s.auto;
     this.el.playBtn.textContent = s.playing ? "⏸" : "▶";
 
-    const key = `${s.segIndex}|${s.stepInSeg}|${s.step.cue}|${s.step.quote?.text}|${s.step.card?.image}|${this.started}`;
+    const key = `${s.segIndex}|${s.stepInSeg}|${s.step.cue}|${s.step.quote?.text}|${s.step.card?.caption}|${this.started}`;
     if (key === this.lastKey) return;
     this.lastKey = key;
 
@@ -214,7 +267,13 @@ export class Overlay {
         ? Array.from({ length: s.stepsInSeg }, (_, i) => `<i class="${i <= s.stepInSeg ? "on" : ""}"></i>`).join("")
         : `<u><s style="width:${((s.stepInSeg + 1) / s.stepsInSeg) * 100}%"></s></u>`;
 
+    const card = s.step.card;
+    const large = card?.layout === "large";
+    const focused = Boolean(s.step.focus) || large;
+
+    // con un acercamiento o una tarjeta grande el texto baja su opacidad para dejar ver lo que se muestra
     this.el.subtitle.hidden = !s.step.cue;
+    this.el.subtitle.classList.toggle("dim", focused);
     if (s.step.cue) {
       this.el.subtitle.textContent = s.step.cue;
       this.el.subtitle.classList.remove("pop");
@@ -227,23 +286,20 @@ export class Overlay {
       this.el.quote.innerHTML = `<span class="qm">“</span><blockquote>${esc(s.step.quote.text)}</blockquote><small>${esc(s.step.quote.who)} · entrevista</small>`;
     }
 
-    this.el.card.hidden = !s.step.card;
-    if (s.step.card) {
-      const card = s.step.card;
-      const img = this.el.card.querySelector("img")!;
+    this.el.card.hidden = !card;
+    this.el.dimmer.hidden = !large;
+    if (card) {
+      const img = this.el.card.querySelector<HTMLImageElement>("img:not(.qr)")!;
+      const qr = this.el.card.querySelector<HTMLImageElement>("img.qr")!;
       const facts = this.el.card.querySelector<HTMLElement>(".facts")!;
+      this.el.card.className = `card layout-${card.layout ?? "left"}`;
       img.hidden = !card.image;
       facts.hidden = !card.facts;
+      qr.hidden = !card.qr;
       if (card.image) img.setAttribute("src", card.image);
       if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
+      if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));
       this.el.card.querySelector("figcaption")!.textContent = card.caption;
-    }
-
-    // el disclaimer completo sale en el cierre (y resumido en la pantalla de inicio)
-    const showDisclaimer = this.started && seg.id === "cierre" && s.stepInSeg === s.stepsInSeg - 1;
-    this.el.disclaimer.hidden = !showDisclaimer;
-    if (showDisclaimer) {
-      this.el.disclaimer.innerHTML = `<b>Sobre el diseño</b>${this.content.disclaimer.map((d) => `<span>${esc(d)}</span>`).join("")}`;
     }
   }
 }

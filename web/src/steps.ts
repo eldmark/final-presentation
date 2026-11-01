@@ -8,8 +8,9 @@ export const TRAVEL = 3;
 interface Ev {
   at: number;
   cue?: string;
+  focus?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: import("./types").Fact[]; caption: string };
+  card?: { image?: string; facts?: import("./types").Fact[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
   bubble?: string;
 }
 
@@ -29,9 +30,9 @@ export function buildSteps(
   tour.segments.forEach((seg, si) => {
     const c = content.segments[seg.id];
     const evs: Ev[] = [];
-    c?.cues.forEach((x) => evs.push({ at: x.at, cue: x.text }));
+    c?.cues.forEach((x) => evs.push({ at: x.at, cue: x.text, focus: x.focus }));
     c?.quotes.forEach((x) => evs.push({ at: x.at, quote: { who: x.who, text: x.text } }));
-    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, caption: x.caption } }));
+    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, qr: x.qr, layout: x.layout, caption: x.caption } }));
     const segBubbles = retimed.filter((b) => b.at >= seg.start && b.at < seg.end);
     segBubbles.forEach((b) => evs.push({ at: b.at, bubble: b.text }));
     evs.sort((a, b) => a.at - b.at);
@@ -40,18 +41,21 @@ export function buildSteps(
     const arrival = si === 0 ? seg.start : seg.start + (prev.station === seg.station ? 0 : TRAVEL);
 
     let cue: string | undefined;
+    let focus: string | undefined;
     let cur: Step = { t: arrival, seg: si, arrival: true };
     steps.push(cur);
     const stepOfEvent = new Map<number, Step>();
 
     for (const ev of evs) {
       if (ev.at - cur.t > MERGE) {
-        cur = { t: ev.at, seg: si, cue };
+        cur = { t: ev.at, seg: si, cue, focus };
         steps.push(cur);
       }
       if (ev.cue) {
         cue = ev.cue;
+        focus = ev.focus; // el foco se hereda mientras no cambie el subtítulo
         cur.cue = ev.cue;
+        cur.focus = ev.focus;
         cur.label = ev.cue;
       }
       if (ev.quote) {
