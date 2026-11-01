@@ -138,7 +138,7 @@ phone(c, (x + 1.2, -0.3, 1.1), (math.radians(-10), 0, 0))
 box(c, "landline_base", (x + 2.3, -0.5, 0.15), (0.7, 0.5, 0.3), DARK)
 box(c, "landline_handset", (x + 2.3, -0.5, 0.38), (0.9, 0.18, 0.14), DARK)
 for k in range(3):
-    box(c, f"wa_bubble{k}", (x + 0.2 + k * 0.1, -1.6, 1.4 + k * 0.45), (1.0, 0.04, 0.3), WA_GREEN)
+    box(c, f"wa_bubble{k}", (x + 2.0 + k * 0.1, -1.0, 1.7 + k * 0.45), (1.0, 0.04, 0.3), WA_GREEN)
 cyl(c, "wall_clock", (x - 1.6, 3.35, 2.4), 0.4, 0.06, CREAM, rot=(math.radians(90), 0, 0))
 bottle(c, (x + 1.2, -0.3, 0.7), 1.0)
 
@@ -162,7 +162,7 @@ for sx in (-1.3, 1.3):
 for k, dx in enumerate((-0.9, 0.0, 0.9)):
     box(c, f"report{k}", (x + dx, 0.4, 0.97), (0.7, 0.5, 0.04), PAPER, (0, 0, math.radians(8 * (k - 1))))
 box(c, "chair_seat", (x, -1.2, 0.5), (0.9, 0.9, 0.1), DARK)
-box(c, "chair_back", (x, -1.6, 0.95), (0.9, 0.1, 0.9), DARK)
+box(c, "chair_back", (x, -1.6, 0.78), (0.9, 0.1, 0.45), DARK)
 text(c, "question", (x, 0.5, 2.7), "?", 1.6, RED, rot=(math.radians(90), 0, 0))
 bottle(c, (x + 1.1, 0.4, 0.94), 0.8)
 
@@ -191,7 +191,7 @@ box(c, "laptop_screen", (x, 1.0, 1.35), (1.1, 0.04, 0.8), DARK, (math.radians(-1
 box(c, "laptop_display", (x, 0.975, 1.35), (1.0, 0.01, 0.7), SCREEN, (math.radians(-12), 0, 0))
 phone(c, (x + 1.5, 0.3, 1.2), (math.radians(-60), 0, 0))
 box(c, "chair_seat", (x, -0.8, 0.5), (0.9, 0.9, 0.1), DARK)
-box(c, "chair_back", (x, -1.25, 0.95), (0.9, 0.1, 0.9), DARK)
+box(c, "chair_back", (x, -1.25, 0.78), (0.9, 0.1, 0.45), DARK)
 bottle(c, (x - 1.0, 0.7, 0.84), 0.8)
 
 # 5 · DESPUÉS · tienda
@@ -217,7 +217,7 @@ box(c, "desk_top", (x, -0.2, 0.9), (2.8, 1.1, 0.08), WOOD)
 for sx in (-1.2, 1.2):
     box(c, f"desk_leg{sx}", (x + sx, -0.2, 0.45), (0.1, 0.9, 0.9), WOOD)
 box(c, "chair_seat", (x, -1.6, 0.5), (0.9, 0.9, 0.1), DARK)
-box(c, "chair_back", (x, -2.05, 0.95), (0.9, 0.1, 0.9), DARK)
+box(c, "chair_back", (x, -2.05, 0.78), (0.9, 0.1, 0.45), DARK)
 bottle(c, (x + 1.0, -0.2, 0.94), 0.8)
 
 # 7 · SEGURIDAD
