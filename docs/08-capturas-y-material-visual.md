@@ -37,6 +37,27 @@ Las nuevas están en `../public/` con nombre de fecha. Leyenda: ✅ lista · ✂
 
 El **menú agrupado del panel** (#12) ya se ve en todas las capturas del administrador: no hace falta una aparte.
 
+### Tomadas por Claude el 1 de noviembre (en `assets/capturas/`)
+
+Tomadas en local (Grafana con la base local) y del sitio público de producción (solo lectura, sin datos personales).
+
+| Archivo | Muestra | Cubre | Estado |
+| --- | --- | --- | --- |
+| `grafana-seguridad.jpg` | Operaciones de Seguridad: 966 señales bloqueadas, 1424 cambios administrativos, IP redactada | #21 | ✅ la mejor del lote |
+| `grafana-inventario.jpg` | Stock crítico por sucursal y productos populares | #14 | ✅ (parte inferior "Agotados con demanda" sale sin datos) |
+| `catalogo-1207-productos.jpg` | Catálogo con filtros, 1207 productos y etiqueta "Más vendido" | #2 | ✅ |
+| `catalogo-modo-oscuro.jpg` | El mismo catálogo en modo oscuro | N6 | ✅ |
+| `home-oferta-modal.jpg` | Oferta del mes con cuenta regresiva vista por el cliente | #1 | ✅ |
+| `producto-detalle.jpg` | Ficha de producto | #3 | ✅ |
+| `producto-similares.jpg` | "Productos similares" (recomendaciones) | N1 | ✅ |
+| `contacto-sucursales-waze-maps.jpg` | Mapa y las 3 sucursales con Waze y Google Maps | Mapa | ⚠ los tiles del mapa salen grises: repetir en un equipo con la capa de mapa cargada |
+| `categorias.jpg` | Categorías con conteo de productos | extra | ✅ |
+| `privacidad.jpg` | Política de privacidad pública | #7 (parcial) | ✅ (el Centro de Privacidad con sesión sigue pendiente) |
+
+También llegaron en `public/`: **Almacén 3.1** (`23_59_48`, sincronización exitosa en 12 s, fuente MySQL) → N3 ✅; **Estado del sistema** (`00_00_04`) ✅; **Campañas de marketing** (`00_00_23`) → #20 ✅.
+
+**Datos locales insuficientes, no usar:** `Ventas`, `Estacionalidad`, `Festividades` salen con "No data" porque la base local tiene 0 pedidos y 0 ventas históricas. `Demanda` (Abandono 100 %, Capital detenido Q0) y `Navegación` (109 sesiones, 109 rebotes) muestran valores que se ven mal por ser datos de prueba. Esos cinco tableros hay que tomarlos de **producción**.
+
 ### Faltan, por prioridad
 
 **A · Imprescindibles (rúbrica y guion)**
