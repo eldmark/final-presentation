@@ -36,9 +36,14 @@ export const TOKEN_KEY = "bodega-k";
 /** Token del control remoto: viene en la URL (?k=) y se recuerda en la pestaña. */
 export function readToken(): string | null {
   const fromUrl = new URLSearchParams(location.search).get("k");
-  if (fromUrl) sessionStorage.setItem(TOKEN_KEY, fromUrl);
-  return fromUrl ?? sessionStorage.getItem(TOKEN_KEY);
+  if (fromUrl) {
+    sessionStorage.setItem(TOKEN_KEY, fromUrl);
+    localStorage.setItem(TOKEN_KEY, fromUrl); // así /mobile-qr funciona sin ?k= en este mismo navegador
+  }
+  return fromUrl ?? sessionStorage.getItem(TOKEN_KEY) ?? localStorage.getItem(TOKEN_KEY);
 }
+
+export type Role = "main" | "presenter" | "remote";
 
 const rid = (): string => Math.random().toString(36).slice(2) + Date.now().toString(36);
 
@@ -50,7 +55,10 @@ export class Link {
   private readonly statusHandlers: ((remote: boolean) => void)[] = [];
   private retry = 0;
 
-  constructor(private readonly token: string | null) {
+  constructor(
+    private readonly token: string | null,
+    private readonly role: Role = "main",
+  ) {
     this.bc.onmessage = (e: MessageEvent<Msg>) => this.receive(e.data);
     if (token) this.connect();
   }
@@ -89,7 +97,7 @@ export class Link {
 
   private connect(): void {
     const proto = location.protocol === "https:" ? "wss:" : "ws:";
-    const ws = new WebSocket(`${proto}//${location.host}/ws?k=${encodeURIComponent(this.token!)}`);
+    const ws = new WebSocket(`${proto}//${location.host}/ws?k=${encodeURIComponent(this.token!)}&role=${this.role}`);
     this.ws = ws;
     ws.onopen = () => {
       this.retry = 0;

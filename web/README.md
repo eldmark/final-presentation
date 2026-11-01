@@ -49,14 +49,18 @@ instalar nada: solo abrir una dirección en el navegador.
    ```
    En este equipo:   http://localhost:8088/?k=509543f554fb
    Desde el celular: http://192.168.0.2:8088/remote?k=509543f554fb
+   QR para todos:    http://localhost:8088/mobile-qr?k=509543f554fb
    ```
 
 2. Abre la primera dirección **en el equipo** (la presentación, con el `?k=` completo).
-3. Pulsa **P** (o el botón *Presentador*) para abrir la vista del presentador y despliega
-   **«Controlar desde el celular»**: aparece un **código QR**.
-4. En el celular, abre la **cámara** y apunta al QR (o escribe la dirección «Desde el celular»).
+3. Abre en el equipo **`http://localhost:8088/mobile-qr`** (la primera vez, con el `?k=` que imprimió `start.sh`;
+   el navegador la recuerda y después basta la ruta). Es una pantalla con un **QR grande**, pensada para
+   **proyectarla o enseñarla** a quienes van a conectarse, y un contador que dice **cuántos celulares hay
+   conectados** («2 celulares conectados»). También está en la vista del presentador (tecla **P**).
+4. Cada persona abre la **cámara** del celular y apunta al QR (o escribe la dirección que aparece debajo).
    Se abre la pantalla *Control remoto*; arriba debe decir **● Conectado (por red)**.
-5. Prueba **Siguiente ›**: la presentación del equipo avanza un paso. Pueden conectarse **varios celulares a la vez**.
+5. Prueba **Siguiente ›**: la presentación del equipo avanza un paso. Pueden conectarse **varios celulares a la vez**
+   (todos controlan la misma sesión; avisen quién tiene el control).
 
 > Si el QR dice `localhost`, escribe en el cuadro «Dirección de este equipo en la red» la IP que imprimió
 > `start.sh` (por ejemplo `http://192.168.0.2:8088`). Se guarda para la próxima vez.
@@ -81,9 +85,28 @@ modo. El resto de las notas está plegado.
 | El celular se apaga durante la presentación | El navegador no deja bloquear la pantalla en `http://` de red local | Sube el tiempo de pantalla del celular a «nunca» mientras dure la presentación |
 | Vibra al pulsar pero no avanza | La presentación ya terminó o está en modo automático | Pulsa **M** en el equipo o el botón *Paso a paso* del celular |
 
-**Sin Wi-Fi (o con Wi-Fi que bloquea dispositivos)**: activa **«Compartir internet / punto de acceso»** en uno de
-los celulares, conecta el equipo de la presentación y los demás celulares a esa red, y corre `./start.sh` de nuevo
-para que tome la IP nueva. No hace falta que ese punto de acceso tenga datos móviles.
+**Sin Wi-Fi, o si el Wi-Fi bloquea dispositivos: compartir datos desde un celular**
+
+Sí funciona: si un celular comparte su internet como **punto de acceso Wi-Fi** y el equipo de la presentación y los
+demás celulares se conectan a **esa misma red**, todos quedan en la misma red local y se ven entre sí.
+
+1. En el celular que comparte: *Ajustes → Punto de acceso / Compartir internet → activar* (Wi-Fi).
+2. Conecta el **equipo de la presentación por Wi-Fi** a esa red. **No** uses cable USB ni Bluetooth: con
+   «anclaje USB» el equipo queda en otra subred y los amigos no lo alcanzan.
+3. En el equipo, corre `./start.sh` **otra vez**, para que tome la IP nueva (cambia con cada red).
+4. Abre `http://localhost:8088/mobile-qr` y que los demás escaneen el QR **estando conectados a ese mismo punto de acceso**.
+
+Qué tener en cuenta:
+
+- **No gasta datos móviles**: el control es tráfico local entre dispositivos. La presentación tampoco necesita
+  internet. Solo el QR final de `bodegadelicores.app` usa los datos de quien lo escanee.
+- **Cuántos caben**: el iPhone admite unos 5 dispositivos en su punto de acceso; muchos Android, 8 a 10. Cuenta el
+  equipo de la presentación.
+- **Los datos móviles pueden estar apagados** en el celular que comparte, o sin saldo: la red local funciona igual.
+- El celular que comparte también puede ser control remoto. Si no abre la dirección, pruébalo antes con otro.
+- Si el equipo está conectado además por cable o a otro Wi-Fi, `start.sh` puede escoger la IP equivocada: escribe la
+  correcta en el cuadro «Dirección de este equipo en la red» de `/mobile-qr`.
+- Direcciones típicas: iPhone `172.20.10.x`, Android `192.168.43.x` (o `10.x.x.x` en algunos modelos).
 
 **Sin Docker**: `npm install && npm run build`, y luego
 `PRESENTER_TOKEN=miclave PUBLIC_URL=http://IP:8088 PORT=8088 npm run serve`. El servidor de desarrollo

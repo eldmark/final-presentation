@@ -50,7 +50,7 @@ async function main(): Promise<void> {
   let startedAt = 0;
   const elapsed = (): number => (startedAt ? (performance.now() - startedAt) / 1000 : 0);
 
-  const link = new Link(token);
+  const link = new Link(token, "main");
   const presenterUrl = (): string => `presenter.html${token ? `?k=${encodeURIComponent(token)}` : ""}`;
   const openPresenter = () => {
     const w = window.open(presenterUrl(), "bodega-presentador", "popup,width=1180,height=840");

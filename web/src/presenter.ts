@@ -124,7 +124,7 @@ async function main(): Promise<void> {
 
   const q = <T extends HTMLElement>(sel: string): T => app.querySelector<T>(sel)!;
   const conn = q("[data-conn]");
-  const link = new Link(token);
+  const link = new Link(token, isRemote ? "remote" : "presenter");
   let state: StateMsg | null = null;
   let lastSeen = 0;
   let remoteOk = false;

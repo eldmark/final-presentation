@@ -8,6 +8,6 @@ export default defineConfig({
   build: {
     target: "es2022",
     chunkSizeWarningLimit: 1200,
-    rollupOptions: { input: { main: resolve(__dirname, "index.html"), presenter: resolve(__dirname, "presenter.html"), acerca: resolve(__dirname, "acerca.html") } },
+    rollupOptions: { input: { main: resolve(__dirname, "index.html"), presenter: resolve(__dirname, "presenter.html"), acerca: resolve(__dirname, "acerca.html"), mobileQr: resolve(__dirname, "mobile-qr.html") } },
   },
 });

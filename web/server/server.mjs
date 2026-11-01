@@ -1,7 +1,9 @@
 // Sirve la presentación (carpeta dist/) y retransmite los mensajes del control remoto.
 // - GET  /            la presentación
 // - GET  /remote      la vista del presentador, pensada para el celular
+// - GET  /mobile-qr   pantalla con el QR para que todos los celulares se conecten
 // - GET  /api/info    { publicUrl } para armar el QR del celular
+// - GET  /api/status  { remotes } cuántos celulares hay conectados
 // - WS   /ws?k=TOKEN  relevo: lo que manda un cliente lo reciben los demás
 import http from "node:http";
 import { createReadStream, statSync } from "node:fs";
@@ -28,6 +30,8 @@ const safeEqual = (a, b) => {
   return x.length === y.length && timingSafeEqual(x, y);
 };
 
+const wss = new WebSocketServer({ noServer: true, maxPayload: 64 * 1024 });
+
 const server = http.createServer((req, res) => {
   const url = new URL(req.url ?? "/", "http://x");
   let path = decodeURIComponent(url.pathname);
@@ -37,7 +41,13 @@ const server = http.createServer((req, res) => {
     res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
     return void res.end(JSON.stringify({ publicUrl: PUBLIC_URL }));
   }
+  if (path === "/api/status") {
+    const remotes = [...wss.clients].filter((c) => c.role === "remote" && c.readyState === 1).length;
+    res.writeHead(200, { "content-type": "application/json", "cache-control": "no-store" });
+    return void res.end(JSON.stringify({ remotes }));
+  }
   if (path === "/remote" || path === "/remote/") path = "/presenter.html";
+  if (path === "/mobile-qr" || path === "/mobile-qr/") path = "/mobile-qr.html";
   if (path === "/acerca") path = "/acerca.html";
   if (path.endsWith("/")) path += "index.html";
 
@@ -62,14 +72,17 @@ const server = http.createServer((req, res) => {
 });
 
 // ---- relevo del control remoto ----
-const wss = new WebSocketServer({ noServer: true, maxPayload: 64 * 1024 });
 server.on("upgrade", (req, socket, head) => {
   const url = new URL(req.url ?? "/", "http://x");
   if (url.pathname !== "/ws" || !safeEqual(url.searchParams.get("k") ?? "", TOKEN)) {
     socket.write("HTTP/1.1 401 Unauthorized\r\nConnection: close\r\n\r\n");
     return socket.destroy();
   }
-  wss.handleUpgrade(req, socket, head, (ws) => wss.emit("connection", ws));
+  const role = url.searchParams.get("role") ?? "ui";
+  wss.handleUpgrade(req, socket, head, (ws) => {
+    ws.role = role;
+    wss.emit("connection", ws);
+  });
 });
 wss.on("connection", (ws) => {
   ws.isAlive = true;
@@ -92,4 +105,5 @@ server.listen(PORT, "0.0.0.0", () => {
   console.log(`Presentación lista en el puerto ${PORT}`);
   console.log(`  Principal:  ${PUBLIC_URL || `http://localhost:${PORT}`}/?k=${TOKEN}`);
   console.log(`  Celular:    ${PUBLIC_URL || `http://<IP-de-este-equipo>:${PORT}`}/remote?k=${TOKEN}`);
+  console.log(`  QR para todos: ${PUBLIC_URL || `http://localhost:${PORT}`}/mobile-qr?k=${TOKEN}`);
 });

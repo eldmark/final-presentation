@@ -24,4 +24,5 @@ echo
 echo "Presentación lista."
 echo "  En este equipo:  http://localhost:${PORT_V}/?k=${TOKEN}"
 echo "  Desde el celular: ${PUBLIC}/remote?k=${TOKEN}"
+echo "  QR para todos:   http://localhost:${PORT_V}/mobile-qr?k=${TOKEN}   (se puede proyectar)"
 echo "  (el celular debe estar en la misma red Wi-Fi; el QR aparece en la vista del presentador, tecla P)"
