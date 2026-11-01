@@ -265,6 +265,8 @@ export class Overlay {
   }
 
   private showTitleCard(chapter: Chapter): void {
+    // mientras la cinta de la escena está en pantalla, la cita, la tarjeta y el subtítulo esperan
+    this.root.classList.add("titling");
     // la primera tarjeta ("1 · El antes") espera a que el telón se haya abierto un poco
     if (this.firstTitle) {
       this.firstTitle = false;
@@ -279,7 +281,10 @@ export class Overlay {
     void card.offsetWidth; // reinicia la animación
     card.classList.add("play");
     window.clearTimeout(this.titleTimer);
-    this.titleTimer = window.setTimeout(() => (card.hidden = true), 2800);
+    this.titleTimer = window.setTimeout(() => {
+      card.hidden = true;
+      this.root.classList.remove("titling");
+    }, 2800);
   }
 
   private async qrFor(url: string): Promise<string> {
