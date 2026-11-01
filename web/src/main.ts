@@ -4,6 +4,8 @@ import "@fontsource/poppins/600.css";
 import "@fontsource/poppins/700.css";
 import "@fontsource/playfair-display/600.css";
 import "@fontsource/playfair-display/700.css";
+import "@fontsource/barlow-condensed/600.css";
+import "@fontsource/barlow-condensed/700.css";
 import "./style.css";
 import * as THREE from "three";
 import { Stage } from "./stage";
@@ -24,7 +26,7 @@ async function json<T>(url: string): Promise<T> {
 /** Portada opcional: public/portada/cover.json (o la carpeta que se monta en Docker). */
 async function loadCover(): Promise<Cover | null> {
   try {
-    const c = await json<{ image?: string; title?: string; subtitle?: string }>("portada/cover.json");
+    const c = await json<{ image?: string; title?: string; subtitle?: string; team?: string[]; meta?: string[] }>("portada/cover.json");
     return { ...c, image: c.image ? `portada/${c.image}` : undefined };
   } catch {
     return null;
@@ -56,6 +58,8 @@ async function main(): Promise<void> {
   };
   const openAbout = () => window.open("acerca.html", "_blank");
 
+  /** Portada → telón → inicio. Todo inicio (botón, teclado, celular) pasa por aquí. */
+  const startShow = (auto: boolean) => overlay.playIntro(() => begin(auto));
   const begin = (auto: boolean) => {
     overlay.hideStart();
     tour.auto = auto;
@@ -78,8 +82,8 @@ async function main(): Promise<void> {
     tourData,
     chapters,
     {
-      onStartManual: () => begin(false),
-      onStartAuto: () => begin(true),
+      onStartManual: () => startShow(false),
+      onStartAuto: () => startShow(true),
       onNext: next,
       onPrev: prev,
       onChapter: (firstSeg) => {
@@ -176,10 +180,10 @@ async function main(): Promise<void> {
     if (msg.type !== "cmd") return;
     switch (msg.cmd) {
       case "start":
-        if (!overlay.started) begin(false);
+        if (!overlay.started) startShow(false);
         break;
       case "next":
-        if (!overlay.started) begin(false);
+        if (!overlay.started) startShow(false);
         else next();
         break;
       case "prev":
@@ -211,7 +215,7 @@ async function main(): Promise<void> {
     if (!overlay.started) {
       if (key === "Enter" || key === " ") {
         e.preventDefault();
-        if (!document.querySelector<HTMLButtonElement>('[data-act="start-manual"]')!.disabled) begin(false);
+        if (!document.querySelector<HTMLButtonElement>('[data-act="start-manual"]')!.disabled) startShow(false);
       }
       if (key === "h" || key === "H") overlay.toggleHelp();
       return;
@@ -292,6 +296,7 @@ async function main(): Promise<void> {
   // Parámetros para ensayar: ?t=300 · ?autoplay=1 · ?mode=auto · ?pause=1 · ?large=1 · ?timer=1
   if (params.has("t")) tour.seek(Number(params.get("t")));
   if (params.get("autoplay") === "1" || params.get("mode") === "auto") {
+    overlay.skipIntro();
     begin(params.get("mode") === "auto");
     if (params.get("pause") === "1") tour.playing = false;
   }

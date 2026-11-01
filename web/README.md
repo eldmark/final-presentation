@@ -37,7 +37,12 @@ En la vista del presentador (tecla **P**) abre «Controlar desde el celular»: a
 Si ves `localhost`, escribe la IP del equipo en el cuadro. El celular muestra las ideas clave de quien
 habla, lo que viene, los relojes y botones grandes de **Atrás / Siguiente**, y mantiene la pantalla encendida.
 
-### Portada
+### Portada y telón
+
+La portada sigue el estilo de las diapositivas de Canva (fondo carbón, título condensado, acento lima, integrantes y botón **Presentar**).
+Al pulsarlo —o con **Enter**, o desde el celular— la portada se desvanece, queda un **telón de terciopelo cerrado** y se abre
+revelando la escena 1. Con `?autoplay=1` se salta la portada y con «reducir movimiento» el telón no se anima.
+
 
 Pon `cover.json` y la imagen en `web/portada/` (ver `portada/README.md`). Esa carpeta está montada en el
 contenedor: no hace falta reconstruir la imagen.

@@ -32,7 +32,12 @@ export interface Cover {
   image?: string;
   title?: string;
   subtitle?: string;
+  team?: string[];
+  meta?: string[];
 }
+
+const DEFAULT_TEAM = ["Marcelo Detlefsen", "Marco Díaz", "Lázaro Díaz", "Julián Divas", "Luis Ángel Girón", "Jorge Villeda"];
+const DEFAULT_META = ["Universidad del Valle de Guatemala", "Ingeniería de Software · Sección 10 · Grupo 7", "3 de noviembre de 2026"];
 
 /** Capa HTML encima del 3D. Todo el texto que ve el público pasa por aquí. */
 export class Overlay {
@@ -51,8 +56,9 @@ export class Overlay {
     h: OverlayHandlers,
     cover: Cover | null,
   ) {
-    const title = cover?.title ?? "Del “¿cuánto cuesta?” al dato con el que decidimos";
-    const subtitle = cover?.subtitle ?? "Proyecto de Ingeniería de Software · Grupo 7 · UVG";
+    const tagline = cover?.subtitle ?? "Del “¿cuánto cuesta?” al dato con el que decidimos";
+    const team = cover?.team ?? DEFAULT_TEAM;
+    const meta = cover?.meta ?? DEFAULT_META;
     root.innerHTML = `
       <div class="vignette"></div>
       <div class="dimmer" hidden></div>
@@ -114,24 +120,36 @@ export class Overlay {
         <p>El control remoto de la sala suele enviar Av Pág y Re Pág: ya funcionan. También se puede controlar desde el celular (ver la vista del presentador).</p>
       </section>
 
-      <div class="start" role="dialog" aria-modal="true" aria-label="Inicio">
+      <div class="curtain" aria-hidden="true">
+        <div class="drape l"></div><div class="drape r"></div><div class="valance"></div>
+      </div>
+
+      <div class="start" role="dialog" aria-modal="true" aria-label="Portada">
         ${cover?.image ? `<img class="cover" src="${esc(cover.image)}" alt="" />` : ""}
-        <div class="start-card">
+        <i class="halftone ht-tr"></i><i class="halftone ht-bl"></i>
+        <header class="cv-top">
           <img class="logo" src="logo.svg" alt="Bodega de Licores" />
-          <h1>${esc(title)}</h1>
-          <p class="sub">${esc(subtitle)}</p>
-          <div class="start-actions">
-            <button class="go" data-act="start-manual" disabled>Preparando…</button>
-            <button class="go ghost" data-act="start-auto" disabled>Reproducción automática</button>
+          <span>${esc(meta[1] ?? "")}</span>
+        </header>
+        <div class="cv-body">
+          <p class="kicker">Proyecto final</p>
+          <h1>${cover?.title ? esc(cover.title) : "Bodega de <b>Licores</b>"}</h1>
+          <p class="tagline">${esc(tagline)}</p>
+          <ul class="team" aria-label="Equipo">${team.map((n) => `<li>${esc(n)}</li>`).join("")}</ul>
+          <div class="cv-actions">
+            <button class="pill-btn" data-act="start-manual" disabled>Preparando…</button>
+            <button class="link-btn" data-act="start-auto" disabled>Reproducción automática</button>
           </div>
           <div class="loadbar"><i></i></div>
-          <p class="hint">Enter inicia · → avanza · H muestra los atajos</p>
-          <p class="legal">Datos reales anonimizados · marca usada con autorización · más en «Acerca de» (tecla I)</p>
         </div>
+        <footer class="cv-foot">
+          <span>${esc(meta[0] ?? "")}</span><span>${esc(meta[1] ?? "")}</span><span>${esc(meta[2] ?? "")}</span>
+          <em>Datos reales anonimizados · marca usada con autorización · más en «Acerca de» (tecla I)</em>
+        </footer>
       </div>`;
 
     for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "tc-who", "pill", "pill-title", "pill-who", "dots", "quote", "card", "subtitle",
-      "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar"]) {
+      "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar", "curtain"]) {
       this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
     this.el.modeBtn = root.querySelector<HTMLElement>('[data-act="mode"]')!;
@@ -177,7 +195,7 @@ export class Overlay {
   setReady(): void {
     this.el.loadbar.classList.add("done");
     for (const b of [this.el.startManual, this.el.startAuto]) (b as HTMLButtonElement).disabled = false;
-    this.el.startManual.textContent = "Presentar paso a paso";
+    this.el.startManual.textContent = "Presentar";
   }
 
   toast(msg: string): void {
@@ -205,6 +223,37 @@ export class Overlay {
     this.el.timer.classList.add("on");
   }
 
+  private intro = false;
+  private firstTitle = true;
+
+  /**
+   * Portada → telón cerrado → el telón se abre y arranca la presentación.
+   * `begin` se llama justo cuando el telón empieza a abrirse.
+   */
+  playIntro(begin: () => void): void {
+    if (this.intro || this.started) return;
+    this.intro = true;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      this.el.curtain.hidden = true;
+      this.firstTitle = false;
+      begin();
+      return;
+    }
+    this.el.start.classList.add("leaving"); // la portada se desvanece y deja ver el telón
+    window.setTimeout(() => {
+      this.el.curtain.classList.add("open");
+      begin();
+      window.setTimeout(() => (this.el.curtain.hidden = true), 3200);
+    }, 1500);
+  }
+
+  /** Salta la portada y el telón (para ensayos con ?autoplay=1). */
+  skipIntro(): void {
+    this.el.curtain.hidden = true;
+    this.firstTitle = false;
+    this.intro = true;
+  }
+
   hideStart(): void {
     this.el.start.hidden = true;
     this.root.classList.add("running");
@@ -216,6 +265,12 @@ export class Overlay {
   }
 
   private showTitleCard(chapter: Chapter): void {
+    // la primera tarjeta ("1 · El antes") espera a que el telón se haya abierto un poco
+    if (this.firstTitle) {
+      this.firstTitle = false;
+      window.setTimeout(() => this.showTitleCard(chapter), 1300);
+      return;
+    }
     const card = this.el["title-card"];
     this.el["tc-num"].textContent = String(chapter.number);
     this.el["tc-title"].textContent = chapter.title;

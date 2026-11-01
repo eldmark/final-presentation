@@ -10,7 +10,8 @@
    Si el navegador bloquea la ventana, permitir las emergentes o abrir `presenter.html?k=TOKEN` en otra pestaña.
    **Celular:** escanear el QR de la vista del presentador (misma red Wi-Fi) o abrir `/remote?k=TOKEN`.
 5. El cronómetro **no** se ve en la pantalla del público; está en la vista del presentador y en el celular.
-6. Probar **Siguiente** desde el portátil: la presentación debe avanzar un paso.
+6. Esperar a que la portada diga **Presentar** (termina la precarga). Al empezar, el telón tarda ~3 s en abrirse: quien abre habla después de que se vea la escena 1.
+   Probar **Siguiente** desde el portátil: la presentación debe avanzar un paso.
 7. Si hay control remoto, probar Av Pág y Re Pág.
 8. Texto grande (`A`) si la sala es grande.
 
