@@ -47,7 +47,7 @@ Fuente: `bodegas-backend/docs/working/features/reporting.md` y `bodegas-frontend
 
 ## La decisión del título: Grafana
 
-El equipo decidió **Grafana** (en vez de Metabase, ~1.5 GB RAM en JVM) por ser ligero (~50–80 MB) y por el **aprovisionamiento automático**: datasource y tableros como YAML/JSON versionados, sin configuración manual. Se conecta con un **rol PostgreSQL de solo lectura** (RTF-BL-01), así que ni un panel mal hecho puede modificar datos.
+El equipo decidió **Grafana** (en vez de Metabase, ~1.5 GB RAM en JVM) por ser ligero (medido en el Sprint 7: Grafana 260 MB y Umami 107 MB frente a 1.5 GB de Metabase, unas 4 veces menos) y por el **aprovisionamiento automático**: datasource y tableros como YAML/JSON versionados, sin configuración manual. Se conecta con un **rol PostgreSQL de solo lectura** (RTF-BL-01), así que ni un panel mal hecho puede modificar datos.
 
 Decisiones de diseño de la reportería que vale mencionar:
 - Un tablero por página (las filas colapsables escondían media reportería).

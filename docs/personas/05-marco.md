@@ -8,7 +8,7 @@ La pared de monitores de la oficina. Cada decisión es un monitor que se enciend
 
 ## Texto (≈ 400 palabras)
 
-**[0:00 · apertura]** "Antes, la administradora decidía con intuición. Hoy abre **Reportes**. Usamos **Grafana** para los datos del negocio y **Umami** para el tráfico web, dentro del panel. Elegimos Grafana en lugar de Metabase porque usa unos 50 MB de memoria y no 1.5 GB; y Umami porque respeta la privacidad. Les voy a mostrar cinco decisiones."
+**[0:00 · apertura]** "Antes, la administradora decidía con intuición. Hoy abre **Reportes**. Usamos **Grafana** para los datos del negocio y **Umami** para el tráfico web, dentro del panel. Cambiamos Metabase, que usaba 1.5 GB de memoria, por Grafana y Umami, que usan 260 MB y 107 MB: unas cuatro veces menos recursos. Umami, además, respeta la privacidad. Les voy a mostrar cinco decisiones."
 
 **[0:25 · 1 · qué dejar de comprar]** *(cita C6, Administrador: "A cada dos meses se hace inventario para controlar." → hoy se ve en tiempo real)* "Primera: **qué dejar de comprar**. El tablero de demanda muestra el **capital detenido**: cuánto dinero está en bodega en productos que no se venden. Si no se mueve, no se vuelve a pedir, o se **liquida con una promoción**."
 

@@ -9,6 +9,7 @@ Se reconstruye entero desde los scripts. El `.blend` es una copia de trabajo.
 | 2 | `02_screens_logo.py` | Pone las capturas en laptop, tablet, monitores y tableros, y el logo en los letreros |
 | 3 | `03_figures.py` | Figuras low-poly: cliente, empleada, administradora y la silueta del atacante |
 | 4 | `04_camera_tour.py` | Recorrido de cámara de 13:30 con los tiempos del guion; crea marcadores y exporta `tour.json` |
+| 5 | `05_export_glb.py` | Exporta `web/public/models/diorama.glb` y copia `tour.json` a la web |
 
 En Blender, desde la consola o el MCP:
 
@@ -62,7 +63,7 @@ exec(open("/home/dmark123/Documents/software/final-presentation/blender/04_camer
 
 ## Pendiente
 
-- Burbujas de chat con texto y reportes visibles en las estaciones del "antes".
+- Reportes visibles en el escritorio de la administradora del "antes". (Las burbujas de WhatsApp ya están, pero se dibujan en JavaScript: `web/src/bubbles.ts`.)
 - Tarjetas de cita (entrevistas) y subtítulos: van en la capa web, no en Blender.
-- Export a `.glb` por estación y video de respaldo.
+- Video de respaldo del recorrido completo.
 - Pantallas de Ventas, Estacionalidad y Festividades cuando haya capturas de producción.

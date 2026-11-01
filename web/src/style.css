@@ -1,0 +1,87 @@
+:root {
+  --burgundy: #841c26;
+  --burgundy-dark: #5f1119;
+  --cream: #f5f0eb;
+  --ink: #2b2020;
+  --glass: rgba(24, 12, 14, 0.82);
+  --fs-sub: clamp(22px, 2.35vw, 40px);
+  --fs-quote: clamp(18px, 1.7vw, 30px);
+}
+body.large-text {
+  --fs-sub: clamp(28px, 3vw, 50px);
+  --fs-quote: clamp(22px, 2.2vw, 38px);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #2a1a1d; color: var(--cream);
+  font-family: "Space Grotesk", system-ui, -apple-system, "Segoe UI", sans-serif; }
+#stage { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+#overlay { position: fixed; inset: 0; pointer-events: none; }
+#overlay > * { pointer-events: auto; }
+[hidden] { display: none !important; }
+
+/* ---------- escena ---------- */
+.pill { position: absolute; top: 22px; left: 24px; display: flex; gap: 12px; align-items: center;
+  background: var(--glass); padding: 10px 20px; border-radius: 999px; font-size: clamp(15px, 1.25vw, 22px);
+  border: 1px solid rgba(245, 240, 235, 0.14); pointer-events: none; }
+.pill b { display: grid; place-items: center; width: 2em; height: 2em; border-radius: 50%; background: var(--burgundy); }
+.pill span { font-weight: 600; }
+.pill em { font-style: normal; opacity: 0.78; }
+.pill em::before { content: "· "; }
+
+/* ---------- subtítulos ---------- */
+.subtitle { position: absolute; left: 50%; bottom: 112px; transform: translateX(-50%); margin: 0;
+  width: min(1100px, 88vw); text-align: center; font-size: var(--fs-sub); line-height: 1.25; font-weight: 600;
+  background: var(--glass); padding: 14px 26px; border-radius: 16px; pointer-events: none;
+  text-wrap: balance; animation: rise 0.35s ease-out; }
+
+/* ---------- cita de entrevista ---------- */
+.quote { position: absolute; right: 28px; top: 90px; width: min(480px, 36vw); background: var(--cream); color: var(--ink);
+  border-left: 8px solid var(--burgundy); border-radius: 6px 16px 16px 6px; padding: 16px 22px 18px;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.35); pointer-events: none; animation: slide 0.4s ease-out; }
+.quote small { display: block; color: var(--burgundy); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.75em; font-weight: 700; margin-bottom: 8px; }
+.quote blockquote { margin: 0; font-size: var(--fs-quote); line-height: 1.3; font-weight: 500; }
+
+/* ---------- tarjeta con imagen ---------- */
+.card { position: absolute; left: 24px; top: 90px; margin: 0; width: min(560px, 42vw); background: var(--cream); color: var(--ink);
+  border-radius: 14px; overflow: hidden; box-shadow: 0 14px 40px rgba(0, 0, 0, 0.4); pointer-events: none; animation: slide-l 0.4s ease-out; }
+.card img { display: block; width: 100%; height: auto; }
+.card figcaption { padding: 10px 16px 12px; font-weight: 600; font-size: clamp(14px, 1.2vw, 20px); border-top: 4px solid var(--burgundy); }
+
+/* ---------- disclaimer ---------- */
+.disclaimer { position: absolute; left: 50%; bottom: 104px; transform: translateX(-50%); width: min(820px, 80vw);
+  background: var(--cream); color: var(--ink); border-radius: 14px; padding: 14px 20px; display: grid; gap: 6px;
+  font-size: clamp(13px, 1.05vw, 18px); line-height: 1.35; border-top: 6px solid var(--burgundy); pointer-events: none; animation: rise 0.4s ease-out; }
+.disclaimer b { color: var(--burgundy); }
+
+/* ---------- controles ---------- */
+.dock { position: absolute; left: 0; right: 0; bottom: 0; padding: 0 20px 14px; background: linear-gradient(transparent, rgba(0,0,0,0.55)); }
+.bar { position: relative; height: 12px; background: rgba(245, 240, 235, 0.22); border-radius: 6px; cursor: pointer; margin-bottom: 8px; }
+.bar:focus-visible, button:focus-visible { outline: 3px solid #ffd166; outline-offset: 3px; }
+.fill { height: 100%; background: var(--burgundy); border-radius: 6px; pointer-events: none; }
+.bar i { position: absolute; top: -3px; width: 2px; height: 18px; background: var(--cream); opacity: 0.85; pointer-events: none; }
+.buttons { display: flex; align-items: center; gap: 10px; }
+.buttons button { min-width: 44px; min-height: 44px; border: 0; border-radius: 10px; background: rgba(245,240,235,0.14); color: var(--cream);
+  font-size: 20px; cursor: pointer; }
+.buttons button:hover { background: rgba(245,240,235,0.28); }
+.buttons button[aria-pressed="true"] { background: var(--burgundy); }
+.clock { font-variant-numeric: tabular-nums; opacity: 0.85; margin-left: 8px; }
+.spacer { flex: 1; }
+
+/* ---------- inicio ---------- */
+.start { position: absolute; inset: 0; display: grid; place-items: center; background: radial-gradient(circle at 50% 40%, rgba(60,28,34,0.82), rgba(20,10,12,0.96)); }
+.start-card { width: min(720px, 90vw); text-align: center; display: grid; gap: 12px; justify-items: center; }
+.start-card .logo { width: min(300px, 55vw); border-radius: 14px; background: #fff; padding: 6px; }
+.start-card h1 { margin: 8px 0 0; font-size: clamp(34px, 4vw, 60px); }
+.start-card .sub { margin: 0; font-size: clamp(18px, 1.8vw, 28px); opacity: 0.9; }
+.start-card .small { margin: 0; font-size: clamp(13px, 1.05vw, 17px); opacity: 0.72; line-height: 1.4; }
+.go { margin-top: 12px; padding: 14px 40px; font-size: 22px; font-weight: 700; border: 0; border-radius: 12px; background: var(--burgundy); color: var(--cream); cursor: pointer; }
+.go:hover { background: #a1222f; }
+.hint { margin: 4px 0 0; font-size: 14px; opacity: 0.6; }
+
+@keyframes rise { from { opacity: 0; transform: translate(-50%, 12px); } to { opacity: 1; transform: translate(-50%, 0); } }
+@keyframes slide { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+@keyframes slide-l { from { opacity: 0; transform: translateX(-24px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .subtitle, .quote, .card, .disclaimer { animation: none; }
+}

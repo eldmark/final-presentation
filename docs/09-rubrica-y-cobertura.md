@@ -101,7 +101,7 @@ Se agrega una **escena de 45 s** (la presenta Julián, antes del cierre). Estruc
 | Backend | **Express + TypeScript** | Laravel, FastAPI | Mismo lenguaje que el frontend; flexible para APIs REST; FastAPI integra poco con JS |
 | Base de datos | **PostgreSQL + Prisma** | MySQL, MongoDB | Relaciones complejas e integridad referencial; el equipo ya la conocía; Prisma da tipado |
 | Despliegue | **Docker** | — | Frontend, backend y base corren independientes y portables |
-| Reportería | **Grafana + Umami** | Metabase | Metabase consumía ~1.5 GB de RAM; Grafana ~50–80 MB y Umami ~80–120 MB; tableros aprovisionados como código; Umami respeta la privacidad |
+| Reportería | **Grafana + Umami** | Metabase | Medido en el Sprint 7: Metabase 1.5 GB de RAM (corre en la JVM); Grafana 260 MB y Umami 107 MB, unas 4 veces menos; tableros aprovisionados como código; Umami respeta la privacidad |
 | Autenticación | **Clerk** | Hacerla propia | Login con Google y sesiones sin guardar contraseñas nosotros |
 | Imágenes | **Cloudflare R2** | Disco del servidor | Almacenamiento externo compatible con S3 para imágenes WebP |
 | Correo | **Resend** | — | Correos transaccionales con reintentos idempotentes |

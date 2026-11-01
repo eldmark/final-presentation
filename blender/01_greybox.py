@@ -137,8 +137,7 @@ box(c, "side_table", (x + 1.2, -0.3, 0.35), (1.0, 1.0, 0.7), WOOD)
 phone(c, (x + 1.2, -0.3, 1.1), (math.radians(-10), 0, 0))
 box(c, "landline_base", (x + 2.3, -0.5, 0.15), (0.7, 0.5, 0.3), DARK)
 box(c, "landline_handset", (x + 2.3, -0.5, 0.38), (0.9, 0.18, 0.14), DARK)
-for k in range(3):
-    box(c, f"wa_bubble{k}", (x + 2.0 + k * 0.1, -1.0, 1.7 + k * 0.45), (1.0, 0.04, 0.3), WA_GREEN)
+# Las burbujas de WhatsApp se dibujan en JavaScript (web/src/bubbles.ts), no en Blender.
 cyl(c, "wall_clock", (x - 1.6, 3.35, 2.4), 0.4, 0.06, CREAM, rot=(math.radians(90), 0, 0))
 bottle(c, (x + 1.2, -0.3, 0.7), 1.0)
 
