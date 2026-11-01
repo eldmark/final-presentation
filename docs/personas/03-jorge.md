@@ -44,7 +44,7 @@
 
 ## No digas
 - Que los cambios "mejoraron" una cifra: el informe dice que falta la segunda medición.
-- Nombres o datos de los participantes. Son P01–P06 y no se mencionan.
+- Nombres o datos de los participantes. Son P01–P06 y no se mencionan. **Se cuenta con el consentimiento informado** de la persona que aparece en las fotos del NeuroLab.
 - Que la diferenciación 'Reservar para recoger' / 'Comprar y pagar' ya está en el producto: hoy es **propuesta**. **[confirmar]** si ya se aplicó.
 - El detalle de permisos de empleados (no entra en esta escena).
 

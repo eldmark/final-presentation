@@ -55,11 +55,17 @@ Mapa de sucursales y "cómo llegar" (Lázaro lo muestra), correos de pedidos y r
 
 # Escena 7 · Valor e impacto (0:45, antes del cierre)
 
-**Se ve:** la mesa del inicio (cita C2 pequeña: "Mínimo 10 minutos."), ahora con el teléfono en silencio y el tablero encendido. Tres tarjetas grandes: *antes*, *métrica*, *beneficiarios*.
+**Se ve:** la mesa del inicio, con el teléfono en silencio. Pasos: la pregunta, el "antes", dos tarjetas de Umami y la cota.
 
-**Texto (≈ 110 palabras):**
-"¿Cuánto vale esto? Antes, de cada dos días a todos los días, una consulta de precio o existencia le quitaba entre uno y diez minutos o más al personal. Nuestra métrica es **minutos de personal liberados por semana**: las consultas que la web resuelve por sí sola, por el tiempo que cada una tomaba. Sale de los datos de la propia plataforma. [**Cifra real de Marco**: x consultas por semana ≈ y horas.] El supuesto lo decimos claro: no todas sustituyen una llamada, por eso lo mostramos en escenarios. Gana el **cliente**, que no viaja en vano; el **empleado**, que no se interrumpe; y la **administradora**, que decide con datos. Y comparamos con la alternativa: seguir con llamadas o con un catálogo de WhatsApp, que no deja datos."
+**Cifras reales** (capturas de Umami, últimos 90 días; **piloto y pruebas del equipo**, no tráfico de clientes):
+- **79** visitantes · **122** visitas · **2 440** vistas de página · rebote 17 % · visita de 6 min 17 s.
+- **230** eventos de consulta (`PRODUCT_VIEW`, `SEARCH`, `ADD_TO_CART`).
+- Cada consulta atendida por personal quitaba entre **1 y 10+ minutos** (entrevistas).
+- **Cota superior:** 230 consultas × 1 a 10 min = de **3.8 a 38 horas** de atención, **si** cada evento hubiera sido una llamada. Se dice como cota, no como ahorro medido.
 
-**No digas** "ahorramos X %" sin la cifra medida. Detalle en `09`.
+**Texto (≈ 120 palabras):**
+"¿Cuánto vale esto? Antes, cada consulta de precio o existencia le quitaba al personal entre uno y diez minutos o más. Durante el piloto, la plataforma registró **79 visitantes, 122 visitas y 230 eventos de consulta**: vistas de producto, búsquedas y productos al carrito. Si cada uno de esos eventos hubiera sido una llamada de uno a diez minutos, hablamos de **entre cuatro y treinta y ocho horas de atención**. Es una **cota superior**: fue un piloto y también incluye pruebas del equipo. Lo importante es la métrica: **minutos de personal liberados por semana**, y que ahora se puede medir. Gana el **cliente**, que no viaja en vano; el **empleado**, que no se interrumpe; y la **administradora**, que decide con datos."
+
+**No digas** "ahorramos X horas" ni "X %": es una cota con supuesto explícito.
 
 **Pasa la palabra:** "Lázaro cierra."

@@ -85,7 +85,7 @@ Se agrega una **escena de 45 s** (la presenta Julián, antes del cierre). Estruc
 | **Alternativas** | Seguir con WhatsApp y llamadas; catálogo de WhatsApp Business; plataforma de e-commerce de terceros; desarrollo propio (la elegida: integra con Almacén 3.1, reportería propia, control de los datos) |
 | **Costo** | **[completar]** costo mensual real de servidor, dominio y servicios con plan de pago |
 
-> **Para Marco (datos y Grafana), hoy:** sacar de la base y de Umami los conteos semanales de vistas de producto con stock, sesiones, pedidos y reservas, y búsquedas sin resultados. Con eso se calcula la métrica con **números reales anonimizados**. Si no se puede medir algo, se dice como escenario y no como hecho.
+> **Cifras ya disponibles** (capturas de Umami, últimos 90 días, piloto y pruebas del equipo): 79 visitantes, 122 visitas, 2 440 vistas, 230 eventos de consulta. Con 1 a 10 min por consulta, la **cota superior** es de 3.8 a 38 horas. Se presenta como cota, nunca como ahorro medido.
 
 > **Regla:** nada de "ahorramos X %" sin medirlo. Se presentan escenarios con su supuesto a la vista.
 

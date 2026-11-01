@@ -23,21 +23,28 @@ export interface TourData {
 
 export interface Cue {
   at: number; // segundo absoluto de la presentación
-  dur: number;
+  dur?: number; // solo informativo
   text: string;
 }
 
 export interface Quote {
   at: number;
-  dur: number;
+  dur?: number;
   who: string; // rol, nunca nombre
   text: string;
 }
 
+export interface Fact {
+  value: string;
+  label: string;
+}
+
+/** Tarjeta con una imagen o con cifras destacadas. */
 export interface ImageCard {
   at: number;
-  dur: number;
-  image: string;
+  dur?: number;
+  image?: string;
+  facts?: Fact[];
   caption: string;
 }
 
@@ -60,4 +67,23 @@ export interface BubbleSpec {
   until: number;
   station: number;
   slot: number; // posición en la pila
+}
+
+/** Un "paso" es lo que ve el público tras una pulsación: subtítulo, cita, tarjeta y burbujas. */
+export interface Step {
+  t: number; // segundo de la línea de tiempo al que se llega
+  seg: number; // índice de segmento (estación)
+  cue?: string;
+  quote?: { who: string; text: string };
+  card?: { image?: string; facts?: Fact[]; caption: string };
+  arrival?: boolean;
+}
+
+export interface Chapter {
+  number: number;
+  title: string;
+  speaker: string;
+  start: number;
+  end: number;
+  firstSeg: number;
 }

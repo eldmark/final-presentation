@@ -49,7 +49,20 @@ for name, (src, crop) in SOURCES.items():
     im.save(OUT / f"{name}.jpg", quality=88)
     print(f"{name}: {im.width}x{im.height}")
 
-# Logo: pasa a PNG para que Blender lo lea sin depender del códec WebP
-logo = Image.open(ROOT / "docs" / "assets" / "marca" / "Logo.webp").convert("RGBA")
-logo.save(OUT / "logo.png")
-print("logo:", logo.size)
+# Logo vigente del sitio (el del encabezado: logoclaro.svg). Se rasteriza sobre crema para los letreros.
+import subprocess
+svg = ROOT / "docs" / "assets" / "marca" / "logo-sitio.svg"
+tmp = OUT / "_logo_tmp.png"
+subprocess.run(["rsvg-convert", "-w", "1800", "--background-color", "#F5F0EB", str(svg), "-o", str(tmp)], check=True)
+logo = Image.open(tmp).convert("RGB")
+# recorta el margen vacío y deja un borde parejo
+bg = Image.new("RGB", logo.size, (245, 240, 235))
+from PIL import ImageChops
+bbox = ImageChops.difference(logo, bg).getbbox()
+logo = logo.crop(bbox)
+pad = 70
+canvas = Image.new("RGB", (logo.width + 2 * pad, logo.height + 2 * pad), (245, 240, 235))
+canvas.paste(logo, (pad, pad))
+canvas.save(OUT / "logo.png")
+tmp.unlink()
+print("logo:", canvas.size)

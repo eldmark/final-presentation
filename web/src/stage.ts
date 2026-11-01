@@ -20,6 +20,7 @@ export class Stage {
     this.renderer.toneMapping = THREE.NoToneMapping; // mismo criterio que Blender ("Standard")
 
     this.scene.background = new THREE.Color("#2A1A1D");
+    this.scene.fog = new THREE.Fog("#2A1A1D", 38, 130); // suaviza el horizonte detrás de las estaciones
     this.camera = new THREE.PerspectiveCamera(40, 16 / 9, 0.1, 400);
 
     this.scene.add(new THREE.HemisphereLight("#fff3e8", "#3b2327", 0.95));

@@ -8,135 +8,414 @@
   "segments": {
     "antes_cliente": {
       "cues": [
-        { "at": 1, "dur": 6, "text": "Bodega de Licores · Quetzaltenango" },
-        { "at": 8, "dur": 9, "text": "Antes, cada compra empezaba con una pregunta: ¿cuánto cuesta? ¿hay?" },
-        { "at": 20, "dur": 8, "text": "WhatsApp · llamada · visita a la tienda" },
-        { "at": 44, "dur": 9, "text": "Un cliente esperaba la respuesta… y a veces iba en vano" },
-        { "at": 64, "dur": 10, "text": "Nadie supo que esa venta existió" }
+        {
+          "at": 1,
+          "dur": 6,
+          "text": "Bodega de Licores · Quetzaltenango"
+        },
+        {
+          "at": 8,
+          "dur": 9,
+          "text": "Antes, cada compra empezaba con una pregunta: ¿cuánto cuesta? ¿hay?"
+        },
+        {
+          "at": 20,
+          "dur": 8,
+          "text": "WhatsApp · llamada · visita a la tienda"
+        },
+        {
+          "at": 44,
+          "dur": 9,
+          "text": "Un cliente esperaba la respuesta… y a veces iba en vano"
+        },
+        {
+          "at": 64,
+          "dur": 10,
+          "text": "Nadie supo que esa venta existió"
+        }
       ],
       "quotes": [
-        { "at": 28, "dur": 11, "who": "Administrador", "text": "Escriben vía WhatsApp para cotizaciones, consulta de precios o existencias de productos. Todos los días." }
+        {
+          "at": 28,
+          "dur": 11,
+          "who": "Administrador",
+          "text": "Escriben vía WhatsApp para cotizaciones, consulta de precios o existencias de productos. Todos los días."
+        }
       ],
       "cards": []
     },
     "antes_tienda": {
       "cues": [
-        { "at": 82, "dur": 9, "text": "El personal atendía mostrador, teléfono y mensajes a la vez" },
-        { "at": 100, "dur": 12, "text": "Cada sucursal era una isla: se registra, pero no está centralizado" }
+        {
+          "at": 82,
+          "dur": 9,
+          "text": "El personal atendía mostrador, teléfono y mensajes a la vez"
+        },
+        {
+          "at": 100,
+          "dur": 12,
+          "text": "Cada sucursal era una isla: se registra, pero no está centralizado"
+        }
       ],
       "quotes": [
-        { "at": 92, "dur": 8, "who": "Empleado", "text": "En otros casos nos llegamos a comunicar en las otras sucursales preguntando si tienen el producto." },
-        { "at": 104, "dur": 8, "who": "Empleado", "text": "Tengo [que] consultarlo con mi encargado." }
+        {
+          "at": 92,
+          "dur": 8,
+          "who": "Empleado",
+          "text": "En otros casos nos llegamos a comunicar en las otras sucursales preguntando si tienen el producto."
+        },
+        {
+          "at": 104,
+          "dur": 8,
+          "who": "Empleado",
+          "text": "Tengo [que] consultarlo con mi encargado."
+        }
       ],
       "cards": []
     },
     "antes_admin": {
       "cues": [
-        { "at": 117, "dur": 9, "text": "¿Qué compro? ¿Cuándo hago una oferta? ¿Qué no se mueve?" },
-        { "at": 138, "dur": 11, "text": "¿Y si cada pregunta del cliente fuera un dato?" }
+        {
+          "at": 117,
+          "dur": 9,
+          "text": "¿Qué compro? ¿Cuándo hago una oferta? ¿Qué no se mueve?"
+        },
+        {
+          "at": 138,
+          "dur": 11,
+          "text": "¿Y si cada pregunta del cliente fuera un dato?"
+        }
       ],
       "quotes": [
-        { "at": 121, "dur": 7, "who": "Administrador", "text": "Se puede llegar a dar el caso de no concretar una venta por falta de producto." },
-        { "at": 129, "dur": 6, "who": "Administrador", "text": "Mínimo 10 minutos." }
+        {
+          "at": 121,
+          "dur": 7,
+          "who": "Administrador",
+          "text": "Se puede llegar a dar el caso de no concretar una venta por falta de producto."
+        },
+        {
+          "at": 129,
+          "dur": 6,
+          "who": "Administrador",
+          "text": "Mínimo 10 minutos."
+        }
       ],
       "cards": []
     },
     "cliente_elige": {
       "cues": [
-        { "at": 153, "dur": 8, "text": "Lo que pidieron en las entrevistas" },
-        { "at": 176, "dur": 10, "text": "Sugerencias · filtros · stock por sucursal" },
-        { "at": 200, "dur": 10, "text": "Ofertas diseñadas en un editor visual" },
-        { "at": 224, "dur": 14, "text": "Modo oscuro · versión móvil · texto al 200 %" }
+        {
+          "at": 153,
+          "dur": 8,
+          "text": "Lo que pidieron en las entrevistas"
+        },
+        {
+          "at": 176,
+          "dur": 10,
+          "text": "Sugerencias · filtros · stock por sucursal"
+        },
+        {
+          "at": 200,
+          "dur": 10,
+          "text": "Ofertas diseñadas en un editor visual"
+        },
+        {
+          "at": 224,
+          "dur": 14,
+          "text": "Modo oscuro · versión móvil · texto al 200 %"
+        }
       ],
       "quotes": [
-        { "at": 154, "dur": 10, "who": "Empleado", "text": "Dándoles información de una página web donde puedan informarse y ver los productos y precios." },
-        { "at": 188, "dur": 8, "who": "Cliente", "text": "Qué sucursal me queda más cerca." }
+        {
+          "at": 154,
+          "dur": 10,
+          "who": "Empleado",
+          "text": "Dándoles información de una página web donde puedan informarse y ver los productos y precios."
+        },
+        {
+          "at": 188,
+          "dur": 8,
+          "who": "Cliente",
+          "text": "Qué sucursal me queda más cerca."
+        }
       ],
       "cards": []
     },
     "cliente_compra": {
       "cues": [
-        { "at": 243, "dur": 12, "text": "Reserva: si no la recoge, expira sola y libera el stock" },
-        { "at": 272, "dur": 12, "text": "Recomendaciones por coocurrencia (Basket Analysis)" },
-        { "at": 300, "dur": 11, "text": "NeuroLab UVG · 25 de septiembre · 6 personas · 3 tareas" },
-        { "at": 336, "dur": 10, "text": "Buscar tomó 113 s; agregar al carrito, 12 s" }
+        {
+          "at": 243,
+          "dur": 12,
+          "text": "Reserva: si no la recoge, expira sola y libera el stock"
+        },
+        {
+          "at": 272,
+          "dur": 12,
+          "text": "Recomendaciones por coocurrencia (Basket Analysis)"
+        },
+        {
+          "at": 300,
+          "dur": 11,
+          "text": "NeuroLab UVG · 25 de septiembre · 6 personas · 3 tareas"
+        },
+        {
+          "at": 336,
+          "dur": 10,
+          "text": "Buscar tomó 113 s; agregar al carrito, 12 s"
+        }
       ],
       "quotes": [],
       "cards": [
-        { "at": 301, "dur": 16, "image": "cards/s8_p13_neurolab_fotos.png", "caption": "Pruebas de experiencia de usuario en el NeuroLab" },
-        { "at": 319, "dur": 16, "image": "cards/s8_p14_hallazgos_neurolab.png", "caption": "Hallazgos empíricos del NeuroLab" }
+        {
+          "at": 301,
+          "dur": 16,
+          "image": "cards/s8_p13_neurolab_fotos.png",
+          "caption": "Pruebas de experiencia de usuario en el NeuroLab"
+        },
+        {
+          "at": 319,
+          "facts": [
+            {
+              "value": "63.8 %",
+              "label": "del tiempo observado fue buscar"
+            },
+            {
+              "value": "113 s",
+              "label": "mediana para buscar (agregar al carrito: 12 s)"
+            },
+            {
+              "value": "4 de 5",
+              "label": "encuestados con dificultades de búsqueda"
+            },
+            {
+              "value": "2 de 5",
+              "label": "videos: confundieron comprar con reservar"
+            }
+          ],
+          "caption": "Hallazgos del NeuroLab · 25 de septiembre de 2026 · 6 registros"
+        }
       ]
     },
     "pedido_tienda": {
       "cues": [
-        { "at": 362, "dur": 10, "text": "El pedido llega a la sucursal que eligió el cliente" },
-        { "at": 382, "dur": 12, "text": "Cada cambio de estado avisa al cliente por correo" }
+        {
+          "at": 362,
+          "dur": 10,
+          "text": "El pedido llega a la sucursal que eligió el cliente"
+        },
+        {
+          "at": 382,
+          "dur": 12,
+          "text": "Cada cambio de estado avisa al cliente por correo"
+        }
       ],
       "quotes": [
-        { "at": 372, "dur": 7, "who": "Cliente", "text": "Pedidos a domicilio." }
+        {
+          "at": 372,
+          "dur": 7,
+          "who": "Cliente",
+          "text": "Pedidos a domicilio."
+        }
       ],
       "cards": []
     },
     "datos_juntos": {
       "cues": [
-        { "at": 412, "dur": 12, "text": "Almacén 3.1 → sincronización de solo lectura por Tailscale" },
-        { "at": 436, "dur": 10, "text": "Una sola base de datos: PostgreSQL" },
-        { "at": 450, "dur": 12, "text": "Google Cloud · IAP · 1 267 imágenes subidas a R2 en un sprint" }
+        {
+          "at": 412,
+          "dur": 12,
+          "text": "Almacén 3.1 → sincronización de solo lectura por Tailscale"
+        },
+        {
+          "at": 436,
+          "dur": 10,
+          "text": "Una sola base de datos: PostgreSQL"
+        },
+        {
+          "at": 450,
+          "dur": 12,
+          "text": "Google Cloud · IAP · 1 267 imágenes subidas a R2 en un sprint"
+        }
       ],
       "quotes": [
-        { "at": 424, "dur": 10, "who": "Empleado", "text": "Por medio del sistema [...] nos ahorramos tiempo de subir a bodega a verificar si tenemos tal producto." }
+        {
+          "at": 424,
+          "dur": 10,
+          "who": "Empleado",
+          "text": "Por medio del sistema [...] nos ahorramos tiempo de subir a bodega a verificar si tenemos tal producto."
+        }
       ],
       "cards": [
-        { "at": 464, "dur": 14, "image": "cards/s8_p16_load_tests.png", "caption": "Pruebas de carga" }
+        {
+          "at": 464,
+          "dur": 14,
+          "image": "cards/s8_p16_load_tests.png",
+          "caption": "Pruebas de carga"
+        }
       ]
     },
     "decisiones": {
       "cues": [
-        { "at": 482, "dur": 10, "text": "Grafana + Umami: tableros aprovisionados como código" },
-        { "at": 508, "dur": 14, "text": "1 · Qué dejar de comprar: capital detenido" },
-        { "at": 530, "dur": 14, "text": "2 · Qué empezar a vender: búsquedas sin resultados" },
-        { "at": 552, "dur": 14, "text": "3 · Cuándo ofertar: estacionalidad y festividades" },
-        { "at": 574, "dur": 14, "text": "4 · Dónde se cae la compra: abandono de carrito" },
-        { "at": 596, "dur": 14, "text": "5 · Qué reponer ya: stock crítico" },
-        { "at": 614, "dur": 14, "text": "Cada decisión termina en una acción: campaña, oferta, exporte" }
+        {
+          "at": 482,
+          "dur": 10,
+          "text": "Grafana + Umami: tableros aprovisionados como código"
+        },
+        {
+          "at": 508,
+          "dur": 14,
+          "text": "1 · Qué dejar de comprar: capital detenido"
+        },
+        {
+          "at": 530,
+          "dur": 14,
+          "text": "2 · Qué empezar a vender: búsquedas sin resultados"
+        },
+        {
+          "at": 552,
+          "dur": 14,
+          "text": "3 · Cuándo ofertar: estacionalidad y festividades"
+        },
+        {
+          "at": 574,
+          "dur": 14,
+          "text": "4 · Dónde se cae la compra: abandono de carrito"
+        },
+        {
+          "at": 596,
+          "dur": 14,
+          "text": "5 · Qué reponer ya: stock crítico"
+        },
+        {
+          "at": 614,
+          "dur": 14,
+          "text": "Cada decisión termina en una acción: campaña, oferta, exporte"
+        }
       ],
       "quotes": [
-        { "at": 510, "dur": 9, "who": "Administrador", "text": "A cada dos meses se hace inventario para controlar." }
+        {
+          "at": 510,
+          "dur": 9,
+          "who": "Administrador",
+          "text": "A cada dos meses se hace inventario para controlar."
+        }
       ],
       "cards": [
-        { "at": 483, "dur": 14, "image": "cards/s7_p03_grafana_umami_vs_metabase.png", "caption": "Metabase 1.5 GB de RAM · Grafana 260 MB + Umami 107 MB" },
-        { "at": 598, "dur": 12, "image": "cards/s7_p04_4x_menos_recursos.png", "caption": "4 veces menos recursos" }
+        {
+          "at": 483,
+          "dur": 14,
+          "image": "cards/s7_p03_grafana_umami_vs_metabase.png",
+          "caption": "Metabase 1.5 GB de RAM · Grafana 260 MB + Umami 107 MB"
+        },
+        {
+          "at": 598,
+          "dur": 12,
+          "image": "cards/s7_p04_4x_menos_recursos.png",
+          "caption": "4 veces menos recursos"
+        }
       ]
     },
     "seguridad": {
       "cues": [
-        { "at": 632, "dur": 10, "text": "Lo que más temían: extorsión, estafas, usurpación" },
-        { "at": 654, "dur": 10, "text": "El pedido nace pendiente · nadie cambia su propio rol" },
-        { "at": 672, "dur": 9, "text": "Bitácora de solo lectura · logs sin datos personales" },
-        { "at": 692, "dur": 10, "text": "Todo en tiempo real · la IP se bloquea con un clic" },
-        { "at": 706, "dur": 12, "text": "OWASP ZAP, escaneo completo: 138 pruebas aprobadas · 0 fallos" }
+        {
+          "at": 632,
+          "dur": 10,
+          "text": "Lo que más temían: extorsión, estafas, usurpación"
+        },
+        {
+          "at": 654,
+          "dur": 10,
+          "text": "El pedido nace pendiente · nadie cambia su propio rol"
+        },
+        {
+          "at": 672,
+          "dur": 9,
+          "text": "Bitácora de solo lectura · logs sin datos personales"
+        },
+        {
+          "at": 692,
+          "dur": 10,
+          "text": "Todo en tiempo real · la IP se bloquea con un clic"
+        },
+        {
+          "at": 706,
+          "dur": 12,
+          "text": "OWASP ZAP, escaneo completo: 138 pruebas aprobadas · 0 fallos"
+        }
       ],
       "quotes": [
-        { "at": 634, "dur": 8, "who": "Administrador", "text": "Estafas, extorción." },
-        { "at": 643, "dur": 8, "who": "Administrador", "text": "Robo o usurpación de empresa." }
+        {
+          "at": 634,
+          "dur": 8,
+          "who": "Administrador",
+          "text": "Estafas, extorción."
+        },
+        {
+          "at": 643,
+          "dur": 8,
+          "who": "Administrador",
+          "text": "Robo o usurpación de empresa."
+        }
       ],
       "cards": []
     },
     "valor": {
       "cues": [
-        { "at": 722, "dur": 10, "text": "¿Cuánto vale esto?" },
-        { "at": 734, "dur": 14, "text": "Minutos de personal liberados por semana" },
-        { "at": 750, "dur": 14, "text": "Gana el cliente, el empleado y la administradora" }
+        {
+          "at": 722,
+          "text": "¿Cuánto vale esto?"
+        },
+        {
+          "at": 730,
+          "text": "Antes: de 1 a 10 minutos o más de personal por cada consulta"
+        },
+        {
+          "at": 738,
+          "text": "Piloto de 90 días: 79 visitantes · 122 visitas · 2 440 vistas de página"
+        },
+        {
+          "at": 746,
+          "text": "230 eventos de consulta: vistas de producto, búsquedas y al carrito"
+        },
+        {
+          "at": 754,
+          "text": "Si cada uno hubiera sido una llamada de 1 a 10 min: entre 4 y 38 horas de atención"
+        },
+        {
+          "at": 761,
+          "text": "Cota superior. Gana el cliente, el empleado y la administradora"
+        }
       ],
       "quotes": [
-        { "at": 724, "dur": 7, "who": "Administrador", "text": "Mínimo 10 minutos." }
+        {
+          "at": 723.5,
+          "who": "Administrador",
+          "text": "Mínimo 10 minutos."
+        }
       ],
-      "cards": []
+      "cards": [
+        {
+          "at": 738,
+          "image": "cards/umami_overview.jpg",
+          "caption": "Umami · últimos 90 días (piloto y pruebas del equipo)"
+        },
+        {
+          "at": 746,
+          "image": "cards/umami_events.jpg",
+          "caption": "Umami · eventos PRODUCT_VIEW, SEARCH y ADD_TO_CART"
+        }
+      ]
     },
     "cierre": {
       "cues": [
-        { "at": 767, "dur": 12, "text": "Reducir llamadas y visitas · convertir cada pregunta en un dato" },
-        { "at": 806, "dur": 4, "text": "Gracias" }
+        {
+          "at": 767,
+          "text": "Reducir llamadas y visitas · convertir cada pregunta en un dato"
+        },
+        {
+          "at": 790,
+          "text": "Gracias"
+        }
       ],
       "quotes": [],
       "cards": []

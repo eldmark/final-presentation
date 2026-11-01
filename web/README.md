@@ -11,33 +11,44 @@ npm run build      # genera dist/ (se puede servir desde cualquier carpeta está
 npm run typecheck
 ```
 
-## Controles
+## Cómo se presenta
+
+Por omisión es **paso a paso**: quien presenta decide el ritmo. Cada pulsación lleva al siguiente paso
+(un subtítulo, una cita, una tarjeta, una burbuja de WhatsApp) y la cámara se mueve sola. Hay 8 escenas,
+una por persona, y un cronómetro real de 14 minutos (`T`). También hay modo **automático** (`M`) que
+reproduce los 13:30 sin intervención.
 
 | Tecla | Acción |
 | --- | --- |
-| Espacio / K | Pausa o reanuda |
-| ← / → | Escena anterior o siguiente |
-| F | Pantalla completa |
+| → · Espacio · Enter · Av Pág | Siguiente paso |
+| ← · Re Pág · Retroceso | Paso anterior |
+| Shift + → / ← | Escena siguiente / anterior |
+| M | Paso a paso ↔ automático |
+| T | Muestra u oculta el cronómetro |
 | A | Texto grande (para la sala) |
-| Esc | Pausa |
+| F | Pantalla completa |
+| H · ? | Ayuda |
+| Inicio | Volver al principio |
 
-La barra inferior permite saltar a cualquier punto. Respeta `prefers-reduced-motion`: los viajes largos
-entre estaciones pasan a ser cortes.
+El control remoto de la sala suele mandar Av Pág / Re Pág: ya funcionan. Los controles se esconden solos
+a los pocos segundos sin mover el mouse. Respeta `prefers-reduced-motion`: los viajes largos entre
+estaciones pasan a ser cortes.
 
 ## Para ensayar
 
 | Parámetro | Efecto |
 | --- | --- |
 | `?t=300` | Empieza en el segundo 300 (5:00) |
-| `?autoplay=1` | Salta la pantalla de inicio |
-| `?autoplay=1&pause=1&t=300` | Congela el cuadro (útil para revisar una escena) |
+| `?autoplay=1` | Salta la pantalla de inicio (paso a paso) |
+| `?mode=auto` | Salta el inicio y reproduce solo |
+| `?timer=1` | Muestra el cronómetro |
 | `?large=1` | Texto grande |
 
 ## Dónde se edita cada cosa
 
 | Qué | Archivo |
 | --- | --- |
-| Subtítulos, citas, tarjetas, disclaimer | `public/data/content.json` (tiempos en segundos absolutos) |
+| Subtítulos, citas, tarjetas (imagen o cifras), disclaimer | `public/data/content.json`. Cada elemento con su segundo `at`; los que caen a menos de 1.6 s se funden en un mismo paso |
 | Burbujas de WhatsApp | `src/bubbles.ts` (`BUBBLE_SPECS`) |
 | Recorrido de cámara | `public/data/tour.json` (lo genera `blender/04_camera_tour.py`) |
 | Modelo 3D | `public/models/diorama.glb` (lo genera `blender/05_export_glb.py`) |

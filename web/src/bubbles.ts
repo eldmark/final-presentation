@@ -66,7 +66,7 @@ function makeBubble(spec: BubbleSpec): { sprite: THREE.Sprite; ratio: number } {
   return { sprite, ratio: w / h };
 }
 
-const BUBBLE_HEIGHT = 0.46;
+const BUBBLE_HEIGHT = 0.4;
 
 /**
  * Burbujas de WhatsApp animadas por código (no están en el modelo de Blender).
@@ -79,10 +79,11 @@ export class Bubbles {
     for (const spec of specs) {
       const { sprite, ratio } = makeBubble(spec);
       const x = spec.station * spacing;
-      // estación 0: a la derecha del celular; estación 1: sobre el mostrador
-      const side = spec.station === 0 ? 2.6 : 2.3;
-      const base = spec.station === 0 ? 1.9 : 2.4;
-      const origin = new THREE.Vector3(x + side, base + spec.slot * 0.55, spec.station === 0 ? 1.0 : 0.4);
+      // columna dentro del cuadro de la cámara: el cliente a la derecha, la tienda a la izquierda
+      const sideX = { cliente: 1.75, tienda: 0.35, sistema: 1.05 }[spec.from];
+      const base = spec.station === 0 ? 1.85 : 2.35;
+      const z = spec.station === 0 ? 0.35 : -0.2;
+      const origin = new THREE.Vector3(x + sideX, base + spec.slot * 0.47, z);
       sprite.position.copy(origin);
       scene.add(sprite);
       this.items.push({ spec, sprite, origin, ratio });

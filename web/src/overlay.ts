@@ -1,99 +1,140 @@
-import type { ContentData, TourData, TourSegment } from "./types";
+import type { Chapter, ContentData, Step, TourData } from "./types";
 
-const mmss = (s: number): string => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+const clock = (s: number): string => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
-/** Capa HTML encima del 3D: escena, subtítulos, citas, tarjetas, progreso y controles. */
+export interface OverlayHandlers {
+  onStartManual: () => void;
+  onStartAuto: () => void;
+  onNext: () => void;
+  onPrev: () => void;
+  onChapter: (firstSeg: number) => void;
+  onToggleMode: () => void;
+  onTogglePlay: () => void;
+  onFullscreen: () => void;
+}
+
+export interface OverlayState {
+  step: Step;
+  segIndex: number;
+  stepInSeg: number;
+  stepsInSeg: number;
+  time: number;
+  auto: boolean;
+  playing: boolean;
+  elapsed: number; // segundos reales desde que se empezó
+}
+
+/** Capa HTML encima del 3D. Todo el texto que ve el público pasa por aquí. */
 export class Overlay {
-  private readonly root: HTMLElement;
-  private readonly pill: HTMLElement;
-  private readonly subtitle: HTMLElement;
-  private readonly quote: HTMLElement;
-  private readonly card: HTMLElement;
-  private readonly bar: HTMLElement;
-  private readonly fill: HTMLElement;
-  private readonly clock: HTMLElement;
-  private readonly playBtn: HTMLButtonElement;
-  private readonly start: HTMLElement;
-  private readonly disclaimer: HTMLElement;
+  private readonly el: Record<string, HTMLElement> = {};
   private lastKey = "";
+  private lastChapter = -1;
+  private titleTimer = 0;
+  private chapterEls: HTMLElement[] = [];
 
   constructor(
-    root: HTMLElement,
+    private readonly root: HTMLElement,
     private readonly tour: TourData,
     private readonly content: ContentData,
-    handlers: {
-      onStart: () => void;
-      onToggle: () => void;
-      onPrev: () => void;
-      onNext: () => void;
-      onSeek: (t: number) => void;
-      onFullscreen: () => void;
-    },
+    private readonly chapters: Chapter[],
+    h: OverlayHandlers,
   ) {
-    this.root = root;
     root.innerHTML = `
-      <div class="pill" aria-live="polite"></div>
-      <div class="quote" hidden></div>
-      <figure class="card" hidden><img alt="" /><figcaption></figcaption></figure>
-      <p class="subtitle" aria-live="polite" hidden></p>
-      <div class="disclaimer" hidden></div>
-      <div class="dock">
-        <div class="bar" role="slider" aria-label="Progreso de la presentación" tabindex="0"
-             aria-valuemin="0" aria-valuemax="${tour.duration}" aria-valuenow="0">
-          <div class="fill"></div>
-        </div>
-        <div class="buttons">
-          <button data-act="prev" aria-label="Escena anterior">⏮</button>
-          <button data-act="toggle" aria-label="Pausar o reanudar">▶</button>
-          <button data-act="next" aria-label="Escena siguiente">⏭</button>
-          <span class="clock">0:00 / ${mmss(tour.duration)}</span>
-          <span class="spacer"></span>
-          <button data-act="text" aria-label="Texto grande" aria-pressed="false">A²</button>
-          <button data-act="full" aria-label="Pantalla completa">⛶</button>
-        </div>
+      <div class="vignette"></div>
+
+      <div class="title-card" hidden>
+        <span class="tc-num"></span>
+        <div><h2 class="tc-title"></h2><p class="tc-who"></p></div>
       </div>
+
+      <header class="pill" aria-live="polite">
+        <span class="pill-title"></span><em class="pill-who"></em>
+        <span class="dots" aria-hidden="true"></span>
+      </header>
+
+      <aside class="quote" hidden></aside>
+      <figure class="card" hidden><img alt="" /><div class="facts" hidden></div><figcaption></figcaption></figure>
+      <p class="subtitle" aria-live="polite" hidden></p>
+      <section class="disclaimer" hidden></section>
+
+      <div class="timer" title="Tiempo real de la presentación (T para ocultar)"></div>
+
+      <footer class="dock">
+        <nav class="chapters" aria-label="Escenas"></nav>
+        <div class="buttons">
+          <button data-act="prev" aria-label="Paso anterior" title="Anterior (←)">‹</button>
+          <button data-act="next" aria-label="Paso siguiente" title="Siguiente (→ o Espacio)">›</button>
+          <span class="step-info"></span>
+          <span class="spacer"></span>
+          <button data-act="mode" class="wide" aria-label="Cambiar entre paso a paso y automático" title="Modo (M)"></button>
+          <button data-act="play" aria-label="Pausar o reanudar" title="Pausa (Espacio)" hidden>⏸</button>
+          <button data-act="text" aria-label="Texto grande" aria-pressed="false" title="Texto grande (A)">A²</button>
+          <button data-act="help" aria-label="Ayuda de teclado" title="Ayuda (H)">?</button>
+          <button data-act="full" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
+        </div>
+      </footer>
+
+      <section class="help" hidden role="dialog" aria-label="Atajos de teclado">
+        <h3>Atajos</h3>
+        <dl>
+          <dt>→ · Espacio · Av Pág</dt><dd>Siguiente paso</dd>
+          <dt>← · Re Pág</dt><dd>Paso anterior</dd>
+          <dt>Shift + → / ←</dt><dd>Escena siguiente / anterior</dd>
+          <dt>M</dt><dd>Paso a paso ↔ automático</dd>
+          <dt>T</dt><dd>Mostrar u ocultar el cronómetro</dd>
+          <dt>A</dt><dd>Texto grande</dd>
+          <dt>F</dt><dd>Pantalla completa</dd>
+          <dt>Inicio</dt><dd>Volver al principio</dd>
+          <dt>H · ?</dt><dd>Esta ayuda</dd>
+        </dl>
+        <p>El control remoto de la sala suele enviar Av Pág y Re Pág: ya funcionan.</p>
+      </section>
+
       <div class="start" role="dialog" aria-modal="true" aria-label="Inicio">
         <div class="start-card">
-          <img class="logo" src="logo.png" alt="Bodega de Licores" />
-          <h1>${content.title}</h1>
-          <p class="sub">Del “¿cuánto cuesta?” al dato con el que decidimos</p>
-          ${content.disclaimer.map((d) => `<p class="small">${d}</p>`).join("")}
-          <button class="go" data-act="start">Empezar</button>
-          <p class="hint">← → cambia de escena · Espacio pausa · F pantalla completa · A texto grande</p>
+          <img class="logo" src="logo.svg" alt="Bodega de Licores" />
+          <h1>Del “¿cuánto cuesta?” al dato con el que decidimos</h1>
+          <p class="sub">Proyecto de Ingeniería de Software · Grupo 7 · UVG</p>
+          ${content.disclaimer.map((d) => `<p class="legal">${esc(d)}</p>`).join("")}
+          <div class="start-actions">
+            <button class="go" data-act="start-manual">Presentar paso a paso</button>
+            <button class="go ghost" data-act="start-auto">Reproducción automática</button>
+          </div>
+          <p class="hint">Enter inicia · → avanza · H muestra los atajos</p>
         </div>
       </div>`;
 
-    this.pill = root.querySelector(".pill")!;
-    this.subtitle = root.querySelector(".subtitle")!;
-    this.quote = root.querySelector(".quote")!;
-    this.card = root.querySelector(".card")!;
-    this.bar = root.querySelector(".bar")!;
-    this.fill = root.querySelector(".fill")!;
-    this.clock = root.querySelector(".clock")!;
-    this.playBtn = root.querySelector('[data-act="toggle"]')!;
-    this.start = root.querySelector(".start")!;
-    this.disclaimer = root.querySelector(".disclaimer")!;
-
-    // marcas de escena en la barra
-    for (const s of tour.segments) {
-      const tick = document.createElement("i");
-      tick.style.left = `${(s.start / tour.duration) * 100}%`;
-      tick.title = `${mmss(s.start)} · ${s.speaker} · ${s.scene}`;
-      this.bar.appendChild(tick);
+    for (const k of ["title-card", "tc-num", "tc-title", "tc-who", "pill", "pill-title", "pill-who", "dots", "quote", "card", "subtitle",
+      "disclaimer", "timer", "dock", "chapters", "step-info", "help", "start"]) {
+      this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
+    this.el.modeBtn = root.querySelector<HTMLElement>('[data-act="mode"]')!;
+    this.el.playBtn = root.querySelector<HTMLElement>('[data-act="play"]')!;
+
+    // capítulos: una pastilla por escena, ancho proporcional a su duración
+    this.chapters.forEach((c) => {
+      const b = document.createElement("button");
+      b.className = "chapter";
+      b.style.flexGrow = String(c.end - c.start);
+      b.innerHTML = `<b>${c.number}</b><span>${esc(c.title)}</span><em>${esc(c.speaker)}</em>`;
+      b.title = `${c.number} · ${c.title} — ${c.speaker}`;
+      b.addEventListener("click", () => h.onChapter(c.firstSeg));
+      this.el.chapters.appendChild(b);
+      this.chapterEls.push(b);
+    });
 
     root.addEventListener("click", (e) => {
       const act = (e.target as HTMLElement).closest<HTMLElement>("[data-act]")?.dataset.act;
-      if (act === "start") handlers.onStart();
-      else if (act === "toggle") handlers.onToggle();
-      else if (act === "prev") handlers.onPrev();
-      else if (act === "next") handlers.onNext();
-      else if (act === "full") handlers.onFullscreen();
+      if (act === "start-manual") h.onStartManual();
+      else if (act === "start-auto") h.onStartAuto();
+      else if (act === "next") h.onNext();
+      else if (act === "prev") h.onPrev();
+      else if (act === "mode") h.onToggleMode();
+      else if (act === "play") h.onTogglePlay();
+      else if (act === "full") h.onFullscreen();
       else if (act === "text") this.toggleLargeText();
-    });
-    this.bar.addEventListener("click", (e) => {
-      const r = this.bar.getBoundingClientRect();
-      handlers.onSeek(((e.clientX - r.left) / r.width) * tour.duration);
+      else if (act === "help") this.toggleHelp();
     });
   }
 
@@ -103,55 +144,98 @@ export class Overlay {
     this.root.querySelector('[data-act="text"]')?.setAttribute("aria-pressed", String(on));
   }
 
+  toggleHelp(force?: boolean): void {
+    this.el.help.hidden = !(force ?? Boolean(this.el.help.hidden));
+  }
+
+  toggleTimer(): void {
+    this.el.timer.classList.toggle("on");
+  }
+
+  showTimer(): void {
+    this.el.timer.classList.add("on");
+  }
+
   hideStart(): void {
-    this.start.hidden = true;
+    this.el.start.hidden = true;
+    this.root.classList.add("running");
+    this.lastKey = ""; // fuerza el primer repintado, con la tarjeta de título de la escena 1
   }
 
   get started(): boolean {
-    return Boolean(this.start.hidden);
+    return Boolean(this.el.start.hidden);
   }
 
-  private active<T extends { at: number; dur: number }>(items: T[], t: number): T | undefined {
-    return items.find((i) => t >= i.at && t < i.at + i.dur);
+  private showTitleCard(chapter: Chapter): void {
+    const card = this.el["title-card"];
+    this.el["tc-num"].textContent = String(chapter.number);
+    this.el["tc-title"].textContent = chapter.title;
+    this.el["tc-who"].textContent = chapter.speaker;
+    card.hidden = false;
+    card.classList.remove("play");
+    void card.offsetWidth; // reinicia la animación
+    card.classList.add("play");
+    window.clearTimeout(this.titleTimer);
+    this.titleTimer = window.setTimeout(() => (card.hidden = true), 2800);
   }
 
-  update(t: number, seg: TourSegment, playing: boolean): void {
-    this.fill.style.width = `${(t / this.tour.duration) * 100}%`;
-    this.bar.setAttribute("aria-valuenow", String(Math.round(t)));
-    this.clock.textContent = `${mmss(t)} / ${mmss(this.tour.duration)}`;
-    this.playBtn.textContent = playing ? "⏸" : "▶";
+  update(s: OverlayState): void {
+    const seg = this.tour.segments[s.segIndex];
+    const chapter = this.chapters.find((c) => parseInt(seg.scene, 10) === c.number)!;
 
-    const sceneKey = `${seg.speaker}|${seg.scene}`;
-    const content = this.content.segments[seg.id];
+    // cronómetro y estado del modo (cambian cada cuadro, son baratos)
+    this.el.timer.textContent = `${clock(s.elapsed)} / 14:00`;
+    this.el.timer.classList.toggle("warn", s.elapsed >= 12.5 * 60);
+    this.el.timer.classList.toggle("over", s.elapsed >= 14 * 60);
+    this.el.modeBtn.textContent = s.auto ? "Automático" : "Paso a paso";
+    (this.el.playBtn as HTMLButtonElement).hidden = !s.auto;
+    this.el.playBtn.textContent = s.playing ? "⏸" : "▶";
 
-    const cue = content ? this.active(content.cues, t) : undefined;
-    const quote = content ? this.active(content.quotes, t) : undefined;
-    const card = content ? this.active(content.cards, t) : undefined;
-    // el disclaimer aparece al inicio y durante el cierre
-    const showDisclaimer = this.started && (t < 6 || (seg.id === "cierre" && t >= 780 && t < 804));
-    const key = `${sceneKey}|${cue?.text}|${quote?.text}|${card?.image}|${showDisclaimer}`;
+    const key = `${s.segIndex}|${s.stepInSeg}|${s.step.cue}|${s.step.quote?.text}|${s.step.card?.image}|${this.started}`;
     if (key === this.lastKey) return;
     this.lastKey = key;
 
-    this.pill.innerHTML = `<span>${seg.scene}</span><em>${seg.speaker}</em>`;
+    this.el["step-info"].textContent = `Escena ${chapter.number}/${this.chapters.length} · paso ${s.stepInSeg + 1}/${s.stepsInSeg}`;
+    this.chapterEls.forEach((el, i) => el.classList.toggle("active", this.chapters[i] === chapter));
 
-    this.subtitle.hidden = !cue;
-    if (cue) this.subtitle.textContent = cue.text;
+    // tarjeta de título al entrar a una escena nueva
+    if (this.started && chapter.number !== this.lastChapter) this.showTitleCard(chapter);
+    if (this.started) this.lastChapter = chapter.number;
 
-    this.quote.hidden = !quote;
-    if (quote) {
-      this.quote.innerHTML = `<small>${quote.who} · entrevista</small><blockquote>“${quote.text}”</blockquote>`;
+    this.el["pill-title"].textContent = `${chapter.number} · ${chapter.title}`;
+    this.el["pill-who"].textContent = chapter.speaker;
+    this.el.dots.innerHTML = Array.from({ length: s.stepsInSeg }, (_, i) => `<i class="${i <= s.stepInSeg ? "on" : ""}"></i>`).join("");
+
+    this.el.subtitle.hidden = !s.step.cue;
+    if (s.step.cue) {
+      this.el.subtitle.textContent = s.step.cue;
+      this.el.subtitle.classList.remove("pop");
+      void this.el.subtitle.offsetWidth;
+      this.el.subtitle.classList.add("pop");
     }
 
-    this.card.hidden = !card;
-    if (card) {
-      this.card.querySelector("img")!.setAttribute("src", card.image);
-      this.card.querySelector("figcaption")!.textContent = card.caption;
+    this.el.quote.hidden = !s.step.quote;
+    if (s.step.quote) {
+      this.el.quote.innerHTML = `<span class="qm">“</span><blockquote>${esc(s.step.quote.text)}</blockquote><small>${esc(s.step.quote.who)} · entrevista</small>`;
     }
 
-    this.disclaimer.hidden = !showDisclaimer;
+    this.el.card.hidden = !s.step.card;
+    if (s.step.card) {
+      const card = s.step.card;
+      const img = this.el.card.querySelector("img")!;
+      const facts = this.el.card.querySelector<HTMLElement>(".facts")!;
+      img.hidden = !card.image;
+      facts.hidden = !card.facts;
+      if (card.image) img.setAttribute("src", card.image);
+      if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
+      this.el.card.querySelector("figcaption")!.textContent = card.caption;
+    }
+
+    // el disclaimer completo sale en el cierre (y resumido en la pantalla de inicio)
+    const showDisclaimer = this.started && seg.id === "cierre" && s.stepInSeg === s.stepsInSeg - 1;
+    this.el.disclaimer.hidden = !showDisclaimer;
     if (showDisclaimer) {
-      this.disclaimer.innerHTML = `<b>Sobre el diseño</b>${this.content.disclaimer.map((d) => `<span>${d}</span>`).join("")}`;
+      this.el.disclaimer.innerHTML = `<b>Sobre el diseño</b>${this.content.disclaimer.map((d) => `<span>${esc(d)}</span>`).join("")}`;
     }
   }
 }
