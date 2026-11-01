@@ -31,11 +31,63 @@ El contenedor sirve la presentación y retransmite los mensajes entre dispositiv
 Todo funciona **sin internet**, pero el celular y el equipo deben estar en la **misma red Wi-Fi**.
 Sin el token nadie puede mover la presentación desde otro dispositivo. `.env` no se sube a git.
 
-### Control desde el celular
+### Conectar los celulares a la sesión local
 
-En la vista del presentador (tecla **P**) abre «Controlar desde el celular»: ahí hay un **QR**.
-Si ves `localhost`, escribe la IP del equipo en el cuadro. El celular muestra las ideas clave de quien
-habla, lo que viene, los relojes y botones grandes de **Atrás / Siguiente**, y mantiene la pantalla encendida.
+Cada celular se convierte en un **control remoto** con las notas de quien habla. No necesita internet ni
+instalar nada: solo abrir una dirección en el navegador.
+
+**Antes de empezar**
+
+- El equipo con la presentación y los celulares deben estar en la **misma red** (el mismo Wi-Fi, o el
+  punto de acceso del celular de alguien; ver «Sin Wi-Fi» abajo).
+- Docker debe estar corriendo (`./start.sh`).
+
+**Paso a paso**
+
+1. En el equipo de la presentación: `cd web && ./start.sh`. Al terminar imprime algo así:
+
+   ```
+   En este equipo:   http://localhost:8088/?k=509543f554fb
+   Desde el celular: http://192.168.0.2:8088/remote?k=509543f554fb
+   ```
+
+2. Abre la primera dirección **en el equipo** (la presentación, con el `?k=` completo).
+3. Pulsa **P** (o el botón *Presentador*) para abrir la vista del presentador y despliega
+   **«Controlar desde el celular»**: aparece un **código QR**.
+4. En el celular, abre la **cámara** y apunta al QR (o escribe la dirección «Desde el celular»).
+   Se abre la pantalla *Control remoto*; arriba debe decir **● Conectado (por red)**.
+5. Prueba **Siguiente ›**: la presentación del equipo avanza un paso. Pueden conectarse **varios celulares a la vez**.
+
+> Si el QR dice `localhost`, escribe en el cuadro «Dirección de este equipo en la red» la IP que imprimió
+> `start.sh` (por ejemplo `http://192.168.0.2:8088`). Se guarda para la próxima vez.
+
+**Qué ve cada celular**: el nombre de quien habla (grande), sus ideas clave resaltadas, lo que viene, el
+cronómetro total y de la escena, y botones grandes de *Atrás / Siguiente*, *escena anterior / siguiente* y el
+modo. El resto de las notas está plegado.
+
+**El token (`k=`)**: es la «llave» de la sesión. Sin ella nadie en el mismo Wi-Fi puede mover la presentación.
+`start.sh` la crea una sola vez y la guarda en `.env` (no se sube a git). Para **cambiarla**: borra la línea
+`PRESENTER_TOKEN` de `.env` y vuelve a correr `./start.sh`; los celulares tendrán que escanear el QR de nuevo.
+
+**Si no conecta**
+
+| Síntoma | Causa probable | Qué hacer |
+| --- | --- | --- |
+| El celular no abre la página | No están en la misma red, o el Wi-Fi aísla a los clientes («AP isolation», común en redes de universidad o cafetería) | Usa el punto de acceso de un celular (ver abajo) |
+| Abre la página pero dice *Sin señal de la presentación* | La ventana de la presentación está minimizada o tapada | Déjala visible: el navegador pausa las ventanas ocultas |
+| Dice *Esperando la presentación…* y nunca conecta | Falta el `?k=` o es el token viejo | Escanea el QR de nuevo o copia la dirección completa que imprimió `start.sh` |
+| Cambió la IP del equipo (otra red) | `PUBLIC_URL` en `.env` quedó con la IP anterior | Borra `PUBLIC_URL` de `.env` y corre `./start.sh`, o escríbela en el cuadro del QR |
+| Funciona en el equipo pero no en el celular | Firewall del equipo | Abre el puerto: `sudo ufw allow 8088/tcp` (ufw) o `sudo firewall-cmd --add-port=8088/tcp` (firewalld) |
+| El celular se apaga durante la presentación | El navegador no deja bloquear la pantalla en `http://` de red local | Sube el tiempo de pantalla del celular a «nunca» mientras dure la presentación |
+| Vibra al pulsar pero no avanza | La presentación ya terminó o está en modo automático | Pulsa **M** en el equipo o el botón *Paso a paso* del celular |
+
+**Sin Wi-Fi (o con Wi-Fi que bloquea dispositivos)**: activa **«Compartir internet / punto de acceso»** en uno de
+los celulares, conecta el equipo de la presentación y los demás celulares a esa red, y corre `./start.sh` de nuevo
+para que tome la IP nueva. No hace falta que ese punto de acceso tenga datos móviles.
+
+**Sin Docker**: `npm install && npm run build`, y luego
+`PRESENTER_TOKEN=miclave PUBLIC_URL=http://IP:8088 PORT=8088 npm run serve`. El servidor de desarrollo
+(`npm run dev`) **no** incluye el relevo: sirve para editar, no para usar el celular.
 
 ### Portada y telón
 
