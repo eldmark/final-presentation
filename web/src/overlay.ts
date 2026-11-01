@@ -79,6 +79,7 @@ export class Overlay {
         <img class="qr" alt="Código QR" hidden />
         <div class="facts" hidden></div>
         <ul class="logos" hidden></ul>
+        <p class="logo-use" hidden></p>
         <figcaption></figcaption>
       </figure>
       <p class="subtitle" aria-live="polite" hidden></p>
@@ -293,6 +294,32 @@ export class Overlay {
     }, 2800);
   }
 
+  /** Cada logo explica para qué se usó: al pasar el cursor, con el foco (Tab) o con la rueda del mouse. */
+  private setupLogos(grid: HTMLElement, useEl: HTMLElement, logos: { name: string; src: string; use?: string }[]): void {
+    grid.innerHTML = logos
+      .map((l, i) => `<li tabindex="0" data-i="${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`)
+      .join("");
+    const items = [...grid.querySelectorAll<HTMLElement>("li")];
+    const hint = "Pasa el cursor o gira la rueda sobre un logo para ver para qué lo usamos";
+    let cur = -1;
+    const show = (i: number) => {
+      cur = i;
+      items.forEach((el, k) => el.classList.toggle("on", k === i));
+      const l = logos[i];
+      useEl.innerHTML = l?.use ? `<b>${esc(l.name)}</b> · ${esc(l.use)}` : esc(hint);
+    };
+    items.forEach((el, i) => {
+      el.addEventListener("mouseenter", () => show(i));
+      el.addEventListener("focus", () => show(i));
+    });
+    grid.addEventListener("mouseleave", () => show(-1));
+    grid.onwheel = (e) => {
+      e.preventDefault();
+      show(Math.max(0, Math.min(items.length - 1, (cur < 0 ? (e.deltaY > 0 ? -1 : items.length) : cur) + (e.deltaY > 0 ? 1 : -1))));
+    };
+    show(-1);
+  }
+
   private async qrFor(url: string): Promise<string> {
     const hit = this.qrCache.get(url);
     if (hit) return hit;
@@ -336,7 +363,7 @@ export class Overlay {
     const focused = Boolean(s.step.focus) || large;
 
     // con un acercamiento o una tarjeta grande el texto baja su opacidad para dejar ver lo que se muestra
-    this.el.subtitle.hidden = !s.step.cue;
+    this.el.subtitle.hidden = !s.step.cue || Boolean(card?.logos); // la tarjeta de logos ya lleva su propio texto
     this.el.subtitle.classList.toggle("dim", focused);
     if (s.step.cue) {
       this.el.subtitle.textContent = s.step.cue;
@@ -361,8 +388,10 @@ export class Overlay {
       facts.hidden = !card.facts;
       qr.hidden = !card.qr;
       const logos = this.el.card.querySelector<HTMLElement>(".logos")!;
+      const useEl = this.el.card.querySelector<HTMLElement>(".logo-use")!;
       logos.hidden = !card.logos;
-      if (card.logos) logos.innerHTML = card.logos.map((l) => `<li><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`).join("");
+      useEl.hidden = !card.logos;
+      if (card.logos) this.setupLogos(logos, useEl, card.logos);
       if (card.image) img.setAttribute("src", card.image);
       if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
       if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));

@@ -10,7 +10,7 @@ interface Ev {
   cue?: string;
   focus?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: import("./types").Fact[]; logos?: { name: string; src: string }[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
+  card?: { image?: string; facts?: import("./types").Fact[]; logos?: { name: string; src: string; use?: string }[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
   bubble?: string;
 }
 

@@ -49,7 +49,7 @@ export interface ImageCard {
   dur?: number;
   image?: string;
   facts?: Fact[];
-  logos?: { name: string; src: string }[]; // cuadrícula de logos (síntesis de tecnologías)
+  logos?: { name: string; src: string; use?: string }[]; // cuadrícula de logos (síntesis de tecnologías)
   qr?: string; // URL que se codifica en un QR
   layout?: CardLayout; // left por omisión; large = imagen grande al centro; right = panel a la derecha
   caption: string;
@@ -82,7 +82,7 @@ export interface Step {
   seg: number; // índice de segmento (estación)
   cue?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: Fact[]; logos?: { name: string; src: string }[]; qr?: string; layout?: CardLayout; caption: string };
+  card?: { image?: string; facts?: Fact[]; logos?: { name: string; src: string; use?: string }[]; qr?: string; layout?: CardLayout; caption: string };
   focus?: string; // pantalla a la que se acerca la cámara
   label?: string; // resumen corto del paso para la vista del presentador
   bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)

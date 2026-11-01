@@ -464,127 +464,158 @@
           "logos": [
             {
               "name": "Vue 3",
-              "src": "logos/vuedotjs.svg"
+              "src": "logos/vuedotjs.svg",
+              "use": "Framework del frontend: catálogo, carrito, panel de la administradora y editor de ofertas."
             },
             {
               "name": "Vite",
-              "src": "logos/vite.svg"
+              "src": "logos/vite.svg",
+              "use": "Compila y sirve el frontend; builds rápidos en desarrollo y producción."
             },
             {
               "name": "Pinia",
-              "src": "logos/pinia.svg"
+              "src": "logos/pinia.svg",
+              "use": "Estado global del frontend: carrito, sesión, filtros y favoritos."
             },
             {
               "name": "TypeScript",
-              "src": "logos/typescript.svg"
+              "src": "logos/typescript.svg",
+              "use": "Tipos en frontend y backend: menos errores antes de llegar a producción."
             },
             {
               "name": "Leaflet",
-              "src": "logos/leaflet.svg"
+              "src": "logos/leaflet.svg",
+              "use": "Mapa de sucursales con «cómo llegar» (Waze y Google Maps)."
             },
             {
               "name": "Node.js",
-              "src": "logos/nodedotjs.svg"
+              "src": "logos/nodedotjs.svg",
+              "use": "Entorno del servidor: la API de pedidos, reservas y catálogo."
             },
             {
               "name": "Express",
-              "src": "logos/express.svg"
+              "src": "logos/express.svg",
+              "use": "Framework de la API REST: rutas, middlewares, límites de uso."
             },
             {
               "name": "Prisma",
-              "src": "logos/prisma.svg"
+              "src": "logos/prisma.svg",
+              "use": "Acceso a la base de datos: modelos, migraciones y consultas tipadas."
             },
             {
               "name": "PostgreSQL",
-              "src": "logos/postgresql.svg"
+              "src": "logos/postgresql.svg",
+              "use": "Una sola base de datos central para todas las sucursales."
             },
             {
               "name": "Redis",
-              "src": "logos/redis.svg"
+              "src": "logos/redis.svg",
+              "use": "Caché y control de uso (cuotas y límites) para respuestas rápidas."
             },
             {
               "name": "Docker",
-              "src": "logos/docker.svg"
+              "src": "logos/docker.svg",
+              "use": "Empaqueta la API, la base y los tableros para correr igual en todos lados."
             },
             {
               "name": "Nginx",
-              "src": "logos/nginx.svg"
+              "src": "logos/nginx.svg",
+              "use": "Sirve el frontend en producción con cabeceras de seguridad."
             },
             {
               "name": "Google Cloud",
-              "src": "logos/googlecloud.svg"
+              "src": "logos/googlecloud.svg",
+              "use": "Infraestructura en producción: servidores, IAP y almacenamiento de imágenes."
             },
             {
               "name": "GitHub",
-              "src": "logos/github.svg"
+              "src": "logos/github.svg",
+              "use": "Código, ramas, revisiones y flujos de integración continua."
             },
             {
               "name": "Clerk",
-              "src": "logos/clerk.svg"
+              "src": "logos/clerk.svg",
+              "use": "Inicio de sesión y roles: cliente, empleado y administrador."
             },
             {
               "name": "Resend",
-              "src": "logos/resend.svg"
+              "src": "logos/resend.svg",
+              "use": "Correos de pedidos, reservas, recordatorios y avisos de stock."
             },
             {
               "name": "Sentry",
-              "src": "logos/sentry.svg"
+              "src": "logos/sentry.svg",
+              "use": "Monitoreo de errores y trazabilidad por solicitud."
             },
             {
               "name": "Grafana",
-              "src": "logos/grafana.svg"
+              "src": "logos/grafana.svg",
+              "use": "Tableros de decisiones y de seguridad (SOC) para la administradora."
             },
             {
               "name": "Umami",
-              "src": "logos/umami.svg"
+              "src": "logos/umami.svg",
+              "use": "Analítica web: visitas, búsquedas y eventos de consulta."
             },
             {
               "name": "Vitest",
-              "src": "logos/vitest.svg"
+              "src": "logos/vitest.svg",
+              "use": "Pruebas unitarias y de componentes del frontend."
             },
             {
               "name": "Jest",
-              "src": "logos/jest.svg"
+              "src": "logos/jest.svg",
+              "use": "Pruebas unitarias y de integración del backend."
             },
             {
               "name": "Playwright",
-              "src": "logos/playwright.svg"
+              "src": "logos/playwright.svg",
+              "use": "Pruebas de extremo a extremo y de accesibilidad en el navegador."
             },
             {
               "name": "ESLint",
-              "src": "logos/eslint.svg"
+              "src": "logos/eslint.svg",
+              "use": "Revisión de estilo, seguridad y accesibilidad del código."
             },
             {
               "name": "OWASP ZAP",
-              "src": "logos/owasp.svg"
+              "src": "logos/owasp.svg",
+              "use": "Escaneo de seguridad del sitio: 138 pruebas."
             },
             {
               "name": "Figma",
-              "src": "logos/figma.svg"
+              "src": "logos/figma.svg",
+              "use": "Diseño inicial de las pantallas."
             },
             {
               "name": "Canva",
-              "src": "logos/canva.svg"
+              "src": "logos/canva.svg",
+              "use": "Material visual y diapositivas del equipo."
             },
             {
               "name": "Miro",
-              "src": "logos/miro.svg"
+              "src": "logos/miro.svg",
+              "use": "Tablero de planeación, aportes del equipo y flujos."
             },
             {
               "name": "Jira",
-              "src": "logos/jira.svg"
+              "src": "logos/jira.svg",
+              "use": "Gestión de tareas, sprints y evidencia de pruebas."
             },
             {
               "name": "Three.js",
-              "src": "logos/threedotjs.svg"
+              "src": "logos/threedotjs.svg",
+              "use": "Dibuja el diorama 3D de esta presentación en el navegador."
             },
             {
               "name": "Blender",
-              "src": "logos/blender.svg"
+              "src": "logos/blender.svg",
+              "use": "Modelado del diorama 3D y del recorrido de cámara."
             },
             {
               "name": "OpenStreetMap",
-              "src": "logos/openstreetmap.svg"
+              "src": "logos/openstreetmap.svg",
+              "use": "Mapa base de la intro de esta presentación."
             }
           ],
           "caption": "Tecnologías de Bodega de Licores"
