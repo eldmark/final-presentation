@@ -7,9 +7,11 @@ import "@fontsource/playfair-display/700.css";
 import "./style.css";
 import { Stage } from "./stage";
 import { Tour } from "./tour";
-import { Bubbles, BUBBLE_SPECS } from "./bubbles";
+import { Bubbles } from "./bubbles";
+import { BUBBLE_SPECS } from "./bubbleSpecs";
 import { Overlay } from "./overlay";
 import { buildChapters, buildSteps } from "./steps";
+import { openChannel, type Msg, type StateMsg } from "./sync";
 import type { ContentData, TourData } from "./types";
 
 async function json<T>(url: string): Promise<T> {
@@ -52,6 +54,7 @@ async function main(): Promise<void> {
   };
   const next = () => tour.next();
   const prev = () => tour.prev();
+  const openPresenter = () => window.open("presenter.html", "bodega-presentador", "popup,width=1180,height=840");
 
   const overlay = new Overlay(document.getElementById("overlay")!, tourData, content, chapters, {
     onStartManual: () => begin(false),
@@ -65,7 +68,64 @@ async function main(): Promise<void> {
     onToggleMode: toggleMode,
     onTogglePlay: () => (tour.playing = !tour.playing),
     onFullscreen: fullscreen,
+    onPresenter: openPresenter,
   });
+
+  // ---- vista del presentador: otra ventana del mismo origen, sincronizada por BroadcastChannel ----
+  const chan = openChannel();
+  let sceneNumber = -1;
+  let sceneStartedAt = performance.now();
+  let lastSent = "";
+  let lastSentAt = 0;
+  const stateMsg = (): StateMsg => ({
+    type: "state",
+    started: overlay.started,
+    auto: tour.auto,
+    playing: tour.playing,
+    time: tour.time,
+    stepIndex: tour.stepIndex,
+    elapsed: elapsed(),
+    sceneElapsed: (performance.now() - sceneStartedAt) / 1000,
+  });
+  const broadcast = (force = false) => {
+    const msg = stateMsg();
+    const sig = `${msg.started}|${msg.auto}|${msg.playing}|${msg.stepIndex}`;
+    const now = performance.now();
+    if (force || sig !== lastSent || now - lastSentAt > 500) {
+      chan.postMessage(msg);
+      lastSent = sig;
+      lastSentAt = now;
+    }
+  };
+  chan.onmessage = (ev: MessageEvent<Msg>) => {
+    const msg = ev.data;
+    if (msg.type === "hello") return broadcast(true);
+    if (msg.type !== "cmd") return;
+    switch (msg.cmd) {
+      case "start":
+        if (!overlay.started) begin(false);
+        break;
+      case "next":
+        if (!overlay.started) begin(false);
+        else next();
+        break;
+      case "prev":
+        prev();
+        break;
+      case "nextScene":
+        tour.jumpScene(1);
+        break;
+      case "prevScene":
+        tour.jumpScene(-1);
+        break;
+      case "toggleMode":
+        toggleMode();
+        break;
+      case "goStep":
+        if (msg.index !== undefined) tour.goStep(msg.index);
+        break;
+    }
+  };
 
   window.addEventListener("keydown", (e) => {
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -126,6 +186,10 @@ async function main(): Promise<void> {
       case "?":
         overlay.toggleHelp();
         break;
+      case "p":
+      case "P":
+        openPresenter();
+        break;
       case "Escape":
         overlay.toggleHelp(false);
         tour.playing = false;
@@ -154,17 +218,34 @@ async function main(): Promise<void> {
   if (params.get("large") === "1") overlay.toggleLargeText(true);
   if (params.get("timer") === "1") overlay.showTimer();
 
+  /** Lógica de la presentación: se separa del dibujo para seguir funcionando si la ventana queda oculta. */
+  const advance = (dt: number) => {
+    tour.update(dt);
+    const chapterNow = parseInt(tour.segment.scene, 10);
+    if (chapterNow !== sceneNumber) {
+      sceneNumber = chapterNow;
+      sceneStartedAt = performance.now();
+    }
+    broadcast();
+  };
   let last = performance.now();
+  // un navegador pausa requestAnimationFrame en ventanas ocultas: este temporizador mantiene el reloj y la sincronización
+  window.setInterval(() => {
+    if (!document.hidden) return;
+    const now = performance.now();
+    advance(Math.min(3, (now - last) / 1000));
+    last = now;
+  }, 200);
   const frame = (now: number) => {
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
-    tour.update(dt);
+    advance(dt);
     const { pos, aim } = tour.pose();
     stage.camera.position.copy(pos);
     stage.camera.lookAt(aim);
     stage.followLight(aim);
     bubbles.update(tour.time);
-    const { index, total } = tour.stepsInSegment();
+    const { index, total } = tour.stepsInChapter();
     overlay.update({
       step: tour.step,
       segIndex: tour.segmentIndex,

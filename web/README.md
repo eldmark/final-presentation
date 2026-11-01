@@ -34,6 +34,20 @@ El control remoto de la sala suele mandar Av Pág / Re Pág: ya funcionan. Los c
 a los pocos segundos sin mover el mouse. Respeta `prefers-reduced-motion`: los viajes largos entre
 estaciones pasan a ser cortes.
 
+## Vista del presentador
+
+Una segunda ventana, sincronizada en vivo con la presentación (mismo navegador, sin servidor):
+
+- Se abre con la tecla **P**, con el botón **Presentador** de la barra, o en `presenter.html`.
+- Muestra la escena actual, las **ideas clave** de quien habla, los **datos que puede citar**, lo que **no debe decir** y la **frase de relevo**.
+- Muestra **lo que viene** en el siguiente paso y avisa cuando cambia de escena y de persona.
+- Dos relojes: el **total** contra los 14:00 y el de **esta escena** contra su tiempo (ámbar al pasarse, rojo al pasarse un 25 %).
+- Controla la presentación: Siguiente, Anterior, escena anterior o siguiente, modo, y clic en cualquier paso o escena.
+- Las notas de cada persona están en `public/data/notes.json`.
+
+Ponla en la pantalla del portátil y la presentación en el proyector. Las dos ventanas deben estar **visibles**:
+si una ventana queda minimizada o tapada, el navegador la pausa y la sincronización se retrasa.
+
 ## Para ensayar
 
 | Parámetro | Efecto |

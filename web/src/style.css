@@ -43,6 +43,8 @@ body.idle { cursor: none; }
 .dots { display: flex; gap: 5px; margin-left: 6px; }
 .dots i { width: 8px; height: 8px; border-radius: 50%; background: rgba(245, 240, 235, 0.28); transition: background 0.3s, transform 0.3s; }
 .dots i.on { background: #ffd166; }
+.dots u { display: block; width: 70px; height: 6px; border-radius: 3px; background: rgba(245, 240, 235, 0.25); overflow: hidden; text-decoration: none; }
+.dots s { display: block; height: 100%; background: #ffd166; text-decoration: none; transition: width 0.3s; }
 
 /* ---------- tarjeta de título de escena ---------- */
 .title-card { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); display: flex; align-items: center; justify-content: center;

@@ -76,6 +76,8 @@ export interface Step {
   cue?: string;
   quote?: { who: string; text: string };
   card?: { image?: string; facts?: Fact[]; caption: string };
+  label?: string; // resumen corto del paso para la vista del presentador
+  bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)
   arrival?: boolean;
 }
 

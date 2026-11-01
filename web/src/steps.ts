@@ -10,6 +10,7 @@ interface Ev {
   cue?: string;
   quote?: { who: string; text: string };
   card?: { image?: string; facts?: import("./types").Fact[]; caption: string };
+  bubble?: string;
 }
 
 /**
@@ -32,7 +33,7 @@ export function buildSteps(
     c?.quotes.forEach((x) => evs.push({ at: x.at, quote: { who: x.who, text: x.text } }));
     c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, caption: x.caption } }));
     const segBubbles = retimed.filter((b) => b.at >= seg.start && b.at < seg.end);
-    segBubbles.forEach((b) => evs.push({ at: b.at }));
+    segBubbles.forEach((b) => evs.push({ at: b.at, bubble: b.text }));
     evs.sort((a, b) => a.at - b.at);
 
     const prev = tour.segments[si - 1];
@@ -51,9 +52,20 @@ export function buildSteps(
       if (ev.cue) {
         cue = ev.cue;
         cur.cue = ev.cue;
+        cur.label = ev.cue;
       }
-      if (ev.quote) cur.quote = ev.quote;
-      if (ev.card) cur.card = ev.card;
+      if (ev.quote) {
+        cur.quote = ev.quote;
+        cur.label ??= `Cita: “${ev.quote.text}”`;
+      }
+      if (ev.card) {
+        cur.card = ev.card;
+        cur.label ??= `Tarjeta: ${ev.card.caption}`;
+      }
+      if (ev.bubble) {
+        (cur.bubbles ??= []).push(ev.bubble);
+        cur.label ??= `💬 ${ev.bubble}`;
+      }
       stepOfEvent.set(ev.at, cur);
     }
     // cada burbuja aparece cuando se llega a su paso

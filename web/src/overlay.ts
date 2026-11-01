@@ -12,6 +12,7 @@ export interface OverlayHandlers {
   onToggleMode: () => void;
   onTogglePlay: () => void;
   onFullscreen: () => void;
+  onPresenter: () => void;
 }
 
 export interface OverlayState {
@@ -70,6 +71,7 @@ export class Overlay {
           <button data-act="mode" class="wide" aria-label="Cambiar entre paso a paso y automático" title="Modo (M)"></button>
           <button data-act="play" aria-label="Pausar o reanudar" title="Pausa (Espacio)" hidden>⏸</button>
           <button data-act="text" aria-label="Texto grande" aria-pressed="false" title="Texto grande (A)">A²</button>
+          <button data-act="presenter" class="wide" aria-label="Abrir la vista del presentador" title="Vista del presentador (P)">Presentador</button>
           <button data-act="help" aria-label="Ayuda de teclado" title="Ayuda (H)">?</button>
           <button data-act="full" aria-label="Pantalla completa" title="Pantalla completa (F)">⛶</button>
         </div>
@@ -86,6 +88,7 @@ export class Overlay {
           <dt>A</dt><dd>Texto grande</dd>
           <dt>F</dt><dd>Pantalla completa</dd>
           <dt>Inicio</dt><dd>Volver al principio</dd>
+          <dt>P</dt><dd>Abrir la vista del presentador (segunda ventana)</dd>
           <dt>H · ?</dt><dd>Esta ayuda</dd>
         </dl>
         <p>El control remoto de la sala suele enviar Av Pág y Re Pág: ya funcionan.</p>
@@ -135,6 +138,7 @@ export class Overlay {
       else if (act === "full") h.onFullscreen();
       else if (act === "text") this.toggleLargeText();
       else if (act === "help") this.toggleHelp();
+      else if (act === "presenter") h.onPresenter();
     });
   }
 
@@ -204,7 +208,11 @@ export class Overlay {
 
     this.el["pill-title"].textContent = `${chapter.number} · ${chapter.title}`;
     this.el["pill-who"].textContent = chapter.speaker;
-    this.el.dots.innerHTML = Array.from({ length: s.stepsInSeg }, (_, i) => `<i class="${i <= s.stepInSeg ? "on" : ""}"></i>`).join("");
+    // con muchos pasos, una barrita en vez de puntos
+    this.el.dots.innerHTML =
+      s.stepsInSeg <= 12
+        ? Array.from({ length: s.stepsInSeg }, (_, i) => `<i class="${i <= s.stepInSeg ? "on" : ""}"></i>`).join("")
+        : `<u><s style="width:${((s.stepInSeg + 1) / s.stepsInSeg) * 100}%"></s></u>`;
 
     this.el.subtitle.hidden = !s.step.cue;
     if (s.step.cue) {

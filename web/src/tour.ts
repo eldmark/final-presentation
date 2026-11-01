@@ -66,6 +66,13 @@ export class Tour {
     return { index: inSeg.indexOf(this.step), total: inSeg.length };
   }
 
+  /** Posición del paso actual dentro de su escena completa (varias estaciones = una escena). */
+  stepsInChapter(): { index: number; total: number } {
+    const number = (s: Step) => parseInt(this.data.segments[s.seg].scene, 10);
+    const inChapter = this.steps.filter((s) => number(s) === number(this.step));
+    return { index: inChapter.indexOf(this.step), total: inChapter.length };
+  }
+
   update(dt: number): void {
     if (this.anim) {
       const a = this.anim;
@@ -108,6 +115,10 @@ export class Tour {
       return idx;
     }
     return this.stepIndex;
+  }
+
+  goStep(index: number): void {
+    this.animateTo(index);
   }
 
   next(): void {

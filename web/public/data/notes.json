@@ -1,0 +1,126 @@
+{
+  "chapters": {
+    "1": {
+      "ideas": [
+        "Bodega de Licores, Quetzaltenango: todo era presencial",
+        "Cada compra empezaba con una pregunta: ¿cuánto cuesta? ¿hay?, por WhatsApp, llamada o visita",
+        "La tienda atendía mostrador, teléfono y mensajes a la vez; cada sucursal era una isla",
+        "La administradora decidía con intuición, con reportes separados",
+        "Giro: ¿y si cada pregunta del cliente fuera un dato?"
+      ],
+      "data": [
+        "4 de 4 administradores: consultas por WhatsApp o llamada, de cada 2 días a diario",
+        "Cada consulta quitaba de 1 a 10+ minutos",
+        "3 de 4 reconocen ventas perdidas por falta de producto",
+        "3 de 3 clientes querían ver precios en línea; 2 de 3 ya habían llamado antes de ir"
+      ],
+      "avoid": ["Cifras de ventas perdidas en quetzales: no están medidas", "Decir que el WhatsApp no funcionaba"],
+      "handoff": "Lo primero que cambió fue lo que ve el cliente. Lázaro."
+    },
+    "2": {
+      "ideas": [
+        "Sugerencias mientras escribe, filtros por categoría, precio y disponibilidad",
+        "Precio y stock por cada sucursal en una sola pantalla",
+        "Las ofertas se diseñan en un editor visual parecido a Canva",
+        "Modo oscuro, versión móvil con menú lateral, texto al 200 %"
+      ],
+      "data": [
+        "Catálogo de 1 207 productos",
+        "Contraste 4.5:1, foco visible, botones de 44 px, uso con teclado",
+        "Accesibilidad revisada con axe en 11 rutas, tema claro y oscuro"
+      ],
+      "avoid": ["Precios o nombres de producto sin revisar en las capturas"],
+      "handoff": "Con el producto elegido, el cliente tiene que comprarlo con confianza. Jorge."
+    },
+    "3": {
+      "ideas": [
+        "Carrito y reserva: si no la recoge, expira sola y libera el stock",
+        "Recomendaciones por coocurrencia (Basket Analysis), optimizado para producción en GCP",
+        "NeuroLab UVG, 25 de septiembre: 6 personas, 3 tareas, eye tracking, sensor electrodérmico y encuesta",
+        "Búsqueda tolerante a errores de escritura (trigramas)",
+        "El chat tapaba la paginación y se corrigió; también probado con lector de pantalla y teclado"
+      ],
+      "data": [
+        "Buscar fue el 63.8 % del tiempo: mediana 113 s contra 12 s para agregar al carrito",
+        "4 de 5 encuestados con dificultades al buscar",
+        "2 de 5 videos: confundieron comprar con reservar",
+        "Más picos al escribir en 5 de 5 casos (exploratorio)"
+      ],
+      "avoid": [
+        "Decir que una cifra ya mejoró: falta la segunda medición",
+        "Nombres o datos de los participantes (son P01 a P06)",
+        "Que 'Reservar para recoger' y 'Comprar y pagar' ya están aplicados: confirmar antes"
+      ],
+      "handoff": "Cuando el cliente confirma, el pedido tiene que llegar a la tienda. Marcelo."
+    },
+    "4": {
+      "ideas": [
+        "El pedido llega a la sucursal; la empleada lo ve en su panel, con pedidos y reservas primero",
+        "Cada cambio de estado avisa al cliente por correo",
+        "Easy Orders y productos favoritos",
+        "Almacén 3.1 se sincroniza en solo lectura por Tailscale: leemos, no modificamos",
+        "Una sola base de datos; imágenes en R2, sin fondo y en WebP",
+        "Google Cloud con IAP. Por qué: Vue, Express, PostgreSQL y Tailscale"
+      ],
+      "data": ["1 267 imágenes subidas a R2 en un sprint", "Pruebas de carga con Locust"],
+      "avoid": ["Nombres de tablas, IPs o rutas internas", "Decir que el sistema de la tienda se reemplazó: se complementa"],
+      "handoff": "Con todos los datos en un solo lugar, ya se puede decidir. Marco."
+    },
+    "5": {
+      "ideas": [
+        "Grafana y Umami dentro del panel; los tableros se aprovisionan como código",
+        "Metabase usaba 1.5 GB; Grafana 260 MB y Umami 107 MB: unas 4 veces menos",
+        "1 · Qué dejar de comprar: capital detenido",
+        "2 · Qué empezar a vender: búsquedas sin resultados",
+        "3 · Cuándo ofertar: estacionalidad y festividades (Jorge puede presentar Festividades, 30 s)",
+        "4 · Dónde se cae la compra: abandono de carrito",
+        "5 · Qué reponer ya: stock crítico",
+        "Cada decisión termina en una acción: campaña, oferta o exporte"
+      ],
+      "data": [
+        "Festividades: Navidad 24 dic; Año Nuevo 29 dic al 4 ene; feria e Independencia 12 al 18 sep",
+        "Exportes con rango de fechas, tope de filas, sin fórmulas maliciosas y auditados"
+      ],
+      "avoid": ["Montos que no estén en una captura revisada", "Ingresos del histórico de Almacén (solo pedidos y unidades)", "Nombres de clientes"],
+      "handoff": "Con tanto dato valioso, hay que cuidarlo. Luis Ángel."
+    },
+    "6": {
+      "ideas": [
+        "El miedo, en las entrevistas: extorsión, estafas, usurpación de la empresa",
+        "Intento 1: pedido 'entregado' con fecha pasada; el servidor lo ignora, nace pendiente",
+        "Intento 2: un empleado se cambia el rol; solo el administrador edita usuarios",
+        "Bitácora de solo lectura; logs sin datos personales",
+        "Grafana sin sesión se corta; el tablero usa un usuario de solo lectura",
+        "Todo en tiempo real; la IP se bloquea con un clic (solo se guarda su huella cifrada)"
+      ],
+      "data": [
+        "OWASP ZAP, escaneo completo: 138 pruebas aprobadas, 0 fallos",
+        "Señales: 401, 403, CORS, 429 e IP bloqueada"
+      ],
+      "avoid": ["Decir 'es imposible hackearlo': di 'lo atacamos nosotros primero'", "IPs reales, dominios internos o claves", "Pruebas contra producción"],
+      "handoff": "Todo esto tiene un valor medible. Julián."
+    },
+    "7": {
+      "ideas": [
+        "La métrica: minutos de personal liberados por semana",
+        "Piloto de 90 días: 79 visitantes, 122 visitas y 230 eventos de consulta",
+        "Cota superior: de 3.8 a 38 horas, si cada evento hubiera sido una llamada de 1 a 10 minutos",
+        "Gana el cliente, el empleado y la administradora"
+      ],
+      "data": ["Umami: 2 440 vistas de página, rebote 17 %, visita de 6 min 17 s"],
+      "avoid": ["'Ahorramos X horas' o 'X %': es una cota con supuesto", "Presentarlo como tráfico de clientes: es piloto y pruebas del equipo"],
+      "handoff": "Lázaro cierra."
+    },
+    "8": {
+      "ideas": [
+        "El propósito: reducir llamadas y visitas, y convertir cada pregunta en un dato",
+        "El teléfono quedó en silencio y el tablero encendido",
+        "Mencionar el disclaimer: diseño, datos anonimizados, marca autorizada, 3D artístico",
+        "Gracias"
+      ],
+      "data": [],
+      "avoid": ["Leer el disclaimer completo: basta con mencionarlo"],
+      "handoff": "Gracias."
+    }
+  }
+}
