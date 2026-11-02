@@ -108,6 +108,8 @@ async function main(): Promise<void> {
     },
     cover,
   );
+  const demo = content.segments.cierre?.video;
+  if (demo) overlay.setDemo(demo);
   const mapCfg = await json<MapCfg>("data/map.json").catch(() => null);
   const map = mapCfg ? new MapIntro(document.getElementById("overlay")!, mapCfg) : null;
 

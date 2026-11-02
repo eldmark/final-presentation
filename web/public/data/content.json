@@ -626,7 +626,12 @@
           "qr": "https://bodegadelicores.app",
           "caption": "bodegadelicores.app"
         }
-      ]
+      ],
+      "video": {
+        "src": "media/demo-rapido.mp4",
+        "from": 769,
+        "until": 796
+      }
     }
   }
 }

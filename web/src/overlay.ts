@@ -249,6 +249,44 @@ export class Overlay {
     }, 1500);
   }
 
+  private demo: { el: HTMLVideoElement; from: number; until: number; on: boolean } | null = null;
+
+  /** Video de demo mudo y en bucle, visible solo entre `from` y `until` (tiempo del recorrido). */
+  setDemo(cfg: { src: string; from: number; until: number }): void {
+    const el = document.createElement("video");
+    el.className = "demo-video";
+    // WebM primero (lo reproduce cualquier Chromium/Firefox) y MP4 de respaldo (Safari)
+    const base = cfg.src.replace(/\.[^.]+$/, "");
+    for (const [ext, type] of [["webm", "video/webm"], ["mp4", "video/mp4"]]) {
+      const src = document.createElement("source");
+      src.src = `${base}.${ext}`;
+      src.type = type;
+      el.appendChild(src);
+    }
+    el.muted = true;
+    el.loop = true;
+    el.playsInline = true;
+    el.preload = "auto";
+    el.hidden = true;
+    el.setAttribute("aria-label", "Demostración rápida del sitio");
+    this.root.appendChild(el);
+    this.demo = { el, from: cfg.from, until: cfg.until, on: false };
+  }
+
+  private updateDemo(time: number): void {
+    const d = this.demo;
+    if (!d) return;
+    const want = this.started && time >= d.from && time < d.until;
+    if (want === d.on) return;
+    d.on = want;
+    d.el.hidden = !want;
+    if (want) void d.el.play().catch(() => undefined);
+    else {
+      d.el.pause();
+      d.el.currentTime = 0;
+    }
+  }
+
   /** Tras el mapa no hay telón que esperar: la cinta de la escena 1 sale enseguida. */
   skipTitleDelay(): void {
     this.firstTitle = false;
@@ -340,6 +378,7 @@ export class Overlay {
     (this.el.playBtn as HTMLButtonElement).hidden = !s.auto;
     this.el.playBtn.textContent = s.playing ? "⏸" : "▶";
 
+    this.updateDemo(s.time);
     const key = `${s.segIndex}|${s.stepInSeg}|${s.step.cue}|${s.step.quote?.text}|${s.step.card?.caption}|${this.started}`;
     if (key === this.lastKey) return;
     this.lastKey = key;

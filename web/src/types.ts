@@ -56,6 +56,8 @@ export interface ImageCard {
 }
 
 export interface SegmentContent {
+  /** Video mudo en bucle que se muestra entre dos instantes del recorrido (p. ej. la demo durante las conclusiones). */
+  video?: { src: string; from: number; until: number };
   cues: Cue[];
   quotes: Quote[];
   cards: ImageCard[];
