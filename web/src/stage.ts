@@ -34,7 +34,7 @@ export class Stage {
   private readonly rim: THREE.DirectionalLight;
   private readonly fx: PostFX;
   private readonly dust = new Dust();
-  private readonly clock = new THREE.Clock();
+  private readonly born = performance.now();
   private aim = new THREE.Vector3();
   quality: Quality = "high";
   private readonly sensorWidth = 36; // mm, igual que la cámara de Blender
@@ -197,7 +197,7 @@ export class Stage {
 
   /** focus: 0 en el recorrido, 1 con la cámara encima de una pantalla. */
   render(focus = 0): void {
-    const t = this.clock.getElapsedTime();
+    const t = (performance.now() - this.born) / 1000;
     this.dust.update(t, this.aim, (window.innerHeight * this.pixelRatio()) / 1080);
     this.dust.points.visible = focus < 0.98;
     if (this.quality === "high") this.fx.render(focus, t);

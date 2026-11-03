@@ -9,6 +9,7 @@ import "@fontsource/barlow-condensed/700.css";
 import "./style.css";
 import * as THREE from "three";
 import { Stage, type Quality } from "./stage";
+import { People } from "./people";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
@@ -136,6 +137,9 @@ async function main(): Promise<void> {
   overlay.setProgress(0.04);
   const root = await stage.loadModel("models/diorama.glb");
   await stage.applyScreenOverrides(root);
+  const people = new People();
+  // si faltan los personajes, se quedan los maniquíes del modelo
+  await people.load(root).catch((err: unknown) => console.warn("Personajes:", err));
   const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
   overlay.setProgress(0.3);
 
@@ -402,6 +406,7 @@ async function main(): Promise<void> {
     stage.followLight(aim);
 
     bubbles.update(tour.time);
+    people.update(dt);
     const { index, total } = tour.stepsInChapter();
     if (!map?.active) overlay.update({
       step: tour.step,

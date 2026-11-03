@@ -25,7 +25,8 @@ async function main(): Promise<void> {
         <p>Las cifras de uso salen de un piloto de 90 días, con pruebas del equipo incluidas; no son tráfico de clientes.
         Las citas son textuales de las entrevistas del Corte 1 (enero de 2026), atribuidas por rol.</p></section>
       <section><h2>Sobre los modelos 3D</h2><p>${esc(content.disclaimer[2])}</p>
-        <p>Las figuras son maniquíes neutros que ilustran lo que se narra: no representan a ninguna persona.</p></section>
+        <p>Las figuras ilustran lo que se narra: no representan a ninguna persona. El cliente, la empleada y la administradora
+        son modelos animados de Quaternius (licencia CC0, tomados de Poly Pizza) con los colores de la presentación.</p></section>
       <section><h2>Quién hizo qué</h2>
         <table>${TEAM.map(([n, d]) => `<tr><th>${esc(n)}</th><td>${esc(d)}</td></tr>`).join("")}</table></section>
       <p class="foot">Ingeniería de Software · Grupo 7 · Universidad del Valle de Guatemala</p>
