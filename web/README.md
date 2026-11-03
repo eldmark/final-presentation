@@ -182,12 +182,13 @@ si una ventana queda minimizada o tapada, el navegador la pausa y la sincronizac
 
 | Qué | Archivo |
 | --- | --- |
-| Subtítulos, citas, tarjetas (imagen o cifras), disclaimer | `public/data/content.json`. Cada elemento con su segundo `at`; los que caen a menos de 1.6 s se funden en un mismo paso |
+| Subtítulos, citas, tarjetas (imagen, cifras, logos o galería de capturas con `"layout": "gallery"`), disclaimer | `public/data/content.json`. Cada elemento con su segundo `at`; los que caen a menos de 1.6 s se funden en un mismo paso |
 | Burbujas de WhatsApp | `src/bubbles.ts` (`BUBBLE_SPECS`) |
 | Recorrido de cámara | `public/data/tour.json` (lo genera `blender/04_camera_tour.py`) |
 | Modelo 3D | `public/models/diorama.glb` (lo genera `blender/05_export_glb.py`) |
-| Personajes animados (cliente, empleada, administradora) | `public/models/people/` y `src/people.ts` (colores, animación por estación). Ocupan el lugar de las figuras `fig_*` del modelo; el atacante sigue siendo la silueta de Blender |
-| Ambientación (estanterías con botellas, lámparas, plantas, alfombras, cuadros, sofá, vetas de madera, botella de vidrio) | `src/decor.ts`. Se monta en código encima del modelo: no hace falta volver a exportar de Blender |
+| Personajes animados (cliente, empleado, administrador) | `public/models/people/` y `src/people.ts` (colores, pose: de pie, sentado o con el celular). Ocupan el lugar de las figuras `fig_*` del modelo; el atacante sigue siendo la silueta de Blender |
+| Ambientación (fachada de la bodega en la escena 1, estanterías con botellas, lámparas, plantas, vetas de madera, botella de vidrio) | `src/decor.ts`. Se monta en código encima del modelo: no hace falta volver a exportar de Blender |
+| Escena de seguridad (domo, paquetes del ataque, «BLOQUEADO», luces de los racks) | `src/security.ts` |
 | Imágenes de las tarjetas | `public/cards/` |
 | **Cambiar una captura de pantalla del modelo** | `public/screens/manifest.json` |
 

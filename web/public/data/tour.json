@@ -25,7 +25,7 @@
       "start": 115,
       "end": 150,
       "speaker": "Julián",
-      "scene": "1 · El antes (administradora)"
+      "scene": "1 · El antes (administrador)"
     },
     {
       "id": "cliente_elige",
@@ -65,7 +65,7 @@
       "start": 480,
       "end": 630,
       "speaker": "Marco",
-      "scene": "5 · La administradora decide"
+      "scene": "5 · El administrador decide"
     },
     {
       "id": "seguridad",

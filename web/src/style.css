@@ -110,6 +110,18 @@ body.idle .subtitle { bottom: 4.5vh; }
 .card.layout-large img:not(.qr) { width: 100%; max-height: 62vh; object-fit: contain; background: #15090c; }
 .card.layout-large figcaption { font-size: clamp(16px, 1.6vw, 28px); text-align: center; }
 .card .qr { width: min(360px, 40vh); margin: 24px auto 10px; border-radius: 12px; }
+
+/* galería: varias capturas lado a lado (modo oscuro, texto al 200 %, móvil) */
+.card.layout-gallery { left: 50%; top: 47%; width: min(1500px, 94vw); transform: translate(-50%, -50%); border-radius: 20px;
+  animation: zoom-in 0.55s cubic-bezier(0.2, 0.8, 0.2, 1) both; background: #1a0b0e; }
+.gallery { display: grid; grid-template-columns: 1fr 1fr 0.44fr; gap: clamp(10px, 1.2vw, 20px); align-items: center; padding: clamp(14px, 1.6vw, 26px); }
+.gallery[hidden] { display: none; }
+.gallery figure { margin: 0; display: grid; gap: 10px; justify-items: center; animation: slide-r 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.gallery figure:nth-child(2) { animation-delay: 0.12s; }
+.gallery figure:nth-child(3) { animation-delay: 0.24s; }
+.card .gallery img { width: 100%; max-height: 58vh; object-fit: contain; border-radius: 10px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45); background: #000; }
+.gallery span { padding: 4px 14px; border-radius: 999px; background: var(--burgundy); color: #fff; font-weight: 600; font-size: clamp(12px, 1.05vw, 18px); }
+.card.layout-gallery figcaption { text-align: center; font-size: clamp(16px, 1.6vw, 28px); background: var(--cream); }
 .dimmer { position: absolute; inset: 0; background: rgba(12, 5, 7, 0.55); pointer-events: none !important; animation: fade 0.4s ease both; }
 
 /* tarjeta con cifras */

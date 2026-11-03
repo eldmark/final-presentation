@@ -5,7 +5,7 @@
         "Bodega de Licores, Quetzaltenango: todo era presencial",
         "Cada compra empezaba con una pregunta: ¿cuánto cuesta? ¿hay?, por WhatsApp, llamada o visita",
         "La tienda atendía mostrador, teléfono y mensajes a la vez; cada sucursal era una isla",
-        "La administradora decidía con intuición, con reportes separados",
+        "El administrador decidía con intuición, con reportes separados",
         "Giro: ¿y si cada pregunta del cliente fuera un dato?",
         "OBJETIVO 1: Construir un panel de administración autogestionable que permita al personal de la licorera actualizar entradas y salidas de inventario en un tiempo máximo de 5 minutos diarios.",
         "OBJETIVO 2: Evaluar el impacto del software comparando métricas operativas del negocio, comprobando una reducción mínima de 15 horas semanales en la gestión manual de mensajes.",
@@ -65,7 +65,7 @@
     },
     "4": {
       "ideas": [
-        "El pedido llega a la sucursal; la empleada lo ve en su panel, con pedidos y reservas primero",
+        "El pedido llega a la sucursal; el empleado lo ve en su panel, con pedidos y reservas primero",
         "Cada cambio de estado avisa al cliente por correo",
         "Easy Orders y productos favoritos",
         "Almacén 3.1 se sincroniza en solo lectura por Tailscale: leemos, no modificamos",
@@ -134,7 +134,7 @@
         "La métrica: minutos de personal liberados por semana",
         "Piloto de 90 días: 79 visitantes, 122 visitas y 230 eventos de consulta",
         "Cota superior: de 3.8 a 38 horas, si cada evento hubiera sido una llamada de 1 a 10 minutos",
-        "Gana el cliente, el empleado y la administradora",
+        "Gana el cliente, el empleado y el administrador",
         "Costo real de la infraestructura: USD 2.76 en Google Cloud del 26 de sept al 2 de oct (captura de facturación)"
       ],
       "data": [
@@ -151,7 +151,7 @@
         "Conclusión 1: cada pregunta del cliente ahora es un dato",
         "El cliente encuentra, reserva y compra sin llamar",
         "La tienda atiende sus pedidos y reservas sin interrupciones",
-        "La administradora decide con datos",
+        "El administrador decide con datos",
         "La seguridad se ve, se mide y se audita",
         "Invitar a probar la plataforma: QR a bodegadelicores.app"
       ],

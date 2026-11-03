@@ -100,6 +100,7 @@ export class Overlay {
         <img class="qr" alt="Código QR" hidden />
         <div class="facts" hidden></div>
         <ul class="logos" hidden></ul>
+        <div class="gallery" hidden></div>
         <p class="logo-use" hidden></p>
         <figcaption></figcaption>
       </figure>
@@ -430,11 +431,12 @@ export class Overlay {
         : `<u><s style="width:${((s.stepInSeg + 1) / s.stepsInSeg) * 100}%"></s></u>`;
 
     const card = s.step.card;
-    const large = card?.layout === "large";
-    const focused = Boolean(s.step.focus) || large;
+    const large = card?.layout === "large" || card?.layout === "gallery";
+    const focused = Boolean(s.step.focus);
 
-    // con un acercamiento o una tarjeta grande el texto baja su opacidad para dejar ver lo que se muestra
-    this.el.subtitle.hidden = !s.step.cue || Boolean(card?.logos); // la tarjeta de logos ya lleva su propio texto
+    // una tarjeta grande ya lleva su propio texto: el subtítulo se esconde para no encimarse con ella;
+    // con un acercamiento a una pantalla, baja su opacidad para dejar verla
+    this.el.subtitle.hidden = !s.step.cue || large || Boolean(card?.logos);
     this.el.subtitle.classList.toggle("dim", focused);
     if (s.step.cue) {
       this.el.subtitle.innerHTML = words(s.step.cue, 38, 0);
@@ -462,6 +464,13 @@ export class Overlay {
       const useEl = this.el.card.querySelector<HTMLElement>(".logo-use")!;
       logos.hidden = !card.logos;
       useEl.hidden = !card.logos;
+      const gallery = this.el.card.querySelector<HTMLElement>(".gallery")!;
+      gallery.hidden = !card.gallery;
+      if (card.gallery) {
+        gallery.innerHTML = card.gallery
+          .map((g) => `<figure><img src="${esc(g.src)}" alt="${esc(g.label)}" /><span>${esc(g.label)}</span></figure>`)
+          .join("");
+      }
       if (card.logos) this.setupLogos(logos, useEl, card.logos, card.groups);
       if (card.image) img.setAttribute("src", card.image);
       if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");

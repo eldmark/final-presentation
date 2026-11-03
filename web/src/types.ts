@@ -50,7 +50,13 @@ export interface Logo {
   hints?: string[]; // palabras clave de por qué se eligió (solo en la vista del presentador)
 }
 
-export type CardLayout = "left" | "right" | "large" | "objetivos";
+export type CardLayout = "left" | "right" | "large" | "objetivos" | "gallery";
+
+/** Una captura de la galería (varias pantallas lado a lado, con su etiqueta). */
+export interface Shot {
+  src: string;
+  label: string;
+}
 
 /** Tarjeta con una imagen, cifras destacadas o un código QR. */
 export interface ImageCard {
@@ -59,6 +65,7 @@ export interface ImageCard {
   image?: string;
   facts?: Fact[];
   logos?: Logo[]; // cuadrícula de logos (síntesis de tecnologías)
+  gallery?: Shot[]; // varias capturas lado a lado (layout "gallery")
   groups?: { id: string; title: string }[]; // títulos de los grupos de logos (por Logo.group)
   qr?: string; // URL que se codifica en un QR
   layout?: CardLayout; // left por omisión; large = imagen grande al centro; right = panel a la derecha
@@ -94,7 +101,7 @@ export interface Step {
   seg: number; // índice de segmento (estación)
   cue?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: Fact[]; logos?: Logo[]; groups?: { id: string; title: string }[]; qr?: string; layout?: CardLayout; caption: string };
+  card?: { image?: string; facts?: Fact[]; logos?: Logo[]; gallery?: Shot[]; groups?: { id: string; title: string }[]; qr?: string; layout?: CardLayout; caption: string };
   focus?: string; // pantalla a la que se acerca la cámara
   label?: string; // resumen corto del paso para la vista del presentador
   bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)

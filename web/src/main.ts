@@ -11,6 +11,7 @@ import * as THREE from "three";
 import { Stage, type Quality } from "./stage";
 import { People } from "./people";
 import { Decor } from "./decor";
+import { Security } from "./security";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
@@ -143,6 +144,7 @@ async function main(): Promise<void> {
   // si faltan los personajes, se quedan los maniquíes del modelo
   await people.load(root).catch((err: unknown) => console.warn("Personajes:", err));
   const decor = new Decor(stage.scene, root);
+  const security = new Security(stage.scene);
   decor.setQuality(stage.quality === "high");
   const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
   overlay.setProgress(0.3);
@@ -151,6 +153,7 @@ async function main(): Promise<void> {
   for (const s of steps) {
     if (s.card?.image) images.add(s.card.image);
     s.card?.logos?.forEach((l) => images.add(l.src));
+    s.card?.gallery?.forEach((g) => images.add(g.src));
   }
   const focusNames = new Set(steps.map((s) => s.focus).filter((f): f is string => Boolean(f)));
   const warmPoses = [
@@ -412,6 +415,7 @@ async function main(): Promise<void> {
     bubbles.update(tour.time);
     people.update(dt);
     decor.update(aim);
+    security.update(dt);
     const { index, total } = tour.stepsInChapter();
     if (!map?.active) overlay.update({
       step: tour.step,

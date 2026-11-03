@@ -6,7 +6,7 @@ import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js"
 import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
 import { ShaderPass } from "three/addons/postprocessing/ShaderPass.js";
 
-/** Oclusión ambiental a media resolución; las burbujas (sprites) no cuentan, igual que los puntos. */
+/** Oclusión ambiental a media resolución; las burbujas (sprites), los vidrios y los efectos (userData.noAO) no cuentan. */
 class SceneAO extends GTAOPass {
   override setSize(width: number, height: number): void {
     super.setSize(Math.max(1, Math.round(width / 2)), Math.max(1, Math.round(height / 2)));
@@ -21,7 +21,7 @@ class SceneAO extends GTAOPass {
   ): void {
     const hidden: THREE.Object3D[] = [];
     this.scene.traverseVisible((o) => {
-      if ((o as THREE.Sprite).isSprite) hidden.push(o);
+      if ((o as THREE.Sprite).isSprite || o.userData.noAO) hidden.push(o);
     });
     for (const o of hidden) o.visible = false;
     super.render(renderer, writeBuffer, readBuffer, deltaTime, maskActive);

@@ -157,11 +157,6 @@
           "text": "Ofertas diseñadas en un editor visual"
         },
         {
-          "at": 213,
-          "dur": 10,
-          "text": "La vista de usuario: el modal de oferta al entrar"
-        },
-        {
           "at": 224,
           "dur": 14,
           "text": "Modo oscuro · versión móvil · texto al 200 %"
@@ -190,11 +185,15 @@
           "caption": "Inicio · carrusel de oferta (Casillero del Diablo) diseñado en el editor visual"
         },
         {
-          "at": 213,
-          "dur": 10,
-          "layout": "large",
-          "image": "cards/home-usuario.jpg",
-          "caption": "Vista de usuario · modal de oferta al entrar"
+          "at": 224,
+          "dur": 14,
+          "layout": "gallery",
+          "gallery": [
+            { "src": "cards/ux-modo-oscuro.png", "label": "Modo oscuro" },
+            { "src": "cards/ux-texto-200.png", "label": "Texto al 200 %" },
+            { "src": "cards/ux-movil.jpg", "label": "Versión móvil (y en inglés)" }
+          ],
+          "caption": "El mismo catálogo en modo oscuro, con texto al 200 % y en el celular"
         }
       ]
     },
@@ -412,25 +411,7 @@
               "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
             }
           ],
-          "caption": "Metabase 1.5 GB de RAM · Grafana 260 MB + Umami 107 MB"
-        },
-        {
-          "at": 598,
-          "dur": 12,
-          "layout": "large",
-          "logos": [
-            {
-              "name": "Grafana",
-              "src": "logos/grafana.svg",
-              "use": "Tableros del negocio (ventas, inventario, demanda, estacionalidad) aprovisionados como código · 260 MB de RAM."
-            },
-            {
-              "name": "Umami",
-              "src": "logos/umami.svg",
-              "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
-            }
-          ],
-          "caption": "4 veces menos recursos que Metabase"
+          "caption": "Grafana 260 MB + Umami 107 MB frente a 1.5 GB de Metabase: 4 veces menos recursos"
         }
       ]
     },
@@ -535,7 +516,7 @@
         },
         {
           "at": 780,
-          "text": "Cota superior. Gana el cliente, el empleado y la administradora"
+          "text": "Cota superior. Gana el cliente, el empleado y el administrador"
         }
       ],
       "quotes": [
@@ -553,7 +534,7 @@
             {
               "name": "Vue 3",
               "src": "logos/vuedotjs.svg",
-              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel de la administradora y editor de ofertas.",
+              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel del administrador y editor de ofertas.",
               "group": "proyecto",
               "hints": [
                 "componentes",
@@ -734,7 +715,7 @@
             {
               "name": "Grafana",
               "src": "logos/grafana.svg",
-              "use": "Tableros de decisiones y de seguridad (SOC) para la administradora.",
+              "use": "Tableros de decisiones y de seguridad (SOC) para el administrador.",
               "group": "proyecto",
               "hints": [
                 "4 veces menos RAM",
@@ -929,7 +910,7 @@
         },
         {
           "at": 807,
-          "text": "La administradora decide con datos, no con intuición"
+          "text": "El administrador decide con datos, no con intuición"
         },
         {
           "at": 813,

@@ -1,5 +1,4 @@
 import * as THREE from "three";
-import { RoundedBoxGeometry } from "three/addons/geometries/RoundedBoxGeometry.js";
 
 /**
  * Ambientación hecha en código encima del diorama de Blender: estanterías llenas, vetas de madera,
@@ -308,41 +307,6 @@ function frame(parent: THREE.Object3D, x: number, y: number, w: number, h: numbe
   mesh(new THREE.PlaneGeometry(w, h), std("#ffffff", 0.85, { map: tex }), [x, y, wall + 0.042], parent).castShadow = false;
 }
 
-const volcano = (ctx: CanvasRenderingContext2D, W: number, H: number) => {
-  // Quetzaltenango: el Santa María al atardecer
-  const sky = ctx.createLinearGradient(0, 0, 0, H);
-  sky.addColorStop(0, "#f2b36b");
-  sky.addColorStop(1, "#f5e6d0");
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = "#ffd166";
-  ctx.beginPath();
-  ctx.arc(W * 0.72, H * 0.38, H * 0.12, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#841c26";
-  ctx.beginPath();
-  ctx.moveTo(-10, H);
-  ctx.lineTo(W * 0.42, H * 0.22);
-  ctx.lineTo(W * 0.5, H * 0.26);
-  ctx.lineTo(W + 10, H);
-  ctx.fill();
-  ctx.fillStyle = "#4a0e15";
-  ctx.fillRect(0, H * 0.82, W, H * 0.18);
-};
-
-const abstract = (ctx: CanvasRenderingContext2D, W: number, H: number) => {
-  ctx.fillStyle = "#f5f0eb";
-  ctx.fillRect(0, 0, W, H);
-  ctx.fillStyle = "#2c6bd6";
-  ctx.fillRect(W * 0.1, H * 0.15, W * 0.35, H * 0.7);
-  ctx.fillStyle = "#841c26";
-  ctx.beginPath();
-  ctx.arc(W * 0.65, H * 0.45, H * 0.28, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#d4a53c";
-  ctx.fillRect(W * 0.5, H * 0.72, W * 0.4, H * 0.08);
-};
-
 const bottlePoster = (ctx: CanvasRenderingContext2D, W: number, H: number) => {
   ctx.fillStyle = "#841c26";
   ctx.fillRect(0, 0, W, H);
@@ -387,21 +351,163 @@ function papers(parent: THREE.Object3D, x: number, z: number): void {
   for (const [dx, dz] of [[-1.7, 1.0], [1.3, 1.25]]) mesh(new THREE.IcosahedronGeometry(0.06, 0), std("#f3eee6", 0.9, { flatShading: true }), [x + dx, 0.05, z + dz], parent);
 }
 
-/** Cojines y brazos para que el bloque gris de la sala sea un sofá. */
-function sofa(parent: THREE.Object3D, x: number, z: number): void {
-  const fabric = std("#8a8f99", 0.95);
-  const box = (w: number, h: number, d: number) => new RoundedBoxGeometry(w, h, d, 3, Math.min(w, h, d) * 0.3);
-  for (const s of [-1, 1]) mesh(box(0.22, 0.72, 0.98), fabric, [x + s * 1.12, 0.36, z], parent);
-  for (const s of [-1, 1]) {
-    mesh(box(1.0, 0.16, 0.74), fabric, [x + s * 0.51, 0.68, z + 0.06], parent);
-    mesh(box(0.98, 0.5, 0.2), fabric, [x + s * 0.51, 0.95, z - 0.3], parent).rotation.x = -0.12;
-  }
-  const pillow = (color: string, px: number, roll: number) => {
-    const p = mesh(box(0.38, 0.38, 0.12), std(color, 0.9), [x + px, 0.93, z - 0.12], parent);
-    p.rotation.set(-0.3, 0, roll);
+// ---------- escena 1: la fachada de la bodega ----------
+
+const WALL = -3.425; // cara de la pared trasera del modelo
+/** Centro de la vitrina (x relativa a la estación) y su repisa: ahí va la botella que recorre la historia. */
+export const SHOWCASE = { x: -1.35, sill: 0.64, z: WALL + 0.16 };
+
+function stripes(w: number, h: number, scallops: boolean): THREE.CanvasTexture {
+  const t = canvasTexture(256, h, (ctx) => {
+    for (let i = 0; i < 8; i++) {
+      ctx.fillStyle = i % 2 ? "#f3ead9" : "#7a1622";
+      ctx.fillRect(i * 32, 0, 32, h);
+    }
+    if (scallops) {
+      // borde ondulado del faldón del toldo
+      ctx.globalCompositeOperation = "destination-out";
+      for (let i = 0; i < 8; i++) {
+        ctx.beginPath();
+        ctx.arc(i * 32 + 16, h + 6, 18, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  });
+  t.wrapS = THREE.RepeatWrapping;
+  t.repeat.x = w / 2;
+  return t;
+}
+
+/** Banqueta de adoquines: el segmento del plato que queda entre la pared y z = -1.6. */
+function sidewalk(parent: THREE.Object3D, x: number): void {
+  const r = 3.98, edge = 1.6, half = Math.sqrt(r * r - edge * edge);
+  const shape = new THREE.Shape();
+  shape.moveTo(-half, edge);
+  shape.absarc(0, 0, r, Math.atan2(edge, -half), Math.atan2(edge, half), true);
+  shape.lineTo(-half, edge);
+  const tex = canvasTexture(256, 256, (ctx) => {
+    ctx.fillStyle = "#a59b90";
+    ctx.fillRect(0, 0, 256, 256);
+    for (let i = 0; i < 2; i++) for (let j = 0; j < 2; j++) {
+      ctx.fillStyle = ["#cfc6bb", "#c8beb2", "#d4ccc2", "#c4baae"][i * 2 + j];
+      ctx.fillRect(i * 128 + 4, j * 128 + 4, 120, 120);
+    }
+  });
+  tex.wrapS = tex.wrapT = THREE.RepeatWrapping; // las UV de la forma están en metros: 1 m = 2 × 2 adoquines
+  const m = mesh(new THREE.ShapeGeometry(shape, 48).rotateX(-Math.PI / 2), std("#ffffff", 0.9, { map: tex }), [x, 0.012, 0], parent);
+  m.castShadow = false;
+  mesh(new THREE.BoxGeometry(half * 2, 0.1, 0.12), std("#b9b0a5", 0.85), [x, 0.05, -edge + 0.06], parent);
+}
+
+function barrel(parent: THREE.Object3D, x: number, z: number, yaw: number): void {
+  const profile: [number, number][] = [[0, 0], [0.22, 0], [0.26, 0.12], [0.28, 0.35], [0.26, 0.58], [0.22, 0.7], [0, 0.7]];
+  const b = mesh(lathe(profile, 18), WOOD, [x, 0, z], parent);
+  b.rotation.y = yaw;
+  const hoop = std("#2b2020", 0.45, { metalness: 0.6 });
+  for (const [y, r] of [[0.1, 0.255], [0.35, 0.283], [0.6, 0.255]]) mesh(new THREE.TorusGeometry(r, 0.012, 6, 28).rotateX(Math.PI / 2), hoop, [x, y, z], parent);
+}
+
+function streetLamp(parent: THREE.Object3D, x: number, z: number): THREE.Vector3 {
+  const iron = std("#1f1a1b", 0.5, { metalness: 0.6 });
+  mesh(new THREE.CylinderGeometry(0.1, 0.13, 0.25, 12), iron, [x, 0.125, z], parent);
+  mesh(new THREE.CylinderGeometry(0.035, 0.045, 2.6, 10), iron, [x, 1.4, z], parent);
+  mesh(new THREE.CylinderGeometry(0.16, 0.1, 0.06, 4).rotateY(Math.PI / 4), iron, [x, 2.73, z], parent);
+  const glass = mesh(
+    new THREE.CylinderGeometry(0.13, 0.09, 0.3, 4, 1, true).rotateY(Math.PI / 4),
+    new THREE.MeshStandardMaterial({ color: "#000000", emissive: new THREE.Color("#ffc27a"), emissiveIntensity: 2.2, side: THREE.DoubleSide }),
+    [x, 2.91, z],
+    parent,
+  );
+  glass.castShadow = false;
+  mesh(new THREE.ConeGeometry(0.2, 0.18, 4).rotateY(Math.PI / 4), iron, [x, 3.15, z], parent);
+  return new THREE.Vector3(x, 2.9, z);
+}
+
+/** Vitrina, puerta, toldo, letrero, banqueta, farol y barriles. Devuelve dónde van las luces reales. */
+function storefront(parent: THREE.Object3D, x: number, rack: BottleRack): THREE.Vector3[] {
+  const g = new THREE.Group();
+  g.position.x = x;
+  parent.add(g);
+  const wine = std("#6e1520", 0.6);
+
+  // zócalo vino tinto a lo largo de la fachada
+  mesh(new THREE.BoxGeometry(7, 0.55, 0.06), wine, [0, 0.275, WALL + 0.03], g);
+
+  // vitrina: fondo cálido, marco, repisas con botellas a los lados y la botella de la historia al centro
+  const { x: wx } = SHOWCASE;
+  const ww = 3.0, y0 = 0.6, wh = 1.75, depth = 0.34;
+  const glow = canvasTexture(256, 160, (ctx) => {
+    const gr = ctx.createRadialGradient(128, 70, 10, 128, 80, 160);
+    gr.addColorStop(0, "#ffd9a0");
+    gr.addColorStop(0.45, "#b8642c");
+    gr.addColorStop(1, "#3a1410");
+    ctx.fillStyle = gr;
+    ctx.fillRect(0, 0, 256, 160);
+  });
+  const back = mesh(new THREE.PlaneGeometry(ww, wh), new THREE.MeshStandardMaterial({ color: "#000000", emissive: new THREE.Color("#ffffff"), emissiveMap: glow, emissiveIntensity: 0.75 }), [wx, y0 + wh / 2, WALL + 0.005], g);
+  back.castShadow = false;
+  const fr = (w: number, h: number, px: number, py: number) => mesh(new THREE.BoxGeometry(w, h, depth), WOOD_DARK, [px, py, WALL + depth / 2], g);
+  fr(ww + 0.16, 0.08, wx, y0 + wh + 0.04);
+  fr(ww + 0.16, 0.08, wx, y0 - 0.04);
+  fr(0.08, wh + 0.16, wx - ww / 2 - 0.04, y0 + wh / 2);
+  fr(0.08, wh + 0.16, wx + ww / 2 + 0.04, y0 + wh / 2);
+  const side = (from: number, to: number) => {
+    for (const y of [y0 + 0.52, y0 + 1.04]) mesh(new THREE.BoxGeometry(to - from, 0.03, depth - 0.04), WOOD_DARK, [wx + (from + to) / 2, y, WALL + depth / 2], g);
+    for (const y of [y0, y0 + 0.535, y0 + 1.055]) rack.row(x + wx + from + 0.04, x + wx + to - 0.04, y + 0.02, WALL + 0.15, [0, 1, 2]);
   };
-  pillow("#841c26", -0.7, 0.12);
-  pillow("#d4a53c", 0.75, -0.1);
+  side(-ww / 2, -0.32);
+  side(0.32, ww / 2);
+  const pane = mesh(
+    new THREE.PlaneGeometry(ww, wh),
+    new THREE.MeshPhysicalMaterial({ color: "#ffffff", roughness: 0.04, metalness: 0, transparent: true, opacity: 0.14, envMapIntensity: 1.6, depthWrite: false }),
+    [wx, y0 + wh / 2, WALL + depth - 0.01],
+    g,
+  );
+  pane.castShadow = false;
+  pane.userData.noAO = true;
+
+  // puerta con vidrio, jaladera dorada y el letrero de abierto
+  const dx = 1.5;
+  for (const [w, h, px, py] of [[1.24, 0.08, dx, 2.36], [0.08, 2.36, dx - 0.6, 1.18], [0.08, 2.36, dx + 0.6, 1.18]] as const) mesh(new THREE.BoxGeometry(w, h, 0.12), WOOD_DARK, [px, py, WALL + 0.06], g);
+  mesh(new THREE.BoxGeometry(1.1, 2.3, 0.05), wine, [dx, 1.15, WALL + 0.03], g);
+  const doorGlass = mesh(new THREE.PlaneGeometry(0.8, 0.95), new THREE.MeshStandardMaterial({ color: "#000000", emissive: new THREE.Color("#ffffff"), emissiveMap: glow, emissiveIntensity: 0.32 }), [dx, 1.62, WALL + 0.058], g);
+  doorGlass.castShadow = false;
+  mesh(new THREE.CylinderGeometry(0.018, 0.018, 0.3, 8), std("#d4a53c", 0.3, { metalness: 0.8 }), [dx + 0.4, 1.05, WALL + 0.1], g);
+  const open = canvasTexture(256, 96, (ctx) => {
+    ctx.fillStyle = "#f5f0eb";
+    ctx.beginPath();
+    ctx.roundRect(4, 4, 248, 88, 14);
+    ctx.fill();
+    ctx.fillStyle = "#841c26";
+    ctx.font = "700 52px 'Barlow Condensed', 'Arial Narrow', sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("ABIERTO", 128, 50);
+  });
+  mesh(new THREE.PlaneGeometry(0.4, 0.15), std("#ffffff", 0.8, { map: open, alphaTest: 0.5 }), [dx, 1.3, WALL + 0.065], g).castShadow = false;
+
+  // toldo a rayas vino tinto y crema sobre la vitrina y la puerta, con faldón ondulado
+  const aw = 5.4, ax = -0.35;
+  const awning = mesh(new THREE.BoxGeometry(aw, 0.025, 0.95), std("#ffffff", 0.85, { map: stripes(aw, 64, false) }), [ax, 2.62, WALL + 0.45], g);
+  awning.rotation.x = 0.36;
+  const valance = mesh(new THREE.PlaneGeometry(aw, 0.2), std("#ffffff", 0.85, { map: stripes(aw, 64, true), alphaTest: 0.5, side: THREE.DoubleSide }), [ax, 2.34, WALL + 0.9], g);
+  valance.castShadow = false;
+
+  // letrero con el logo sobre el toldo
+  mesh(new THREE.BoxGeometry(1.7, 0.52, 0.06), wine, [ax, 3.07, WALL + 0.03], g);
+  mesh(new THREE.PlaneGeometry(1.58, 0.42), std("#f5f0eb", 0.8), [ax, 3.07, WALL + 0.062], g).castShadow = false;
+  const logo = new THREE.TextureLoader().load("logo.png");
+  logo.colorSpace = THREE.SRGBColorSpace;
+  logo.anisotropy = 4;
+  mesh(new THREE.PlaneGeometry(0.76, 0.405), std("#ffffff", 0.8, { map: logo, transparent: true }), [ax, 3.07, WALL + 0.064], g).castShadow = false;
+
+  sidewalk(parent, x);
+  barrel(g, 2.55, -2.6, 0.3);
+  barrel(g, 2.95, -2.05, 1.2);
+  plant(g, -3.05, -2.0, "bush", 0.95);
+  const lamp = streetLamp(g, 3.1, -1.95).add(new THREE.Vector3(x, 0, 0));
+  // la luz de la vitrina cae sobre la banqueta
+  return [lamp, new THREE.Vector3(x + wx, y0 + wh - 0.2, WALL + 0.25)];
 }
 
 /** Cajas de pedido de cartón con cinta, en lugar de los bloques dorados. */
@@ -444,11 +550,19 @@ export class Decor {
       clearcoatRoughness: 0.05,
       envMapIntensity: 1.5,
     });
+    const heroBottle: THREE.Object3D[] = [];
+    root.updateMatrixWorld(true);
     root.traverse((o) => {
       const m = o as THREE.Mesh;
       if (!m.isMesh) return;
+      const inLobby = Math.abs(m.getWorldPosition(new THREE.Vector3()).x - sx(0)) < SPACING / 2;
       if (/^shelf_(frame|bottle)/.test(m.name)) hidden.push(m);
       if (/^order_box/.test(m.name)) parcels.push(m);
+      // los letreros del piso tienen la numeración vieja de las estaciones
+      if (/^S\d_label/.test(m.name)) hidden.push(m);
+      // la sala de la escena 1 se vuelve la fachada de la bodega
+      if (inLobby && /^(sofa_|side_table|landline_|wall_clock|phone_)/.test(m.name)) hidden.push(m);
+      if (inLobby && /^bottle_/.test(m.name)) heroBottle.push(m);
       const mat = m.material as THREE.MeshStandardMaterial;
       if (/^bottle_(body|shoulder|neck)/.test(m.name)) m.material = this.glass;
       else if (mat.name.startsWith("wood")) surface(mat, "wood");
@@ -461,13 +575,13 @@ export class Decor {
     const rack = new BottleRack();
     const lamps = (p: THREE.Vector3) => this.bulbs.push(p);
 
-    // 0 · sala del cliente: sofá con cojines, lámpara de pie, alfombra, cuadros sobre el sofá, planta
-    sofa(group, sx(0) - 1.5, -1.0);
-    lamps(lamp(group, sx(0) - 3.0, 0, -1.25, true));
-    rug(group, sx(0) - 1.2, -0.15, 3.4, 1.9, ["#e9dcc4", "#841c26", "#d4a53c"]);
-    frame(group, sx(0) - 2.45, 1.75, 0.62, 0.46, volcano);
-    frame(group, sx(0) - 0.75, 1.75, 0.46, 0.46, abstract);
-    plant(group, sx(0) + 2.7, -2.7, "tall");
+    // 0 · fachada de la bodega: el cliente pregunta por WhatsApp desde la banqueta; la botella está en la vitrina
+    storefront(group, sx(0), rack).forEach(lamps);
+    if (heroBottle.length) {
+      // la base de la botella del modelo está en (x + 1.2, 0.7, 0.3)
+      const shift = new THREE.Vector3(sx(0) + SHOWCASE.x - 1.2, SHOWCASE.sill - 0.7, SHOWCASE.z - 0.3);
+      for (const b of heroBottle) b.position.add(shift);
+    }
 
     // 1 y 5 · tienda: estantería abierta llena, cajas con botellas, lámpara en el mostrador, planta
     for (const i of [1, 5]) {
@@ -491,7 +605,7 @@ export class Decor {
     frame(group, sx(4) + 2.2, 2.0, 0.5, 0.7, bottlePoster);
     plant(group, sx(4) - 2.4, -2.5, "bush", 0.9);
 
-    // 6 · panel de la administradora: lámpara, taza, planta
+    // 6 · panel del administrador: lámpara, taza, planta
     lamps(lamp(group, sx(6) - 1.1, 0.94, 0.05));
     mug(group, sx(6) + 0.45, 0.94, 0.45, "#f5f0eb");
     plant(group, sx(6) + 3.05, -1.7, "tall");
