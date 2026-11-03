@@ -5,6 +5,7 @@
 
 ## Se ve
 La pared de monitores de la oficina. Cada decisión es un monitor que se enciende con **un tablero de Grafana** (capturas 13–20 de `08`). El tablero muestra el dato y de ahí sale una **flecha de acción** hacia un botón del sistema.
+En la presentación web, al abrir Grafana + Umami se muestran sus **logos** (no una captura de Canva), y en la decisión 3 la cámara hace **zoom** al monitor con la captura de Estacionalidad (`web/public/cards/estacionalidad.jpg`).
 
 ## Texto (≈ 400 palabras)
 

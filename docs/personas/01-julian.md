@@ -26,6 +26,11 @@
 
 **[2:20 · giro]** "Entonces nos hicimos una pregunta: **¿y si cada pregunta de un cliente fuera un dato?**"
 
+**[2:30 · objetivos]** *(tarjeta «Objetivos del proyecto» en pantalla; se responden en las conclusiones)* "Y estos son los **objetivos** con los que partimos:"
+1. "Construir un panel de administración autogestionable que permita al personal de la licorera actualizar entradas y salidas de inventario en un tiempo máximo de 5 minutos diarios."
+2. "Evaluar el impacto del software comparando métricas operativas del negocio, comprobando una reducción mínima de 15 horas semanales en la gestión manual de mensajes."
+3. "Desarrollar una API RESTful y una interfaz de usuario que permitan buscar y visualizar la disponibilidad de productos en menos de 1.5 segundos, eliminando la necesidad de asistencia humana."
+
 ## Evidencia de las entrevistas (usa 3 o 4 datos, no todos)
 Dilo como "en nuestras entrevistas del Corte 1, a 4 administradores, 4 empleados y 3 clientes". Muestra pequeña, dicho sin adornos.
 - **4 de 4** administradores reciben consultas de precio o existencias por WhatsApp o llamada, entre "cada 2 días" y "todos los días".
@@ -69,3 +74,9 @@ Mapa de sucursales y "cómo llegar" (Lázaro lo muestra), correos de pedidos y r
 **No digas** "ahorramos X horas" ni "X %": es una cota con supuesto explícito.
 
 **Pasa la palabra:** "Lázaro cierra."
+
+## Cambios del 2 de nov (valor e impacto)
+
+- La slide de **tecnologías** («Esto fue todo lo que utilizamos», dos grupos: proyecto y presentación) ahora va **al inicio de esta escena**, antes de «¿Cuánto vale esto?». OpenStreetMap queda en «usado para esta presentación».
+- Los datos de Umami usan la captura de **septiembre de 2026** (230 eventos) y se agrega la captura de costos de **Google Cloud** (USD 2.76, del 26 de sept al 2 de oct).
+- La escena 7 ahora dura 63 s (722 a 785 s) y las conclusiones corren 20 s.

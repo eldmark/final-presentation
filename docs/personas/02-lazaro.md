@@ -6,15 +6,15 @@
 ## Se ve
 1. Laptop con el catálogo (captura de `search-1000.png`). La botella (el hilo de la historia) aparece en la lista.
 2. Escribes "whisky" y aparecen **sugerencias**.
-3. Filtros por categoría, precio y disponibilidad. Ficha del producto con **stock por sucursal** (`branch-stock.png`) y botón de cómo llegar.
-4. La oferta del modal en escritorio y en móvil (`offers-desktop.png`, `offers-mobile.png`) y un segundo de cómo se diseña en el **editor visual tipo Canva**.
+3. Filtros por categoría, precio y disponibilidad.
+4. El **carrusel de inicio** con la oferta de Casillero del Diablo (`promo-hero`), la **vista de usuario** con el modal de oferta (`home-usuario`) y un segundo de cómo se diseña en el **editor visual tipo Canva**.
 5. Cambio rápido a **modo oscuro**, a **móvil** y a **texto al 200 %**.
 
 ## Texto (≈ 220 palabras)
 
 **[0:00]** *(cita C7, Empleado: "Dándoles información de una página web donde puedan informarse y ver los productos y precios.")* "Esto es lo que pidieron en las entrevistas, y esto es lo que ve ahora un cliente. Escribe lo que busca y la plataforma le **sugiere** mientras escribe. Filtra por **categoría, precio y disponibilidad**, y ordena como prefiera."
 
-"Y lo que antes eran una llamada y un viaje en vano ahora es una sola pantalla: **el precio y cuántas botellas hay en cada sucursal**. Si hay, va. Si no, ni sale de su casa." *(cita C8, Cliente: "Qué sucursal me queda más cerca.", sobre el mapa y el stock por sucursal)*
+"Y lo que antes eran una llamada y un viaje en vano ahora es una sola pantalla con **el precio y la disponibilidad**." *(cita C8, Cliente: "Qué sucursal me queda más cerca.")*
 
 **[0:35]** "Las ofertas ya no se mandan por mensaje. La bodega las diseña ella misma en un **editor visual, parecido a Canva**, para el carrusel de inicio y para la oferta del modal. Y se ve bien en escritorio y en teléfono."
 

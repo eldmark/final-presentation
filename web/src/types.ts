@@ -41,7 +41,16 @@ export interface Fact {
   label: string;
 }
 
-export type CardLayout = "left" | "right" | "large";
+/** Una tecnología del slide final. Se edita en content.json (segments.cierre.cards[].logos). */
+export interface Logo {
+  name: string;
+  src: string;
+  use?: string; // para qué se usó (se ve al pasar el cursor)
+  group?: string; // id de grupo: "proyecto" o "presentacion"
+  hints?: string[]; // palabras clave de por qué se eligió (solo en la vista del presentador)
+}
+
+export type CardLayout = "left" | "right" | "large" | "objetivos";
 
 /** Tarjeta con una imagen, cifras destacadas o un código QR. */
 export interface ImageCard {
@@ -49,7 +58,8 @@ export interface ImageCard {
   dur?: number;
   image?: string;
   facts?: Fact[];
-  logos?: { name: string; src: string; use?: string }[]; // cuadrícula de logos (síntesis de tecnologías)
+  logos?: Logo[]; // cuadrícula de logos (síntesis de tecnologías)
+  groups?: { id: string; title: string }[]; // títulos de los grupos de logos (por Logo.group)
   qr?: string; // URL que se codifica en un QR
   layout?: CardLayout; // left por omisión; large = imagen grande al centro; right = panel a la derecha
   caption: string;
@@ -84,7 +94,7 @@ export interface Step {
   seg: number; // índice de segmento (estación)
   cue?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: Fact[]; logos?: { name: string; src: string; use?: string }[]; qr?: string; layout?: CardLayout; caption: string };
+  card?: { image?: string; facts?: Fact[]; logos?: Logo[]; groups?: { id: string; title: string }[]; qr?: string; layout?: CardLayout; caption: string };
   focus?: string; // pantalla a la que se acerca la cámara
   label?: string; // resumen corto del paso para la vista del presentador
   bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)

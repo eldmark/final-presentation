@@ -81,9 +81,24 @@
           "text": "¿Qué compro? ¿Cuándo hago una oferta? ¿Qué no se mueve?"
         },
         {
-          "at": 138,
-          "dur": 11,
+          "at": 135,
+          "dur": 5,
           "text": "¿Y si cada pregunta del cliente fuera un dato?"
+        },
+        {
+          "at": 140,
+          "dur": 4,
+          "text": "Objetivo 1 · Panel autogestionable: inventario al día en máx. 5 min diarios"
+        },
+        {
+          "at": 144,
+          "dur": 4,
+          "text": "Objetivo 2 · Medir el impacto: mínimo 15 horas semanales menos de mensajes manuales"
+        },
+        {
+          "at": 148,
+          "dur": 4,
+          "text": "Objetivo 3 · API y web: ver la disponibilidad en menos de 1.5 s, sin asistencia humana"
         }
       ],
       "quotes": [
@@ -100,7 +115,28 @@
           "text": "Mínimo 10 minutos."
         }
       ],
-      "cards": []
+      "cards": [
+        {
+          "at": 140,
+          "dur": 13,
+          "layout": "objetivos",
+          "facts": [
+            {
+              "value": "≤ 5 min",
+              "label": "1) Construir un panel de administración autogestionable que permita al personal de la licorera actualizar entradas y salidas de inventario en un tiempo máximo de 5 minutos diarios."
+            },
+            {
+              "value": "≥ 15 h",
+              "label": "2) Evaluar el impacto del software comparando métricas operativas del negocio, comprobando una reducción mínima de 15 horas semanales en la gestión manual de mensajes."
+            },
+            {
+              "value": "< 1.5 s",
+              "label": "3) Desarrollar una API RESTful y una interfaz de usuario que permitan buscar y visualizar la disponibilidad de productos en menos de 1.5 segundos, eliminando la necesidad de asistencia humana."
+            }
+          ],
+          "caption": "Objetivos del proyecto · los retomamos en las conclusiones"
+        }
+      ]
     },
     "cliente_elige": {
       "cues": [
@@ -112,13 +148,18 @@
         {
           "at": 176,
           "dur": 10,
-          "text": "Sugerencias · filtros · stock por sucursal",
+          "text": "Sugerencias mientras escribe · filtros por categoría, precio y disponibilidad",
           "focus": "scr_laptop_catalogo"
         },
         {
           "at": 200,
           "dur": 10,
           "text": "Ofertas diseñadas en un editor visual"
+        },
+        {
+          "at": 213,
+          "dur": 10,
+          "text": "La vista de usuario: el modal de oferta al entrar"
         },
         {
           "at": 224,
@@ -140,7 +181,22 @@
           "text": "Qué sucursal me queda más cerca."
         }
       ],
-      "cards": []
+      "cards": [
+        {
+          "at": 200,
+          "dur": 12,
+          "layout": "large",
+          "image": "cards/promo-hero.jpg",
+          "caption": "Inicio · carrusel de oferta (Casillero del Diablo) diseñado en el editor visual"
+        },
+        {
+          "at": 213,
+          "dur": 10,
+          "layout": "large",
+          "image": "cards/home-usuario.jpg",
+          "caption": "Vista de usuario · modal de oferta al entrar"
+        }
+      ]
     },
     "cliente_compra": {
       "cues": [
@@ -150,42 +206,49 @@
           "text": "Reserva: si no la recoge, expira sola y libera el stock"
         },
         {
-          "at": 272,
-          "dur": 12,
-          "text": "Recomendaciones por coocurrencia (Basket Analysis)"
-        },
-        {
-          "at": 300,
+          "at": 260,
           "dur": 11,
           "text": "NeuroLab UVG · 25 de septiembre · 6 personas · 3 tareas"
         },
         {
+          "at": 280,
+          "dur": 12,
+          "text": "Buscar fue el 63.8 % del tiempo observado"
+        },
+        {
+          "at": 305,
+          "dur": 12,
+          "text": "Recomendaciones por coocurrencia (Basket Analysis)"
+        },
+        {
+          "at": 320,
+          "dur": 12,
+          "text": "Favoritos: guarda tus productos para volver a ellos"
+        },
+        {
           "at": 336,
-          "dur": 10,
-          "text": "Buscar tomó 113 s; agregar al carrito, 12 s"
+          "dur": 12,
+          "text": "Easy Orders: repite tus pedidos frecuentes en un clic"
         }
       ],
       "quotes": [],
       "cards": [
         {
-          "at": 301,
+          "at": 261,
           "dur": 16,
           "image": "cards/s8_p13_neurolab_fotos.png",
           "caption": "Pruebas de experiencia de usuario en el NeuroLab",
           "layout": "left"
         },
         {
-          "at": 319,
+          "at": 280,
+          "dur": 22,
           "layout": "right",
           "image": "cards/catalogo.jpg",
           "facts": [
             {
               "value": "63.8 %",
               "label": "del tiempo observado fue buscar"
-            },
-            {
-              "value": "113 s",
-              "label": "mediana para buscar (agregar al carrito: 12 s)"
             },
             {
               "value": "4 de 5",
@@ -197,6 +260,20 @@
             }
           ],
           "caption": "NeuroLab · 25 de septiembre de 2026 · 6 registros"
+        },
+        {
+          "at": 320,
+          "dur": 14,
+          "layout": "large",
+          "image": "cards/favoritos.jpg",
+          "caption": "Favoritos · tus productos guardados"
+        },
+        {
+          "at": 336,
+          "dur": 14,
+          "layout": "large",
+          "image": "cards/pedidos-frecuentes.jpg",
+          "caption": "Easy Orders · pedidos frecuentes para repetir la compra"
         }
       ]
     },
@@ -291,7 +368,8 @@
         {
           "at": 552,
           "dur": 14,
-          "text": "3 · Cuándo ofertar: estacionalidad y festividades"
+          "text": "3 · Cuándo ofertar: festividades",
+          "focus": "scr_monitor_12"
         },
         {
           "at": 574,
@@ -321,14 +399,38 @@
         {
           "at": 483,
           "dur": 14,
-          "image": "cards/s7_p03_grafana_umami_vs_metabase.png",
+          "layout": "large",
+          "logos": [
+            {
+              "name": "Grafana",
+              "src": "logos/grafana.svg",
+              "use": "Tableros del negocio (ventas, inventario, demanda, estacionalidad) aprovisionados como código · 260 MB de RAM."
+            },
+            {
+              "name": "Umami",
+              "src": "logos/umami.svg",
+              "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
+            }
+          ],
           "caption": "Metabase 1.5 GB de RAM · Grafana 260 MB + Umami 107 MB"
         },
         {
           "at": 598,
           "dur": 12,
-          "image": "cards/s7_p04_4x_menos_recursos.png",
-          "caption": "4 veces menos recursos"
+          "layout": "large",
+          "logos": [
+            {
+              "name": "Grafana",
+              "src": "logos/grafana.svg",
+              "use": "Tableros del negocio (ventas, inventario, demanda, estacionalidad) aprovisionados como código · 260 MB de RAM."
+            },
+            {
+              "name": "Umami",
+              "src": "logos/umami.svg",
+              "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
+            }
+          ],
+          "caption": "4 veces menos recursos que Metabase"
         }
       ]
     },
@@ -336,26 +438,41 @@
       "cues": [
         {
           "at": 632,
-          "dur": 10,
+          "dur": 13,
           "text": "Lo que más temían: extorsión, estafas, usurpación"
         },
         {
-          "at": 654,
-          "dur": 10,
-          "text": "El pedido nace pendiente · nadie cambia su propio rol"
+          "at": 646,
+          "dur": 11,
+          "text": "Y lo intentaron: así se ve una petición de ataque"
         },
         {
-          "at": 672,
-          "dur": 9,
-          "text": "Bitácora de solo lectura · logs sin datos personales"
+          "at": 658,
+          "dur": 6,
+          "text": "Intento 1: el pedido nace pendiente, con la fecha del servidor"
         },
         {
-          "at": 692,
-          "dur": 10,
-          "text": "Todo en tiempo real · la IP se bloquea con un clic"
+          "at": 664,
+          "dur": 6,
+          "text": "Intento 2: nadie cambia su propio rol"
         },
         {
-          "at": 706,
+          "at": 670,
+          "dur": 8,
+          "text": "Intento 3: bitácora de solo lectura · logs sin datos personales"
+        },
+        {
+          "at": 678,
+          "dur": 12,
+          "text": "Intento 4: todo en tiempo real · la IP se bloquea con un clic"
+        },
+        {
+          "at": 691,
+          "dur": 11,
+          "text": "Los errores llegan a Sentry con un identificador por solicitud"
+        },
+        {
+          "at": 704,
           "dur": 12,
           "text": "OWASP ZAP, escaneo completo: 138 pruebas aprobadas · 0 fallos"
         }
@@ -363,64 +480,435 @@
       "quotes": [
         {
           "at": 634,
-          "dur": 8,
+          "dur": 5,
           "who": "Administrador",
           "text": "Estafas, extorsión."
         },
         {
-          "at": 643,
-          "dur": 8,
+          "at": 640,
+          "dur": 5,
           "who": "Administrador",
           "text": "Robo o usurpación de empresa."
         }
       ],
-      "cards": []
+      "cards": [
+        {
+          "at": 646,
+          "dur": 11,
+          "layout": "large",
+          "image": "cards/peticion-ataque.png",
+          "caption": "Una de las peticiones con las que intentaron vulnerar el sistema"
+        }
+      ]
     },
     "valor": {
       "cues": [
         {
           "at": 722,
+          "dur": 10,
+          "text": "Esto fue todo lo que utilizamos"
+        },
+        {
+          "at": 733,
           "text": "¿Cuánto vale esto?"
         },
         {
-          "at": 730,
+          "at": 741,
           "text": "Antes: de 1 a 10 minutos o más de personal por cada consulta"
         },
         {
-          "at": 738,
+          "at": 749,
           "text": "Piloto de 90 días: 79 visitantes · 122 visitas · 2 440 vistas de página"
         },
         {
-          "at": 746,
-          "text": "230 eventos de consulta: vistas de producto, búsquedas y al carrito"
+          "at": 757,
+          "text": "230 eventos de consulta en septiembre: vistas de producto, búsquedas y al carrito"
         },
         {
-          "at": 754,
+          "at": 765,
           "text": "Si cada uno hubiera sido una llamada de 1 a 10 min: entre 4 y 38 horas de atención"
         },
         {
-          "at": 761,
+          "at": 772,
+          "dur": 8,
+          "text": "Costo de la infraestructura en Google Cloud: USD 2.76 del 26 de sept al 2 de oct"
+        },
+        {
+          "at": 780,
           "text": "Cota superior. Gana el cliente, el empleado y la administradora"
         }
       ],
       "quotes": [
         {
-          "at": 723.5,
+          "at": 734.5,
           "who": "Administrador",
           "text": "Mínimo 10 minutos."
         }
       ],
       "cards": [
         {
-          "at": 738,
+          "at": 722,
+          "layout": "large",
+          "logos": [
+            {
+              "name": "Vue 3",
+              "src": "logos/vuedotjs.svg",
+              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel de la administradora y editor de ofertas.",
+              "group": "proyecto",
+              "hints": [
+                "componentes",
+                "un archivo",
+                "oficial",
+                "curva suave"
+              ]
+            },
+            {
+              "name": "Vite",
+              "src": "logos/vite.svg",
+              "use": "Compila y sirve el frontend; builds rápidos en desarrollo y producción.",
+              "group": "proyecto",
+              "hints": [
+                "rápido",
+                "recarga instantánea",
+                "módulos nativos"
+              ]
+            },
+            {
+              "name": "Pinia",
+              "src": "logos/pinia.svg",
+              "use": "Estado global del frontend: carrito, sesión, filtros y favoritos.",
+              "group": "proyecto",
+              "hints": [
+                "oficial",
+                "simple",
+                "tipado"
+              ]
+            },
+            {
+              "name": "TypeScript",
+              "src": "logos/typescript.svg",
+              "use": "Tipos en frontend y backend: menos errores antes de llegar a producción.",
+              "group": "proyecto",
+              "hints": [
+                "tipado",
+                "errores al compilar",
+                "mismo lenguaje"
+              ]
+            },
+            {
+              "name": "Leaflet",
+              "src": "logos/leaflet.svg",
+              "use": "Mapa de sucursales con «cómo llegar» (Waze y Google Maps).",
+              "group": "proyecto",
+              "hints": [
+                "gratis",
+                "abierto",
+                "sin llave"
+              ]
+            },
+            {
+              "name": "Node.js",
+              "src": "logos/nodedotjs.svg",
+              "use": "Entorno del servidor: la API de pedidos, reservas y catálogo.",
+              "group": "proyecto",
+              "hints": [
+                "mismo lenguaje"
+              ]
+            },
+            {
+              "name": "Express",
+              "src": "logos/express.svg",
+              "use": "Framework de la API REST: rutas, middlewares, límites de uso.",
+              "group": "proyecto",
+              "hints": [
+                "ligero",
+                "controles de seguridad",
+                "mínimo"
+              ]
+            },
+            {
+              "name": "Prisma",
+              "src": "logos/prisma.svg",
+              "use": "Acceso a la base de datos: modelos, migraciones y consultas tipadas.",
+              "group": "proyecto",
+              "hints": [
+                "tipos generados",
+                "migraciones",
+                "menos código"
+              ]
+            },
+            {
+              "name": "PostgreSQL",
+              "src": "logos/postgresql.svg",
+              "use": "Una sola base central para todas las sucursales: constraints, transacciones y búsqueda difusa (pg_trgm).",
+              "group": "proyecto",
+              "hints": [
+                "constraints",
+                "transacciones",
+                "búsqueda difusa",
+                "sin Elasticsearch"
+              ]
+            },
+            {
+              "name": "Docker",
+              "src": "logos/docker.svg",
+              "use": "Empaqueta la API, la base y los tableros para correr igual en todos lados.",
+              "group": "proyecto",
+              "hints": [
+                "reproducible",
+                "un comando"
+              ]
+            },
+            {
+              "name": "Nginx",
+              "src": "logos/nginx.svg",
+              "use": "Sirve el frontend en producción con cabeceras de seguridad.",
+              "group": "proyecto",
+              "hints": [
+                "rápido",
+                "cabeceras de seguridad"
+              ]
+            },
+            {
+              "name": "Google Cloud",
+              "src": "logos/googlecloud.svg",
+              "use": "Infraestructura en producción: servidores y acceso protegido por IAP.",
+              "group": "proyecto",
+              "hints": [
+                "IAP",
+                "sin SSH abierto"
+              ]
+            },
+            {
+              "name": "Cloudflare R2",
+              "src": "logos/cloudflare.svg",
+              "use": "Almacena las imágenes de los productos y de las ofertas (compatible con S3, sin costo de salida).",
+              "group": "proyecto",
+              "hints": [
+                "compatible S3",
+                "sin cobro de salida"
+              ]
+            },
+            {
+              "name": "GitHub",
+              "src": "logos/github.svg",
+              "use": "Código, ramas, revisiones y flujos de integración continua.",
+              "group": "proyecto",
+              "hints": [
+                "pull requests",
+                "CI"
+              ]
+            },
+            {
+              "name": "Clerk",
+              "src": "logos/clerk.svg",
+              "use": "Inicio de sesión y roles: cliente, empleado y administrador.",
+              "group": "proyecto",
+              "hints": [
+                "sin contraseñas propias",
+                "revocar sesiones",
+                "roles"
+              ]
+            },
+            {
+              "name": "Resend",
+              "src": "logos/resend.svg",
+              "use": "Correos de pedidos, reservas, recordatorios y avisos de stock.",
+              "group": "proyecto",
+              "hints": [
+                "API sencilla",
+                "sin SMTP"
+              ]
+            },
+            {
+              "name": "Sentry",
+              "src": "logos/sentry.svg",
+              "use": "Monitoreo de errores y trazabilidad por solicitud.",
+              "group": "proyecto",
+              "hints": [
+                "contexto del error",
+                "trazabilidad",
+                "antes del cliente"
+              ]
+            },
+            {
+              "name": "Grafana",
+              "src": "logos/grafana.svg",
+              "use": "Tableros de decisiones y de seguridad (SOC) para la administradora.",
+              "group": "proyecto",
+              "hints": [
+                "4 veces menos RAM",
+                "tablero SOC",
+                "gratis"
+              ]
+            },
+            {
+              "name": "Umami",
+              "src": "logos/umami.svg",
+              "use": "Analítica web: visitas, búsquedas y eventos de consulta.",
+              "group": "proyecto",
+              "hints": [
+                "4 veces menos RAM",
+                "ligero",
+                "privacidad"
+              ]
+            },
+            {
+              "name": "Vitest",
+              "src": "logos/vitest.svg",
+              "use": "Pruebas unitarias y de componentes del frontend.",
+              "group": "proyecto",
+              "hints": [
+                "rápido",
+                "recarga instantánea",
+                "módulos nativos"
+              ]
+            },
+            {
+              "name": "Jest",
+              "src": "logos/jest.svg",
+              "use": "Pruebas unitarias y de integración del backend.",
+              "group": "proyecto",
+              "hints": [
+                "estándar Node",
+                "ts-jest"
+              ]
+            },
+            {
+              "name": "Playwright",
+              "src": "logos/playwright.svg",
+              "use": "Pruebas de extremo a extremo y de accesibilidad en el navegador.",
+              "group": "proyecto",
+              "hints": [
+                "varios navegadores",
+                "accesibilidad (axe)"
+              ]
+            },
+            {
+              "name": "ESLint",
+              "src": "logos/eslint.svg",
+              "use": "Revisión de estilo, seguridad y accesibilidad del código.",
+              "group": "proyecto",
+              "hints": [
+                "plugins de seguridad",
+                "accesibilidad"
+              ]
+            },
+            {
+              "name": "OWASP ZAP",
+              "src": "logos/owasp.svg",
+              "use": "Escaneo de seguridad del sitio: 138 pruebas.",
+              "group": "proyecto",
+              "hints": [
+                "abierto",
+                "referencia",
+                "138 pruebas"
+              ]
+            },
+            {
+              "name": "Jira",
+              "src": "logos/jira.svg",
+              "use": "Gestión de tareas, sprints y evidencia de pruebas.",
+              "group": "proyecto",
+              "hints": [
+                "tareas",
+                "sprints",
+                "evidencia"
+              ]
+            },
+            {
+              "name": "OpenStreetMap",
+              "src": "logos/openstreetmap.svg",
+              "use": "Mapa base de la intro de esta presentación.",
+              "group": "presentacion",
+              "hints": [
+                "gratis",
+                "abierto",
+                "mosaicos locales"
+              ]
+            },
+            {
+              "name": "Miro",
+              "src": "logos/miro.svg",
+              "use": "Tablero de planeación, aportes del equipo y flujos.",
+              "group": "presentacion",
+              "hints": [
+                "tablero del equipo",
+                "evidencia por sprint"
+              ]
+            },
+            {
+              "name": "Figma",
+              "src": "logos/figma.svg",
+              "use": "Diseño inicial de las pantallas.",
+              "group": "presentacion",
+              "hints": [
+                "equipo en vivo",
+                "sin instalar"
+              ]
+            },
+            {
+              "name": "Canva",
+              "src": "logos/canva.svg",
+              "use": "Material visual y diapositivas del equipo.",
+              "group": "presentacion",
+              "hints": [
+                "equipo en vivo",
+                "sin instalar"
+              ]
+            },
+            {
+              "name": "Three.js",
+              "src": "logos/threedotjs.svg",
+              "use": "Dibuja el diorama 3D de esta presentación en el navegador.",
+              "group": "presentacion",
+              "hints": [
+                "en el navegador",
+                "sin instalar",
+                "código propio"
+              ]
+            },
+            {
+              "name": "Blender",
+              "src": "logos/blender.svg",
+              "use": "Modelado del diorama 3D y del recorrido de cámara.",
+              "group": "presentacion",
+              "hints": [
+                "libre",
+                "modelado 3D"
+              ]
+            }
+          ],
+          "caption": "Tecnologías de Bodega de Licores",
+          "groups": [
+            {
+              "id": "proyecto",
+              "title": "Usado en el proyecto"
+            },
+            {
+              "id": "presentacion",
+              "title": "Usado para esta presentación"
+            }
+          ],
+          "dur": 10
+        },
+        {
+          "at": 749,
           "image": "cards/umami_overview.jpg",
           "caption": "Umami · últimos 90 días (piloto y pruebas del equipo)",
           "layout": "large"
         },
         {
-          "at": 746,
+          "at": 757,
           "image": "cards/umami_events.jpg",
-          "caption": "Umami · eventos PRODUCT_VIEW, SEARCH y ADD_TO_CART",
+          "caption": "Umami · septiembre de 2026: 230 eventos (PRODUCT_VIEW, SEARCH y ADD_TO_CART)",
+          "layout": "large"
+        },
+        {
+          "at": 772,
+          "dur": 8,
+          "image": "cards/gcp_costos.jpg",
+          "caption": "Google Cloud · costo del 26 de septiembre al 2 de octubre de 2026: USD 2.76",
           "layout": "large"
         }
       ]
@@ -428,200 +916,34 @@
     "cierre": {
       "cues": [
         {
-          "at": 769,
+          "at": 789,
           "text": "Cada pregunta del cliente ahora es un dato"
         },
         {
-          "at": 775,
+          "at": 795,
           "text": "El cliente encuentra, reserva y compra sin tener que llamar"
         },
         {
-          "at": 781,
+          "at": 801,
           "text": "La tienda atiende sus pedidos y reservas sin interrupciones"
         },
         {
-          "at": 787,
+          "at": 807,
           "text": "La administradora decide con datos, no con intuición"
         },
         {
-          "at": 793,
+          "at": 813,
           "text": "Y la seguridad se ve, se mide y se audita"
         },
         {
-          "at": 796.5,
-          "text": "Esto fue todo lo que utilizamos"
-        },
-        {
-          "at": 800,
+          "at": 820,
           "text": "Pruébenlo ahora · gracias"
         }
       ],
       "quotes": [],
       "cards": [
         {
-          "at": 796.5,
-          "layout": "large",
-          "logos": [
-            {
-              "name": "Vue 3",
-              "src": "logos/vuedotjs.svg",
-              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel de la administradora y editor de ofertas."
-            },
-            {
-              "name": "Vite",
-              "src": "logos/vite.svg",
-              "use": "Compila y sirve el frontend; builds rápidos en desarrollo y producción."
-            },
-            {
-              "name": "Pinia",
-              "src": "logos/pinia.svg",
-              "use": "Estado global del frontend: carrito, sesión, filtros y favoritos."
-            },
-            {
-              "name": "TypeScript",
-              "src": "logos/typescript.svg",
-              "use": "Tipos en frontend y backend: menos errores antes de llegar a producción."
-            },
-            {
-              "name": "Leaflet",
-              "src": "logos/leaflet.svg",
-              "use": "Mapa de sucursales con «cómo llegar» (Waze y Google Maps)."
-            },
-            {
-              "name": "Node.js",
-              "src": "logos/nodedotjs.svg",
-              "use": "Entorno del servidor: la API de pedidos, reservas y catálogo."
-            },
-            {
-              "name": "Express",
-              "src": "logos/express.svg",
-              "use": "Framework de la API REST: rutas, middlewares, límites de uso."
-            },
-            {
-              "name": "Prisma",
-              "src": "logos/prisma.svg",
-              "use": "Acceso a la base de datos: modelos, migraciones y consultas tipadas."
-            },
-            {
-              "name": "PostgreSQL",
-              "src": "logos/postgresql.svg",
-              "use": "Una sola base central para todas las sucursales: constraints, transacciones y búsqueda difusa (pg_trgm)."
-            },
-            {
-              "name": "Docker",
-              "src": "logos/docker.svg",
-              "use": "Empaqueta la API, la base y los tableros para correr igual en todos lados."
-            },
-            {
-              "name": "Nginx",
-              "src": "logos/nginx.svg",
-              "use": "Sirve el frontend en producción con cabeceras de seguridad."
-            },
-            {
-              "name": "Google Cloud",
-              "src": "logos/googlecloud.svg",
-              "use": "Infraestructura en producción: servidores y acceso protegido por IAP."
-            },
-            {
-              "name": "Cloudflare R2",
-              "src": "logos/cloudflare.svg",
-              "use": "Almacena las imágenes de los productos y de las ofertas (compatible con S3, sin costo de salida)."
-            },
-            {
-              "name": "GitHub",
-              "src": "logos/github.svg",
-              "use": "Código, ramas, revisiones y flujos de integración continua."
-            },
-            {
-              "name": "Clerk",
-              "src": "logos/clerk.svg",
-              "use": "Inicio de sesión y roles: cliente, empleado y administrador."
-            },
-            {
-              "name": "Resend",
-              "src": "logos/resend.svg",
-              "use": "Correos de pedidos, reservas, recordatorios y avisos de stock."
-            },
-            {
-              "name": "Sentry",
-              "src": "logos/sentry.svg",
-              "use": "Monitoreo de errores y trazabilidad por solicitud."
-            },
-            {
-              "name": "Grafana",
-              "src": "logos/grafana.svg",
-              "use": "Tableros de decisiones y de seguridad (SOC) para la administradora."
-            },
-            {
-              "name": "Umami",
-              "src": "logos/umami.svg",
-              "use": "Analítica web: visitas, búsquedas y eventos de consulta."
-            },
-            {
-              "name": "Vitest",
-              "src": "logos/vitest.svg",
-              "use": "Pruebas unitarias y de componentes del frontend."
-            },
-            {
-              "name": "Jest",
-              "src": "logos/jest.svg",
-              "use": "Pruebas unitarias y de integración del backend."
-            },
-            {
-              "name": "Playwright",
-              "src": "logos/playwright.svg",
-              "use": "Pruebas de extremo a extremo y de accesibilidad en el navegador."
-            },
-            {
-              "name": "ESLint",
-              "src": "logos/eslint.svg",
-              "use": "Revisión de estilo, seguridad y accesibilidad del código."
-            },
-            {
-              "name": "OWASP ZAP",
-              "src": "logos/owasp.svg",
-              "use": "Escaneo de seguridad del sitio: 138 pruebas."
-            },
-            {
-              "name": "Figma",
-              "src": "logos/figma.svg",
-              "use": "Diseño inicial de las pantallas."
-            },
-            {
-              "name": "Canva",
-              "src": "logos/canva.svg",
-              "use": "Material visual y diapositivas del equipo."
-            },
-            {
-              "name": "Miro",
-              "src": "logos/miro.svg",
-              "use": "Tablero de planeación, aportes del equipo y flujos."
-            },
-            {
-              "name": "Jira",
-              "src": "logos/jira.svg",
-              "use": "Gestión de tareas, sprints y evidencia de pruebas."
-            },
-            {
-              "name": "Three.js",
-              "src": "logos/threedotjs.svg",
-              "use": "Dibuja el diorama 3D de esta presentación en el navegador."
-            },
-            {
-              "name": "Blender",
-              "src": "logos/blender.svg",
-              "use": "Modelado del diorama 3D y del recorrido de cámara."
-            },
-            {
-              "name": "OpenStreetMap",
-              "src": "logos/openstreetmap.svg",
-              "use": "Mapa base de la intro de esta presentación."
-            }
-          ],
-          "caption": "Tecnologías de Bodega de Licores"
-        },
-        {
-          "at": 800,
+          "at": 820,
           "layout": "large",
           "qr": "https://bodegadelicores.app",
           "caption": "bodegadelicores.app"
@@ -629,8 +951,8 @@
       ],
       "video": {
         "src": "media/demo-rapido.mp4",
-        "from": 769,
-        "until": 796
+        "from": 789,
+        "until": 816
       }
     }
   }

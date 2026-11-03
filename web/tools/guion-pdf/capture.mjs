@@ -31,20 +31,22 @@ const ready = (page) => page.waitForFunction(() => document.querySelector(".step
   await page.bringToFront();
   await page.waitForTimeout(3000);
   const txt = (sel) => page.evaluate((s) => { const e = document.querySelector(s); return e && !e.hidden && getComputedStyle(e).display !== "none" ? e.textContent.trim() : ""; }, sel);
+  const cardOn = () => page.evaluate(() => { const c = document.querySelector(".card"); return Boolean(c) && !c.hidden; });
   const out = [];
   for (let sc = 1; sc <= 8; sc++) {
     await pres.evaluate((k) => document.querySelectorAll("[data-scenes] li")[k].click(), sc - 1);
     await page.waitForTimeout(6000);
     const cnt = await pres.evaluate(() => document.querySelectorAll("[data-steps] li").length);
     for (let i = 0; i < cnt; i++) {
+      await pres.waitForFunction((k) => document.querySelectorAll("[data-steps] li").length > k, i, { timeout: 30000 });
       await pres.evaluate((k) => document.querySelectorAll("[data-steps] li")[k].click(), i);
       await page.waitForTimeout(i === 0 ? 3500 : 1800);
       const rec = {
         n: out.length + 1, scene: sc, idx: i + 1, of: cnt,
         label: (await pres.evaluate((k) => document.querySelectorAll("[data-steps] li")[k].textContent, i)).trim().replace(/^\d+/, ""),
-        info: await txt(".step-info"), cue: await txt(".subtitle"), quote: (await txt(".quote")).replace(/^“/, ""), card: await txt(".card figcaption"),
-        facts: await page.evaluate(() => [...document.querySelectorAll(".card .facts div")].map((d) => d.textContent.trim())),
-        logos: await page.evaluate(() => document.querySelectorAll(".card .logos:not([hidden]) li").length),
+        info: await txt(".step-info"), cue: await txt(".subtitle"), quote: (await txt(".quote")).replace(/^“/, ""), card: await cardOn() ? await txt(".card figcaption") : "",
+        facts: await cardOn() ? await page.evaluate(() => [...document.querySelectorAll(".card .facts:not([hidden]) div")].map((d) => [...d.children].map((c) => c.textContent.trim()).join(" "))) : [],
+        logos: await cardOn() ? await page.evaluate(() => document.querySelectorAll(".card .logos:not([hidden]) li").length) : 0,
       };
       rec.file = `shots/${String(rec.n).padStart(3, "0")}.jpg`;
       await page.screenshot({ path: OUT + rec.file, type: "jpeg", quality: 82 });

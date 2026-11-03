@@ -6,7 +6,11 @@
         "Cada compra empezaba con una pregunta: ¿cuánto cuesta? ¿hay?, por WhatsApp, llamada o visita",
         "La tienda atendía mostrador, teléfono y mensajes a la vez; cada sucursal era una isla",
         "La administradora decidía con intuición, con reportes separados",
-        "Giro: ¿y si cada pregunta del cliente fuera un dato?"
+        "Giro: ¿y si cada pregunta del cliente fuera un dato?",
+        "OBJETIVO 1: Construir un panel de administración autogestionable que permita al personal de la licorera actualizar entradas y salidas de inventario en un tiempo máximo de 5 minutos diarios.",
+        "OBJETIVO 2: Evaluar el impacto del software comparando métricas operativas del negocio, comprobando una reducción mínima de 15 horas semanales en la gestión manual de mensajes.",
+        "OBJETIVO 3: Desarrollar una API RESTful y una interfaz de usuario que permitan buscar y visualizar la disponibilidad de productos en menos de 1.5 segundos, eliminando la necesidad de asistencia humana.",
+        "Lee los tres objetivos completos antes de pasar la palabra: se responden en las conclusiones"
       ],
       "data": [
         "4 de 4 administradores: consultas por WhatsApp o llamada, de cada 2 días a diario",
@@ -23,7 +27,7 @@
     "2": {
       "ideas": [
         "Sugerencias mientras escribe, filtros por categoría, precio y disponibilidad",
-        "Precio y stock por cada sucursal en una sola pantalla",
+        "Carrusel de inicio con la oferta (Casillero del Diablo) y el modal de oferta en la vista de usuario",
         "Las ofertas se diseñan en un editor visual parecido a Canva",
         "Modo oscuro, versión móvil con menú lateral, texto al 200 %"
       ],
@@ -40,13 +44,14 @@
     "3": {
       "ideas": [
         "Carrito y reserva: si no la recoge, expira sola y libera el stock",
-        "Recomendaciones por coocurrencia (Basket Analysis), optimizado para producción en GCP",
-        "NeuroLab UVG, 25 de septiembre: 6 personas, 3 tareas, eye tracking, sensor electrodérmico y encuesta",
+        "Primero NeuroLab UVG, 25 de septiembre: 6 personas, 3 tareas, eye tracking, sensor electrodérmico y encuesta",
         "Búsqueda tolerante a errores de escritura (trigramas)",
-        "El chat tapaba la paginación y se corrigió; también probado con lector de pantalla y teclado"
+        "El chat tapaba la paginación y se corrigió; también probado con lector de pantalla y teclado",
+        "Después Basket Analysis: recomendaciones por coocurrencia, optimizado para producción en GCP",
+        "Compras: Favoritos (productos favoritos) y Easy Orders / Pedidos frecuentes (repetir una compra en un clic)"
       ],
       "data": [
-        "Buscar fue el 63.8 % del tiempo: mediana 113 s contra 12 s para agregar al carrito",
+        "Buscar fue el 63.8 % del tiempo observado",
         "4 de 5 encuestados con dificultades al buscar",
         "2 de 5 videos: confundieron comprar con reservar",
         "Más picos al escribir en 5 de 5 casos (exploratorio)"
@@ -83,7 +88,7 @@
         "Metabase usaba 1.5 GB; Grafana 260 MB y Umami 107 MB: unas 4 veces menos",
         "1 · Qué dejar de comprar: capital detenido",
         "2 · Qué empezar a vender: búsquedas sin resultados",
-        "3 · Cuándo ofertar: estacionalidad y festividades (Jorge puede presentar Festividades, 30 s)",
+        "3 · Cuándo ofertar: festividades (Jorge puede presentar Festividades, 30 s)",
         "4 · Dónde se cae la compra: abandono de carrito",
         "5 · Qué reponer ya: stock crítico",
         "Cada decisión termina en una acción: campaña, oferta o exporte"
@@ -101,30 +106,36 @@
     },
     "6": {
       "ideas": [
-        "El miedo, en las entrevistas: extorsión, estafas, usurpación de la empresa",
-        "Intento 1: pedido 'entregado' con fecha pasada; el servidor lo ignora, nace pendiente",
-        "Intento 2: un empleado se cambia el rol; solo el administrador edita usuarios",
-        "Bitácora de solo lectura; logs sin datos personales",
-        "Grafana sin sesión se corta; el tablero usa un usuario de solo lectura",
-        "Todo en tiempo real; la IP se bloquea con un clic (solo se guarda su huella cifrada)"
+        "HOOK, el miedo: en las entrevistas dijeron extorsión, estafas y usurpación de la empresa",
+        "HOOK, 'intentaron vulnerar': esta es la petición de ataque (captura pendiente de recibir)",
+        "HILO, intento 1: pedido 'entregado' con fecha pasada; el servidor lo ignora, nace pendiente",
+        "HILO, intento 2: un empleado se cambia el rol; solo el administrador edita usuarios",
+        "HILO, intento 3: bitácora de solo lectura; logs sin datos personales",
+        "HILO, intento 4: todo en tiempo real; la IP se bloquea con un clic (solo se guarda su huella cifrada)",
+        "Sentry: los errores llegan con un identificador por solicitud para seguirles la pista",
+        "OWASP ZAP cierra: escaneo completo, 138 pruebas aprobadas, 0 fallos"
       ],
       "data": [
         "OWASP ZAP, escaneo completo: 138 pruebas aprobadas, 0 fallos",
-        "Señales: 401, 403, CORS, 429 e IP bloqueada"
+        "Señales: 401, 403, CORS, 429 e IP bloqueada",
+        "Sentry con requestId"
       ],
       "avoid": [
         "Decir 'es imposible hackearlo': di 'lo atacamos nosotros primero'",
         "IPs reales, dominios internos o claves",
-        "Pruebas contra producción"
+        "Pruebas contra producción",
+        "Inventar datos de la petición de ataque: describe solo lo que muestre la captura real"
       ],
       "handoff": "Todo esto tiene un valor medible. Julián."
     },
     "7": {
       "ideas": [
+        "Antes del impacto, síntesis: «Esto fue todo lo que utilizamos», en dos grupos: usado en el proyecto y usado para esta presentación (la vista del presentador lista el porqué de cada tecnología)",
         "La métrica: minutos de personal liberados por semana",
         "Piloto de 90 días: 79 visitantes, 122 visitas y 230 eventos de consulta",
         "Cota superior: de 3.8 a 38 horas, si cada evento hubiera sido una llamada de 1 a 10 minutos",
-        "Gana el cliente, el empleado y la administradora"
+        "Gana el cliente, el empleado y la administradora",
+        "Costo real de la infraestructura: USD 2.76 en Google Cloud del 26 de sept al 2 de oct (captura de facturación)"
       ],
       "data": [
         "Umami: 2 440 vistas de página, rebote 17 %, visita de 6 min 17 s"
@@ -142,7 +153,6 @@
         "La tienda atiende sus pedidos y reservas sin interrupciones",
         "La administradora decide con datos",
         "La seguridad se ve, se mide y se audita",
-        "Síntesis: «Esto fue todo lo que utilizamos», con los logos de cada tecnología",
         "Invitar a probar la plataforma: QR a bodegadelicores.app"
       ],
       "data": [],

@@ -95,6 +95,7 @@ for (const c of Object.values(chapters)) {
   ${nt.data?.length ? `<div class="box data"><b>Datos que respaldan</b><ul>${nt.data.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>` : ""}
   ${nt.avoid?.length ? `<div class="box avoid"><b>No digas</b><ul>${nt.avoid.map((i) => `<li>${esc(i)}</li>`).join("")}</ul></div>` : ""}
   ${nt.handoff ? `<div class="box hand"><b>Pasa la palabra:</b> ${esc(nt.handoff)}</div>` : ""}
+  ${c.n === 8 ? `<div class="box hand"><b>Video de demo:</b> durante los 5 puntos de las conclusiones se ve, arriba, un recorrido del sitio en cámara rápida (3x, sin sonido, en bucle; dura 43 s y vuelve a empezar si hace falta). Desaparece al llegar a la slide de tecnologías. La cuenta de Google que aparece en la grabación está difuminada.</div>` : ""}
   <h3>Paso a paso: lo que se muestra</h3>`;
   for (const s of steps.filter((x) => x.scene === c.n)) {
     const lab = s.label;

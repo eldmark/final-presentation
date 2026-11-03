@@ -9,21 +9,21 @@ Las demostraciones corren **solo en local o staging propio**.
 
 ## Texto (≈ 300 palabras)
 
-**[0:00 · el miedo]** "En las entrevistas, los administradores nos dijeron qué les daba miedo de vender en línea: **la extorsión, las estafas y que usurparan la empresa**. *(citas C11 y C12 en pantalla, Administrador: "Estafas, extorción." / "Robo o usurpación de empresa.")* Hay pedidos, NIT y datos personales. Lo trabajamos en **capas**, y lo hicimos visible."
+**Orden de la escena (pedido del equipo): hook → hilo → Sentry → OWASP.**
 
-**[0:20 · intento 1]** "Primer intento: un usuario manda un pedido ya marcado como **entregado** y con una fecha pasada. El servidor lo ignora. **Todo pedido nace pendiente y con la fecha del servidor.** Siempre."
+**[HOOK · el miedo]** "En las entrevistas, los administradores nos dijeron qué les daba miedo de vender en línea: **la extorsión, las estafas y que usurparan la empresa**. *(citas C11 y C12 en pantalla)* Hay pedidos, NIT y datos personales."
 
-**[0:40 · intento 2]** "Segundo intento: un empleado trata de **cambiarse el rol**. Rechazado: solo el administrador edita usuarios, y **nadie cambia su propio rol**."
+**[HOOK · intentaron vulnerar]** "Y no es un miedo en el aire: **intentaron vulnerarnos con esta petición.**" *(en pantalla la captura de la petición de ataque, `web/public/cards/peticion-ataque.png`; hoy es un placeholder. No inventes datos: describe solo lo que muestre la captura real.)*
 
-**[0:55 · intento 3]** "Tercero: borrar las huellas. La **bitácora de auditoría es de solo lectura**, de punta a punta. Cada cambio administrativo queda registrado, y los logs **no guardan datos personales**."
+**[HILO · 4 ejemplos de intento y defensa]**
+1. "Un pedido ya marcado como **entregado** y con fecha pasada: el servidor lo ignora. **Todo pedido nace pendiente y con la fecha del servidor.**"
+2. "Un empleado trata de **cambiarse el rol**: rechazado. Solo el administrador edita usuarios y **nadie cambia su propio rol**."
+3. "Borrar las huellas: la **bitácora de auditoría es de solo lectura**, y los logs **no guardan datos personales**."
+4. "Todo lo que se intenta aparece **en tiempo real**: accesos rechazados, ráfagas, orígenes no permitidos. Si alguien insiste, el administrador **bloquea esa IP con un clic**; solo guardamos una huella cifrada."
 
-**[1:10 · intento 4]** "Cuarto: abrir Grafana sin sesión. El proxy lo corta antes de llegar. Y aunque alguien entrara, el tablero se conecta con un usuario de **solo lectura**: no puede ni escribir en la base."
+**[SENTRY]** "Los errores llegan a **Sentry** con un identificador por solicitud, para seguirles la pista."
 
-**[1:30 · vigilancia]** "Y todo lo que se intenta aparece aquí, **en tiempo real**: accesos rechazados, ráfagas de peticiones, orígenes no permitidos. Los errores llegan a **Sentry** con un identificador por solicitud, para seguirles la pista."
-
-**[1:45 · bloqueo]** "Si alguien insiste, el administrador **bloquea esa IP con un clic**. Y de la IP solo guardamos una huella cifrada, no la dirección."
-
-**[1:55 · cierre del acto]** "Lo atacamos nosotros primero, lo vemos en vivo y lo dejamos documentado."
+**[OWASP ZAP]** "Y lo cerramos con un escaneo completo de OWASP ZAP: **138 pruebas, 0 fallos.** Lo atacamos nosotros primero, lo vemos en vivo y lo dejamos documentado."
 
 ## Datos que respaldan lo que dices
 - `POST /orders` con validación estricta: ignora estado y fechas del llamante.
@@ -33,6 +33,7 @@ Las demostraciones corren **solo en local o staging propio**.
 - nginx con `auth_request` para Grafana; rol de PostgreSQL de solo lectura.
 - Bloqueo por IP con HMAC (`IP_HASH_SECRET`).
 - Sentry con `requestId`.
+- OWASP ZAP, escaneo completo: 138 pruebas aprobadas, 0 fallos.
 
 ## Antes de grabar
 Probar en local cada intento y comprobar que se comporta como dice el texto. Si alguno no sale, **se saca del guion**. Lista completa en `04-seguridad-y-miedo-a-hackeo.md`.

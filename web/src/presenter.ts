@@ -88,6 +88,7 @@ async function main(): Promise<void> {
         </div>
         <div class="box ideas"><h3>Ideas clave</h3><ul data-ideas></ul></div>
         <div class="box handoff"><h3>Relevo</h3><p data-handoff></p></div>
+        <div class="box why" data-why hidden></div>
       </section>
 
       <aside class="col side">
@@ -234,6 +235,25 @@ async function main(): Promise<void> {
     q("[data-data]").innerHTML = (notes?.data ?? []).map((t) => `<li>${esc(t)}</li>`).join("") || "<li class='none'>—</li>";
     q("[data-avoid]").innerHTML = (notes?.avoid ?? []).map((t) => `<li>${esc(t)}</li>`).join("");
     q("[data-handoff]").textContent = notes?.handoff ?? "";
+
+    // Slide final de tecnologías: una palabra clave por cada razón de elegirla (viene de content.json, logos[].hints)
+    const stackCard = steps.find((s) => s.card?.logos)?.card;
+    const why = q("[data-why]");
+    const showWhy = Boolean(stackCard && steps.find((s) => s.card?.logos) && chapterOf(steps.find((s) => s.card?.logos)!) === chapter);
+    why.hidden = !showWhy;
+    if (showWhy && stackCard?.logos) {
+      why.innerHTML =
+        "<h3>Por qué elegimos cada tecnología</h3>" +
+        (stackCard.groups ?? [{ id: "", title: "" }])
+          .map((g) => {
+            const rows = stackCard.logos!
+              .filter((l) => !g.id || l.group === g.id)
+              .map((l) => `<li><b>${esc(l.name)}</b> ${(l.hints ?? []).map((h) => `<i>${esc(h)}</i>`).join("")}</li>`)
+              .join("");
+            return (g.title ? `<h4>${esc(g.title)}</h4>` : "") + `<ul>${rows}</ul>`;
+          })
+          .join("");
+    }
 
     const next = steps[state.stepIndex + 1];
     const nextChapter = next ? chapterOf(next) : null;

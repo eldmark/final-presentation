@@ -1,5 +1,5 @@
 import QRCode from "qrcode";
-import type { Chapter, Step, TourData } from "./types";
+import type { Chapter, Logo, Step, TourData } from "./types";
 
 const clock = (s: number): string => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
@@ -333,11 +333,20 @@ export class Overlay {
   }
 
   /** Cada logo explica para qué se usó: al pasar el cursor, con el foco (Tab) o con la rueda del mouse. */
-  private setupLogos(grid: HTMLElement, useEl: HTMLElement, logos: { name: string; src: string; use?: string }[]): void {
-    grid.innerHTML = logos
-      .map((l, i) => `<li tabindex="0" data-i="${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`)
-      .join("");
-    const items = [...grid.querySelectorAll<HTMLElement>("li")];
+  private setupLogos(grid: HTMLElement, useEl: HTMLElement, logos: Logo[], groups?: { id: string; title: string }[]): void {
+    const li = (l: Logo, i: number) => `<li tabindex="0" data-i="${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`;
+    grid.innerHTML = groups?.length
+      ? groups
+          .map((g) => {
+            const rows = logos.map((l, i) => (l.group === g.id ? li(l, i) : "")).join("");
+            return rows ? `<li class="grp" aria-hidden="true">${esc(g.title)}</li>${rows}` : "";
+          })
+          .join("")
+      : logos.map(li).join("");
+    grid.classList.toggle("few", logos.length < 5);
+    grid.classList.toggle("grouped", Boolean(groups?.length));
+    grid.style.gridTemplateColumns = logos.length < 8 ? `repeat(${logos.length}, 1fr)` : "";
+    const items = [...grid.querySelectorAll<HTMLElement>("li[data-i]")].sort((a, b) => Number(a.dataset.i) - Number(b.dataset.i));
     const hint = "Pasa el cursor o gira la rueda sobre un logo para ver para qué lo usamos";
     let cur = -1;
     const show = (i: number) => {
@@ -430,7 +439,7 @@ export class Overlay {
       const useEl = this.el.card.querySelector<HTMLElement>(".logo-use")!;
       logos.hidden = !card.logos;
       useEl.hidden = !card.logos;
-      if (card.logos) this.setupLogos(logos, useEl, card.logos);
+      if (card.logos) this.setupLogos(logos, useEl, card.logos, card.groups);
       if (card.image) img.setAttribute("src", card.image);
       if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
       if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));
