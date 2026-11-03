@@ -120,6 +120,7 @@
           "at": 140,
           "dur": 13,
           "layout": "objetivos",
+          "reveal": true,
           "facts": [
             {
               "value": "≤ 5 min",
@@ -157,11 +158,6 @@
           "text": "Ofertas diseñadas en un editor visual"
         },
         {
-          "at": 213,
-          "dur": 10,
-          "text": "La vista de usuario: el modal de oferta al entrar"
-        },
-        {
           "at": 224,
           "dur": 14,
           "text": "Modo oscuro · versión móvil · texto al 200 %"
@@ -190,11 +186,24 @@
           "caption": "Inicio · carrusel de oferta (Casillero del Diablo) diseñado en el editor visual"
         },
         {
-          "at": 213,
-          "dur": 10,
-          "layout": "large",
-          "image": "cards/home-usuario.jpg",
-          "caption": "Vista de usuario · modal de oferta al entrar"
+          "at": 224,
+          "dur": 14,
+          "layout": "gallery",
+          "gallery": [
+            {
+              "src": "cards/ux-modo-oscuro.png",
+              "label": "Modo oscuro"
+            },
+            {
+              "src": "cards/ux-texto-200.png",
+              "label": "Texto al 200 %"
+            },
+            {
+              "src": "cards/ux-movil.jpg",
+              "label": "Móvil · en inglés"
+            }
+          ],
+          "caption": "El mismo catálogo en modo oscuro, con texto al 200 % y en el celular"
         }
       ]
     },
@@ -412,25 +421,21 @@
               "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
             }
           ],
-          "caption": "Metabase 1.5 GB de RAM · Grafana 260 MB + Umami 107 MB"
+          "caption": "Grafana 260 MB + Umami 107 MB frente a 1.5 GB de Metabase: 4 veces menos recursos"
         },
         {
-          "at": 598,
-          "dur": 12,
+          "at": 614,
+          "dur": 7,
           "layout": "large",
-          "logos": [
-            {
-              "name": "Grafana",
-              "src": "logos/grafana.svg",
-              "use": "Tableros del negocio (ventas, inventario, demanda, estacionalidad) aprovisionados como código · 260 MB de RAM."
-            },
-            {
-              "name": "Umami",
-              "src": "logos/umami.svg",
-              "use": "Tráfico web que respeta la privacidad, embebido en el panel · 107 MB de RAM."
-            }
-          ],
-          "caption": "4 veces menos recursos que Metabase"
+          "image": "cards/campana-editor.png",
+          "caption": "Campañas de marketing · editor de plantillas: se envían solo a quienes aceptaron promociones"
+        },
+        {
+          "at": 621,
+          "dur": 8,
+          "layout": "large",
+          "image": "cards/campana-correo.png",
+          "caption": "Y así le llega el correo al cliente"
         }
       ]
     },
@@ -444,7 +449,7 @@
         {
           "at": 646,
           "dur": 11,
-          "text": "Y lo intentaron: así se ve una petición de ataque"
+          "text": "Y lo intentaron: el costo de Google Cloud se disparó por solicitudes en masa"
         },
         {
           "at": 658,
@@ -475,6 +480,11 @@
           "at": 704,
           "dur": 12,
           "text": "OWASP ZAP, escaneo completo: 138 pruebas aprobadas · 0 fallos"
+        },
+        {
+          "at": 719,
+          "dur": 14,
+          "text": "Esto fue todo lo que utilizamos"
         }
       ],
       "quotes": [
@@ -496,64 +506,17 @@
           "at": 646,
           "dur": 11,
           "layout": "large",
-          "image": "cards/peticion-ataque.png",
-          "caption": "Una de las peticiones con las que intentaron vulnerar el sistema"
-        }
-      ]
-    },
-    "valor": {
-      "cues": [
-        {
-          "at": 722,
-          "dur": 10,
-          "text": "Esto fue todo lo que utilizamos"
+          "image": "cards/gcp-ataque.jpg",
+          "caption": "Así nos dimos cuenta: las solicitudes llegaron en masa y el procesador del servidor subió solo (Google Cloud, 28 de sept al 3 de oct)"
         },
         {
-          "at": 733,
-          "text": "¿Cuánto vale esto?"
-        },
-        {
-          "at": 741,
-          "text": "Antes: de 1 a 10 minutos o más de personal por cada consulta"
-        },
-        {
-          "at": 749,
-          "text": "Piloto de 90 días: 79 visitantes · 122 visitas · 2 440 vistas de página"
-        },
-        {
-          "at": 757,
-          "text": "230 eventos de consulta en septiembre: vistas de producto, búsquedas y al carrito"
-        },
-        {
-          "at": 765,
-          "text": "Si cada uno hubiera sido una llamada de 1 a 10 min: entre 4 y 38 horas de atención"
-        },
-        {
-          "at": 772,
-          "dur": 8,
-          "text": "Costo de la infraestructura en Google Cloud: USD 2.76 del 26 de sept al 2 de oct"
-        },
-        {
-          "at": 780,
-          "text": "Cota superior. Gana el cliente, el empleado y la administradora"
-        }
-      ],
-      "quotes": [
-        {
-          "at": 734.5,
-          "who": "Administrador",
-          "text": "Mínimo 10 minutos."
-        }
-      ],
-      "cards": [
-        {
-          "at": 722,
+          "at": 718,
           "layout": "large",
           "logos": [
             {
               "name": "Vue 3",
               "src": "logos/vuedotjs.svg",
-              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel de la administradora y editor de ofertas.",
+              "use": "Frontend con componentes reutilizables: catálogo, carrito, panel del administrador y editor de ofertas.",
               "group": "proyecto",
               "hints": [
                 "componentes",
@@ -734,7 +697,7 @@
             {
               "name": "Grafana",
               "src": "logos/grafana.svg",
-              "use": "Tableros de decisiones y de seguridad (SOC) para la administradora.",
+              "use": "Tableros de decisiones y de seguridad (SOC) para el administrador.",
               "group": "proyecto",
               "hints": [
                 "4 veces menos RAM",
@@ -890,25 +853,55 @@
               "title": "Usado para esta presentación"
             }
           ],
-          "dur": 10
+          "dur": 15
+        }
+      ]
+    },
+    "valor": {
+      "cues": [
+        {
+          "at": 733,
+          "text": "¿Cuánto vale esto?"
+        },
+        {
+          "at": 741,
+          "text": "Antes: de 1 a 10 minutos o más de personal por cada consulta"
         },
         {
           "at": 749,
+          "text": "Piloto de septiembre: 79 visitantes · 122 visitas · 2 440 vistas de página"
+        },
+        {
+          "at": 757,
+          "text": "230 eventos de consulta en septiembre: vistas de producto, búsquedas y al carrito"
+        },
+        {
+          "at": 765,
+          "text": "Si cada uno hubiera sido una llamada de 1 a 10 min: entre 4 y 38 horas de atención"
+        },
+        {
+          "at": 780,
+          "text": "Cota superior. Gana el cliente, el empleado y el administrador"
+        }
+      ],
+      "quotes": [
+        {
+          "at": 734.5,
+          "who": "Administrador",
+          "text": "Mínimo 10 minutos."
+        }
+      ],
+      "cards": [
+        {
+          "at": 749,
           "image": "cards/umami_overview.jpg",
-          "caption": "Umami · últimos 90 días (piloto y pruebas del equipo)",
+          "caption": "Umami · septiembre de 2026 (piloto y pruebas del equipo)",
           "layout": "large"
         },
         {
           "at": 757,
           "image": "cards/umami_events.jpg",
           "caption": "Umami · septiembre de 2026: 230 eventos (PRODUCT_VIEW, SEARCH y ADD_TO_CART)",
-          "layout": "large"
-        },
-        {
-          "at": 772,
-          "dur": 8,
-          "image": "cards/gcp_costos.jpg",
-          "caption": "Google Cloud · costo del 26 de septiembre al 2 de octubre de 2026: USD 2.76",
           "layout": "large"
         }
       ]
@@ -929,21 +922,21 @@
         },
         {
           "at": 807,
-          "text": "La administradora decide con datos, no con intuición"
+          "text": "El administrador decide con datos, no con intuición"
         },
         {
           "at": 813,
           "text": "Y la seguridad se ve, se mide y se audita"
         },
         {
-          "at": 820,
+          "at": 825,
           "text": "Pruébenlo ahora · gracias"
         }
       ],
       "quotes": [],
       "cards": [
         {
-          "at": 820,
+          "at": 825,
           "layout": "large",
           "qr": "https://bodegadelicores.app",
           "caption": "bodegadelicores.app"
@@ -952,7 +945,7 @@
       "video": {
         "src": "media/demo-rapido.mp4",
         "from": 789,
-        "until": 816
+        "until": 825
       }
     }
   }

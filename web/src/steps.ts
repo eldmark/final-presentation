@@ -1,4 +1,4 @@
-import type { BubbleSpec, Chapter, ContentData, Step, TourData } from "./types";
+import type { BubbleSpec, Chapter, ContentData, Step, StepCard, TourData } from "./types";
 
 /** Eventos que caen a menos de este margen se funden en un mismo paso. */
 const MERGE = 1.6;
@@ -10,14 +10,16 @@ interface Ev {
   cue?: string;
   focus?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: import("./types").Fact[]; logos?: import("./types").Logo[]; groups?: { id: string; title: string }[]; qr?: string; layout?: import("./types").CardLayout; caption: string };
+  card?: StepCard;
   bubble?: string;
 }
 
 /**
  * Convierte subtítulos, citas, tarjetas y burbujas en pasos que se avanzan de uno en uno.
  * - El subtítulo se hereda hasta que llega otro; la cita y la tarjeta viven solo en su paso.
- * - Cada burbuja de chat se ajusta al instante de su paso, así que aparece una por pulsación.
+ * - Solo hay paso nuevo si cambia lo que se ve: otro subtítulo, una tarjeta o una segunda cita.
+ *   Las burbujas (y una cita sobre un paso libre) se suman al paso en curso: nunca dos pulsaciones iguales.
+ * - Una tarjeta con `reveal` se queda en los pasos siguientes mientras dure y muestra una cifra más en cada uno.
  */
 export function buildSteps(
   tour: TourData,
@@ -32,7 +34,7 @@ export function buildSteps(
     const evs: Ev[] = [];
     c?.cues.forEach((x) => evs.push({ at: x.at, cue: x.text, focus: x.focus }));
     c?.quotes.forEach((x) => evs.push({ at: x.at, quote: { who: x.who, text: x.text } }));
-    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, logos: x.logos, groups: x.groups, qr: x.qr, layout: x.layout, caption: x.caption } }));
+    c?.cards.forEach((x) => evs.push({ at: x.at, card: { image: x.image, facts: x.facts, logos: x.logos, gallery: x.gallery, groups: x.groups, qr: x.qr, layout: x.layout, caption: x.caption, reveal: x.reveal, until: x.at + (x.dur ?? 0) } }));
     const segBubbles = retimed.filter((b) => b.at >= seg.start && b.at < seg.end);
     segBubbles.forEach((b) => evs.push({ at: b.at, bubble: b.text }));
     evs.sort((a, b) => a.at - b.at);
@@ -44,12 +46,15 @@ export function buildSteps(
     let focus: string | undefined;
     let cur: Step = { t: arrival, seg: si, arrival: true };
     steps.push(cur);
+    const segSteps = [cur];
     const stepOfEvent = new Map<number, Step>();
 
     for (const ev of evs) {
-      if (ev.at - cur.t > MERGE) {
+      const changes = Boolean(ev.cue || ev.card || (ev.quote && (cur.quote || cur.card)));
+      if (ev.at - cur.t > MERGE && changes) {
         cur = { t: ev.at, seg: si, cue, focus };
         steps.push(cur);
+        segSteps.push(cur);
       }
       if (ev.cue) {
         cue = ev.cue;
@@ -74,6 +79,17 @@ export function buildSteps(
     }
     // cada burbuja aparece cuando se llega a su paso
     for (const b of segBubbles) b.at = stepOfEvent.get(b.at)?.t ?? b.at;
+
+    // tarjetas que se revelan por pasos (los objetivos): una cifra más en cada paso mientras dure
+    let reveal: { card: StepCard; shown: number } | null = null;
+    for (const st of segSteps) {
+      if (st.card?.reveal) {
+        reveal = { card: st.card, shown: 1 };
+        st.card = { ...st.card, shown: 1 };
+      } else if (reveal && !st.card && st.t < (reveal.card.until ?? 0)) {
+        st.card = { ...reveal.card, shown: Math.min(++reveal.shown, reveal.card.facts?.length ?? 1) };
+      } else reveal = null;
+    }
   });
 
   return { steps, bubbles: retimed };

@@ -138,10 +138,14 @@ reproduce los 13:30 sin intervención.
 | T | Muestra u oculta el cronómetro |
 | A | Texto grande (para la sala) |
 | F | Pantalla completa |
+| Q | Calidad alta ↔ básica (la alta añade luz de estudio, oclusión, brillo y acabado de maqueta) |
 | H · ? | Ayuda |
 | P | Vista del presentador |
 | I | Acerca de (diseño, datos y modelos 3D, en otra pestaña) |
 | Inicio | Volver al principio |
+
+Si el equipo no llega a 30 fps en los primeros segundos con la calidad alta, baja solo a la básica y avisa.
+La elección hecha con **Q** se recuerda en ese navegador.
 
 El control remoto de la sala suele mandar Av Pág / Re Pág: ya funcionan. Los controles se esconden solos
 a los pocos segundos sin mover el mouse. Respeta `prefers-reduced-motion`: los viajes largos entre
@@ -172,15 +176,20 @@ si una ventana queda minimizada o tapada, el navegador la pausa y la sincronizac
 | `?mode=auto` | Salta el inicio y reproduce solo |
 | `?timer=1` | Muestra el cronómetro |
 | `?large=1` | Texto grande |
+| `?quality=high` · `?quality=low` | Fija la calidad (sin medir el equipo) |
 
 ## Dónde se edita cada cosa
 
 | Qué | Archivo |
 | --- | --- |
-| Subtítulos, citas, tarjetas (imagen o cifras), disclaimer | `public/data/content.json`. Cada elemento con su segundo `at`; los que caen a menos de 1.6 s se funden en un mismo paso |
+| Subtítulos, citas, tarjetas (imagen, cifras, logos o galería de capturas con `"layout": "gallery"`), disclaimer | `public/data/content.json`. Cada elemento con su segundo `at`; los que caen a menos de 1.6 s se funden en un mismo paso |
 | Burbujas de WhatsApp | `src/bubbles.ts` (`BUBBLE_SPECS`) |
 | Recorrido de cámara | `public/data/tour.json` (lo genera `blender/04_camera_tour.py`) |
 | Modelo 3D | `public/models/diorama.glb` (lo genera `blender/05_export_glb.py`) |
+| Personajes animados (cliente, empleado, administrador) | `public/models/people/` y `src/people.ts` (colores, pose: de pie, sentado o con el celular). Ocupan el lugar de las figuras `fig_*` del modelo; el atacante sigue siendo la silueta de Blender |
+| Ambientación (fachada de la bodega en la escena 1, estanterías con botellas, lámparas, plantas, vetas de madera, botella de vidrio) | `src/decor.ts`. Se monta en código encima del modelo: no hace falta volver a exportar de Blender |
+| Escena de seguridad (domo, paquetes del ataque, luces de los racks) | `src/security.ts` |
+| Etiquetas que brotan en cada escena y pulsos de datos por las tuberías | `src/popups.ts` (`EMITTERS`: dónde, qué texto, icono y color) |
 | Imágenes de las tarjetas | `public/cards/` |
 | **Cambiar una captura de pantalla del modelo** | `public/screens/manifest.json` |
 

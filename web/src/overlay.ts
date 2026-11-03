@@ -4,6 +4,22 @@ import type { Chapter, Logo, Step, TourData } from "./types";
 const clock = (s: number): string => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
+/**
+ * Parte un texto en palabras que entran una tras otra (`step` ms entre palabras, a partir de `delay`).
+ * Con `mask`, cada palabra sube desde detrás de una máscara (títulos); sin ella, aparece y se enfoca (subtítulos).
+ */
+const words = (text: string, step: number, delay: number, mask = false): string => {
+  let i = 0;
+  return text
+    .split(/(\s+)/)
+    .map((w) => {
+      if (!w.trim()) return w;
+      const d = `${delay + Math.min(i++ * step, 700)}ms`;
+      return mask ? `<span class="w"><span style="--d:${d}">${esc(w)}</span></span>` : `<span class="w" style="--d:${d}">${esc(w)}</span>`;
+    })
+    .join("");
+};
+
 export interface OverlayHandlers {
   onStartManual: () => void;
   onStartAuto: () => void;
@@ -64,11 +80,16 @@ export class Overlay {
       <div class="dimmer" hidden></div>
 
       <div class="title-card" hidden>
-        <span class="tc-num"></span>
-        <div><h2 class="tc-title"></h2></div>
+        <i class="lb top"></i><i class="lb bot"></i>
+        <div class="tc-inner">
+          <span class="tc-kicker">Escena <span class="tc-num"></span> de ${this.chapters.length}</span>
+          <h2 class="tc-title"></h2>
+          <i class="tc-rule"></i>
+        </div>
       </div>
 
       <header class="pill" aria-live="polite">
+        <b class="pill-num" aria-hidden="true"></b>
         <span class="pill-title"></span>
         <span class="dots" aria-hidden="true"></span>
       </header>
@@ -79,6 +100,7 @@ export class Overlay {
         <img class="qr" alt="Código QR" hidden />
         <div class="facts" hidden></div>
         <ul class="logos" hidden></ul>
+        <div class="gallery" hidden></div>
         <p class="logo-use" hidden></p>
         <figcaption></figcaption>
       </figure>
@@ -116,6 +138,7 @@ export class Overlay {
           <dt>T</dt><dd>Mostrar u ocultar el cronómetro</dd>
           <dt>A</dt><dd>Texto grande</dd>
           <dt>F</dt><dd>Pantalla completa</dd>
+          <dt>Q</dt><dd>Calidad alta ↔ básica (si el equipo va lento)</dd>
           <dt>Inicio</dt><dd>Volver al principio</dd>
           <dt>H · ?</dt><dd>Esta ayuda</dd>
         </dl>
@@ -150,7 +173,7 @@ export class Overlay {
         </footer>
       </div>`;
 
-    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "pill", "pill-title", "dots", "quote", "card", "subtitle",
+    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "pill", "pill-num", "pill-title", "dots", "quote", "card", "subtitle",
       "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar", "curtain"]) {
       this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
@@ -320,7 +343,7 @@ export class Overlay {
     }
     const card = this.el["title-card"];
     this.el["tc-num"].textContent = String(chapter.number);
-    this.el["tc-title"].textContent = chapter.title;
+    this.el["tc-title"].innerHTML = words(chapter.title, 70, 260, true);
     card.hidden = false;
     card.classList.remove("play");
     void card.offsetWidth; // reinicia la animación
@@ -334,7 +357,7 @@ export class Overlay {
 
   /** Cada logo explica para qué se usó: al pasar el cursor, con el foco (Tab) o con la rueda del mouse. */
   private setupLogos(grid: HTMLElement, useEl: HTMLElement, logos: Logo[], groups?: { id: string; title: string }[]): void {
-    const li = (l: Logo, i: number) => `<li tabindex="0" data-i="${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`;
+    const li = (l: Logo, i: number) => `<li tabindex="0" data-i="${i}" style="--k:${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`;
     grid.innerHTML = groups?.length
       ? groups
           .map((g) => {
@@ -399,7 +422,8 @@ export class Overlay {
     if (this.started && chapter.number !== this.lastChapter) this.showTitleCard(chapter);
     if (this.started) this.lastChapter = chapter.number;
 
-    this.el["pill-title"].textContent = `${chapter.number} · ${chapter.title}`;
+    this.el["pill-num"].textContent = String(chapter.number);
+    this.el["pill-title"].textContent = chapter.title;
     // con muchos pasos, una barrita en vez de puntos
     this.el.dots.innerHTML =
       s.stepsInSeg <= 12
@@ -407,14 +431,15 @@ export class Overlay {
         : `<u><s style="width:${((s.stepInSeg + 1) / s.stepsInSeg) * 100}%"></s></u>`;
 
     const card = s.step.card;
-    const large = card?.layout === "large";
-    const focused = Boolean(s.step.focus) || large;
+    const large = card?.layout === "large" || card?.layout === "gallery";
+    const focused = Boolean(s.step.focus);
 
-    // con un acercamiento o una tarjeta grande el texto baja su opacidad para dejar ver lo que se muestra
-    this.el.subtitle.hidden = !s.step.cue || Boolean(card?.logos); // la tarjeta de logos ya lleva su propio texto
+    // una tarjeta grande ya lleva su propio texto: el subtítulo se esconde para no encimarse con ella;
+    // con un acercamiento a una pantalla, baja su opacidad para dejar verla
+    this.el.subtitle.hidden = !s.step.cue || large || Boolean(card?.logos);
     this.el.subtitle.classList.toggle("dim", focused);
     if (s.step.cue) {
-      this.el.subtitle.textContent = s.step.cue;
+      this.el.subtitle.innerHTML = words(s.step.cue, 38, 0);
       this.el.subtitle.classList.remove("pop");
       void this.el.subtitle.offsetWidth;
       this.el.subtitle.classList.add("pop");
@@ -431,7 +456,7 @@ export class Overlay {
       const img = this.el.card.querySelector<HTMLImageElement>(":scope > img:not(.qr)")!;
       const qr = this.el.card.querySelector<HTMLImageElement>("img.qr")!;
       const facts = this.el.card.querySelector<HTMLElement>(".facts")!;
-      this.el.card.className = `card layout-${card.layout ?? "left"}`;
+      this.el.card.className = `card layout-${card.layout ?? "left"}${card.qr ? " has-qr" : ""}${card.logos ? " has-logos" : ""}`;
       img.hidden = !card.image;
       facts.hidden = !card.facts;
       qr.hidden = !card.qr;
@@ -439,9 +464,23 @@ export class Overlay {
       const useEl = this.el.card.querySelector<HTMLElement>(".logo-use")!;
       logos.hidden = !card.logos;
       useEl.hidden = !card.logos;
+      const gallery = this.el.card.querySelector<HTMLElement>(".gallery")!;
+      gallery.hidden = !card.gallery;
+      if (card.gallery) {
+        gallery.innerHTML = card.gallery
+          .map((g) => `<figure><img src="${esc(g.src)}" alt="${esc(g.label)}" /><span>${esc(g.label)}</span></figure>`)
+          .join("");
+      }
       if (card.logos) this.setupLogos(logos, useEl, card.logos, card.groups);
       if (card.image) img.setAttribute("src", card.image);
-      if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
+      if (card.facts) {
+        // en las tarjetas que se revelan por pasos, la cifra nueva entra resaltada y las anteriores quedan
+        const shown = card.shown ?? card.facts.length;
+        facts.innerHTML = card.facts
+          .slice(0, shown)
+          .map((f, i) => `<div class="${card.shown && i === shown - 1 ? "new" : ""}"><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`)
+          .join("");
+      }
       if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));
       this.el.card.querySelector("figcaption")!.textContent = card.caption;
     }

@@ -25,7 +25,7 @@
       "start": 115,
       "end": 150,
       "speaker": "Julián",
-      "scene": "1 · El antes (administradora)"
+      "scene": "1 · El antes (administrador)"
     },
     {
       "id": "cliente_elige",
@@ -65,20 +65,20 @@
       "start": 480,
       "end": 630,
       "speaker": "Marco",
-      "scene": "5 · La administradora decide"
+      "scene": "5 · El administrador decide"
     },
     {
       "id": "seguridad",
       "station": 7,
       "start": 630,
-      "end": 720,
+      "end": 733,
       "speaker": "Luis Ángel",
       "scene": "6 · El miedo a que lo hackeen"
     },
     {
       "id": "valor",
       "station": 0,
-      "start": 720,
+      "start": 733,
       "end": 785,
       "speaker": "Julián",
       "scene": "7 · Valor e impacto"
@@ -406,7 +406,7 @@
       ]
     },
     {
-      "t": 720,
+      "t": 733,
       "pos": [
         64.08,
         -7.17,
@@ -419,7 +419,7 @@
       ]
     },
     {
-      "t": 720,
+      "t": 733,
       "pos": [
         64.08,
         -7.17,
@@ -432,7 +432,7 @@
       ]
     },
     {
-      "t": 723.0,
+      "t": 736.0,
       "pos": [
         1.2,
         -8.0,

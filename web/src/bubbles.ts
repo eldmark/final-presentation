@@ -61,7 +61,8 @@ function makeBubble(spec: BubbleSpec): { sprite: THREE.Sprite; ratio: number } {
   const tex = new THREE.CanvasTexture(canvas);
   tex.colorSpace = THREE.SRGBColorSpace;
   tex.anisotropy = 4;
-  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false }));
+  // color apenas por debajo de 1: queda bajo el umbral del brillo (bloom) y el texto no se empaña
+  const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, color: new THREE.Color(0.86, 0.86, 0.86), transparent: true, depthWrite: false, fog: false }));
   sprite.renderOrder = 10;
   sprite.visible = false;
   return { sprite, ratio: w / h };

@@ -8,7 +8,11 @@ import "@fontsource/barlow-condensed/600.css";
 import "@fontsource/barlow-condensed/700.css";
 import "./style.css";
 import * as THREE from "three";
-import { Stage } from "./stage";
+import { Stage, type Quality } from "./stage";
+import { People } from "./people";
+import { Decor } from "./decor";
+import { Security } from "./security";
+import { Popups } from "./popups";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
@@ -42,6 +46,26 @@ async function main(): Promise<void> {
   const [tourData, content, cover] = await Promise.all([json<TourData>("data/tour.json"), json<ContentData>("data/content.json"), loadCover()]);
 
   const stage = new Stage(document.getElementById("stage") as HTMLCanvasElement);
+  // calidad: ?quality=high|low, o la que se eligió con Q la última vez; si no hay, se mide al empezar
+  const QUALITY_KEY = "bodega-quality";
+  let storedQuality: string | null = null;
+  try {
+    storedQuality = localStorage.getItem(QUALITY_KEY);
+  } catch {
+    /* sin almacenamiento: se mide */
+  }
+  const fixedQuality = params.get("quality") ?? storedQuality;
+  if (fixedQuality === "low" || fixedQuality === "high") stage.setQuality(fixedQuality);
+  const setQuality = (q: Quality, remember: boolean) => {
+    stage.setQuality(q);
+    decor.setQuality(q === "high");
+    if (!remember) return;
+    try {
+      localStorage.setItem(QUALITY_KEY, q);
+    } catch {
+      /* no se recuerda, pero funciona */
+    }
+  };
   const tour = new Tour(tourData);
   const { steps, bubbles: bubbleSpecs } = buildSteps(tourData, content, BUBBLE_SPECS);
   tour.steps = steps;
@@ -117,6 +141,13 @@ async function main(): Promise<void> {
   overlay.setProgress(0.04);
   const root = await stage.loadModel("models/diorama.glb");
   await stage.applyScreenOverrides(root);
+  const people = new People();
+  // si faltan los personajes, se quedan los maniquíes del modelo
+  await people.load(root).catch((err: unknown) => console.warn("Personajes:", err));
+  const decor = new Decor(stage.scene, root);
+  const popups = new Popups(stage.scene);
+  const security = new Security(stage.scene, (at) => popups.burst(at, Math.random() < 0.5 ? ["IP bloqueada", "×", "wine"] : ["Ataque bloqueado", "×", "wine"]));
+  decor.setQuality(stage.quality === "high");
   const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
   overlay.setProgress(0.3);
 
@@ -124,6 +155,7 @@ async function main(): Promise<void> {
   for (const s of steps) {
     if (s.card?.image) images.add(s.card.image);
     s.card?.logos?.forEach((l) => images.add(l.src));
+    s.card?.gallery?.forEach((g) => images.add(g.src));
   }
   const focusNames = new Set(steps.map((s) => s.focus).filter((f): f is string => Boolean(f)));
   const warmPoses = [
@@ -295,6 +327,11 @@ async function main(): Promise<void> {
       case "I":
         openAbout();
         break;
+      case "q":
+      case "Q":
+        setQuality(stage.quality === "high" ? "low" : "high", true);
+        overlay.toast(stage.quality === "high" ? "Calidad alta: luz de estudio y efectos" : "Calidad básica: más fluida en equipos lentos");
+        break;
       case "Escape":
         overlay.toggleHelp(false);
         tour.playing = false;
@@ -335,6 +372,20 @@ async function main(): Promise<void> {
     broadcast();
   };
   let last = performance.now();
+  // si el equipo no mueve los efectos a 30 fps en los primeros segundos, se bajan una sola vez
+  let fpsCheck = fixedQuality === "low" || fixedQuality === "high" ? -1 : 0;
+  let fpsFrames = 0;
+  const checkFps = (realDt: number) => {
+    if (fpsCheck < 0 || !overlay.started || document.hidden || realDt > 0.5) return;
+    fpsCheck += realDt;
+    fpsFrames++;
+    if (fpsCheck < 4) return;
+    if (fpsFrames / fpsCheck < 30 && stage.quality === "high") {
+      setQuality("low", false);
+      overlay.toast("Bajé los efectos para que se mueva fluido (Q para cambiar)");
+    }
+    fpsCheck = -1;
+  };
   // un navegador pausa requestAnimationFrame en ventanas ocultas: este temporizador mantiene el reloj y la sincronización
   window.setInterval(() => {
     if (!document.hidden) return;
@@ -344,6 +395,7 @@ async function main(): Promise<void> {
   }, 200);
 
   const loop = (now: number) => {
+    checkFps((now - last) / 1000);
     const dt = Math.min(0.1, (now - last) / 1000);
     last = now;
     advance(dt);
@@ -363,6 +415,10 @@ async function main(): Promise<void> {
     stage.followLight(aim);
 
     bubbles.update(tour.time);
+    people.update(dt);
+    decor.update(aim);
+    security.update(dt);
+    popups.update(dt, aim, e > 0.5);
     const { index, total } = tour.stepsInChapter();
     if (!map?.active) overlay.update({
       step: tour.step,
@@ -374,7 +430,7 @@ async function main(): Promise<void> {
       playing: tour.playing,
       elapsed: elapsed(),
     });
-    stage.render();
+    stage.render(e);
     requestAnimationFrame(loop);
   };
   requestAnimationFrame(loop);
