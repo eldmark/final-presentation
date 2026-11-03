@@ -10,6 +10,7 @@ import "./style.css";
 import * as THREE from "three";
 import { Stage, type Quality } from "./stage";
 import { People } from "./people";
+import { Decor } from "./decor";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
@@ -55,6 +56,7 @@ async function main(): Promise<void> {
   if (fixedQuality === "low" || fixedQuality === "high") stage.setQuality(fixedQuality);
   const setQuality = (q: Quality, remember: boolean) => {
     stage.setQuality(q);
+    decor.setQuality(q === "high");
     if (!remember) return;
     try {
       localStorage.setItem(QUALITY_KEY, q);
@@ -140,6 +142,8 @@ async function main(): Promise<void> {
   const people = new People();
   // si faltan los personajes, se quedan los maniquíes del modelo
   await people.load(root).catch((err: unknown) => console.warn("Personajes:", err));
+  const decor = new Decor(stage.scene, root);
+  decor.setQuality(stage.quality === "high");
   const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
   overlay.setProgress(0.3);
 
@@ -407,6 +411,7 @@ async function main(): Promise<void> {
 
     bubbles.update(tour.time);
     people.update(dt);
+    decor.update(aim);
     const { index, total } = tour.stepsInChapter();
     if (!map?.active) overlay.update({
       step: tour.step,
