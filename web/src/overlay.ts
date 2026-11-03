@@ -4,6 +4,22 @@ import type { Chapter, Logo, Step, TourData } from "./types";
 const clock = (s: number): string => `${String(Math.floor(s / 60)).padStart(2, "0")}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
 const esc = (s: string): string => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
 
+/**
+ * Parte un texto en palabras que entran una tras otra (`step` ms entre palabras, a partir de `delay`).
+ * Con `mask`, cada palabra sube desde detrás de una máscara (títulos); sin ella, aparece y se enfoca (subtítulos).
+ */
+const words = (text: string, step: number, delay: number, mask = false): string => {
+  let i = 0;
+  return text
+    .split(/(\s+)/)
+    .map((w) => {
+      if (!w.trim()) return w;
+      const d = `${delay + Math.min(i++ * step, 700)}ms`;
+      return mask ? `<span class="w"><span style="--d:${d}">${esc(w)}</span></span>` : `<span class="w" style="--d:${d}">${esc(w)}</span>`;
+    })
+    .join("");
+};
+
 export interface OverlayHandlers {
   onStartManual: () => void;
   onStartAuto: () => void;
@@ -64,11 +80,16 @@ export class Overlay {
       <div class="dimmer" hidden></div>
 
       <div class="title-card" hidden>
-        <span class="tc-num"></span>
-        <div><h2 class="tc-title"></h2></div>
+        <i class="lb top"></i><i class="lb bot"></i>
+        <div class="tc-inner">
+          <span class="tc-kicker">Escena <span class="tc-num"></span> de ${this.chapters.length}</span>
+          <h2 class="tc-title"></h2>
+          <i class="tc-rule"></i>
+        </div>
       </div>
 
       <header class="pill" aria-live="polite">
+        <b class="pill-num" aria-hidden="true"></b>
         <span class="pill-title"></span>
         <span class="dots" aria-hidden="true"></span>
       </header>
@@ -151,7 +172,7 @@ export class Overlay {
         </footer>
       </div>`;
 
-    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "pill", "pill-title", "dots", "quote", "card", "subtitle",
+    for (const k of ["dimmer", "title-card", "tc-num", "tc-title", "pill", "pill-num", "pill-title", "dots", "quote", "card", "subtitle",
       "timer", "toast", "dock", "chapters", "step-info", "help", "start", "loadbar", "curtain"]) {
       this.el[k] = root.querySelector<HTMLElement>(`.${k}`)!;
     }
@@ -321,7 +342,7 @@ export class Overlay {
     }
     const card = this.el["title-card"];
     this.el["tc-num"].textContent = String(chapter.number);
-    this.el["tc-title"].textContent = chapter.title;
+    this.el["tc-title"].innerHTML = words(chapter.title, 70, 260, true);
     card.hidden = false;
     card.classList.remove("play");
     void card.offsetWidth; // reinicia la animación
@@ -400,7 +421,8 @@ export class Overlay {
     if (this.started && chapter.number !== this.lastChapter) this.showTitleCard(chapter);
     if (this.started) this.lastChapter = chapter.number;
 
-    this.el["pill-title"].textContent = `${chapter.number} · ${chapter.title}`;
+    this.el["pill-num"].textContent = String(chapter.number);
+    this.el["pill-title"].textContent = chapter.title;
     // con muchos pasos, una barrita en vez de puntos
     this.el.dots.innerHTML =
       s.stepsInSeg <= 12
@@ -415,7 +437,7 @@ export class Overlay {
     this.el.subtitle.hidden = !s.step.cue || Boolean(card?.logos); // la tarjeta de logos ya lleva su propio texto
     this.el.subtitle.classList.toggle("dim", focused);
     if (s.step.cue) {
-      this.el.subtitle.textContent = s.step.cue;
+      this.el.subtitle.innerHTML = words(s.step.cue, 38, 0);
       this.el.subtitle.classList.remove("pop");
       void this.el.subtitle.offsetWidth;
       this.el.subtitle.classList.add("pop");
