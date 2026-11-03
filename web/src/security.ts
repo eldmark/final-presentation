@@ -2,7 +2,7 @@ import * as THREE from "three";
 
 /**
  * Escena de seguridad (estación 7): un domo de energía cubre los servidores, los paquetes del atacante
- * (y de afuera) chocan contra él con una onda y un «BLOQUEADO», y los racks parpadean.
+ * (y de arriba) chocan contra él con una onda y una etiqueta de «IP bloqueada», y los racks parpadean.
  * Todo se monta encima del modelo; la silueta encapuchada sigue siendo la de Blender.
  */
 const CENTER = new THREE.Vector3(63, 0, 0); // estación 7: x = 7 · 9
@@ -43,29 +43,6 @@ const domeFragment = /* glsl */ `
 
 const rnd = (a: number, b: number) => a + Math.random() * (b - a);
 
-function label(): THREE.Sprite {
-  const c = document.createElement("canvas");
-  c.width = 256;
-  c.height = 72;
-  const ctx = c.getContext("2d")!;
-  ctx.fillStyle = "#8f1d2b";
-  ctx.beginPath();
-  ctx.roundRect(4, 4, 248, 64, 32);
-  ctx.fill();
-  ctx.fillStyle = "#ffffff";
-  ctx.font = "700 40px 'Barlow Condensed', 'Arial Narrow', sans-serif";
-  ctx.textAlign = "center";
-  ctx.textBaseline = "middle";
-  ctx.fillText("BLOQUEADO", 128, 38);
-  const tex = new THREE.CanvasTexture(c);
-  tex.colorSpace = THREE.SRGBColorSpace;
-  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: tex, transparent: true, depthWrite: false, fog: false, color: new THREE.Color(0.86, 0.86, 0.86) }));
-  s.scale.set(0.62, 0.175, 1);
-  s.visible = false;
-  s.renderOrder = 11;
-  return s;
-}
-
 interface Packet {
   mesh: THREE.Mesh;
   from: THREE.Vector3;
@@ -78,14 +55,15 @@ interface Packet {
 export class Security {
   private readonly dome: THREE.ShaderMaterial;
   private readonly packets: Packet[] = [];
-  private readonly tags: { sprite: THREE.Sprite; age: number; at: THREE.Vector3 }[] = [];
   private readonly leds: THREE.InstancedMesh;
   private readonly laptop: THREE.Vector3;
   private time = 0;
   private hit = 0;
+  private lastTag = -9;
   private ledClock = 0;
 
-  constructor(scene: THREE.Scene) {
+  /** onBlocked: dónde chocó un paquete, para que brote la etiqueta (la dibuja Popups). */
+  constructor(scene: THREE.Scene, private readonly onBlocked?: (at: THREE.Vector3) => void) {
     const group = new THREE.Group();
     group.name = "security";
     scene.add(group);
@@ -145,11 +123,6 @@ export class Security {
       group.add(mesh);
       this.packets.push({ mesh, from: new THREE.Vector3(), to: new THREE.Vector3(), t: 1, speed: 0.5, wait: rnd(0, 2.5) });
     }
-    for (let i = 0; i < 4; i++) {
-      const sprite = label();
-      group.add(sprite);
-      this.tags.push({ sprite, age: 99, at: new THREE.Vector3() });
-    }
 
     // luces de los racks (x = 62.4, 63, 63.6; frente en z = 0.35)
     const per = 3 * 7;
@@ -194,10 +167,10 @@ export class Security {
 
   private impact(at: THREE.Vector3): void {
     (this.dome.uniforms.uHits.value as THREE.Vector4[])[this.hit++ % HITS].set(at.x, at.y, at.z, this.time);
-    const tag = this.tags.reduce((a, b) => (b.age > a.age ? b : a));
-    if (Math.random() < 0.45) {
-      tag.age = 0;
-      tag.at.copy(at);
+    // no todos los choques llevan etiqueta, y nunca dos casi juntas: que no se amontonen
+    if (this.time - this.lastTag > 1.1 && Math.random() < 0.6) {
+      this.lastTag = this.time;
+      this.onBlocked?.(at.clone().add(new THREE.Vector3(0, 0.2, 0)));
     }
   }
 
@@ -219,13 +192,6 @@ export class Security {
         p.wait = rnd(0.2, 1.6);
         this.impact(p.to);
       }
-    }
-    for (const t of this.tags) {
-      t.age += dt;
-      t.sprite.visible = t.age < 1.3;
-      if (!t.sprite.visible) continue;
-      t.sprite.position.copy(t.at).add(new THREE.Vector3(0, 0.25 + t.age * 0.35, 0));
-      t.sprite.material.opacity = Math.min(1, (1.3 - t.age) * 2.5);
     }
     // los racks parpadean
     this.ledClock += dt;

@@ -69,6 +69,7 @@ export interface ImageCard {
   groups?: { id: string; title: string }[]; // títulos de los grupos de logos (por Logo.group)
   qr?: string; // URL que se codifica en un QR
   layout?: CardLayout; // left por omisión; large = imagen grande al centro; right = panel a la derecha
+  reveal?: boolean; // sus cifras entran de una en una, un paso cada una, mientras dure la tarjeta
   caption: string;
 }
 
@@ -95,13 +96,28 @@ export interface BubbleSpec {
   slot: number; // posición en la pila
 }
 
+/** Lo que muestra una tarjeta en un paso. */
+export interface StepCard {
+  image?: string;
+  facts?: Fact[];
+  logos?: Logo[];
+  gallery?: Shot[];
+  groups?: { id: string; title: string }[];
+  qr?: string;
+  layout?: CardLayout;
+  caption: string;
+  reveal?: boolean;
+  until?: number; // segundo en que deja de mostrarse (para las que se revelan por pasos)
+  shown?: number; // cuántas cifras se ven en este paso (tarjetas que se revelan)
+}
+
 /** Un "paso" es lo que ve el público tras una pulsación: subtítulo, cita, tarjeta y burbujas. */
 export interface Step {
   t: number; // segundo de la línea de tiempo al que se llega
   seg: number; // índice de segmento (estación)
   cue?: string;
   quote?: { who: string; text: string };
-  card?: { image?: string; facts?: Fact[]; logos?: Logo[]; gallery?: Shot[]; groups?: { id: string; title: string }[]; qr?: string; layout?: CardLayout; caption: string };
+  card?: StepCard;
   focus?: string; // pantalla a la que se acerca la cámara
   label?: string; // resumen corto del paso para la vista del presentador
   bubbles?: string[]; // burbujas de chat que aparecen en este paso (para la vista del presentador)

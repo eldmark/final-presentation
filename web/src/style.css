@@ -341,3 +341,64 @@ body.idle .dock { opacity: 0; transform: translateY(14px); pointer-events: none;
   border: 4px solid #fff; border-radius: 16px; box-shadow: 0 22px 60px rgba(0, 0, 0, 0.55); pointer-events: none !important; animation: fade 0.5s ease both; }
 .demo-video[hidden] { display: none; }
 .titling .demo-video { display: none !important; }
+
+/* ================= tarjetas: acabado final ================= */
+/* la píldora de la escena siempre por encima de las tarjetas */
+.pill { z-index: 4; }
+
+/* tarjetas laterales: nunca bajan hasta la zona del subtítulo; la imagen es la que cede */
+.card.layout-left, .card.layout-right, .card.layout-objetivos { display: flex; flex-direction: column; max-height: calc(100vh - 92px - 28vh); }
+.card.layout-left > img, .card.layout-right > img { flex: 1 1 auto; min-height: 0; object-fit: cover; object-position: top; }
+.card.layout-right > img { max-height: 24vh; }
+.card .facts, .card figcaption { flex: none; }
+/* con un número impar de cifras, la última ocupa todo el ancho: sin celda vacía */
+.facts div:last-child:nth-child(odd) { grid-column: 1 / -1; }
+.layout-right .facts div { padding: 12px 16px; }
+.layout-right .facts b { font-size: clamp(26px, 2.6vw, 46px); }
+
+/* objetivos que se revelan por pasos: el nuevo entra resaltado, los anteriores se quedan atenuados */
+.layout-objetivos .facts div.new { background: #fff; box-shadow: inset 6px 0 0 var(--burgundy); animation: slide-r 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both; }
+.layout-objetivos .facts:has(.new) div:not(.new) { opacity: 0.6; }
+
+/* tarjetas grandes: centradas, sin tapar la píldora ni los controles */
+.card.layout-large, .card.layout-gallery { top: calc(50% + 6px); max-height: calc(100vh - 200px); }
+
+/* ---- galería: tres marcos de la misma altura y etiquetas iguales ---- */
+.card.layout-gallery { width: min(1460px, 92vw); background: linear-gradient(160deg, #2a0d12, #160709); border: 1px solid rgba(255, 209, 102, 0.18); }
+.gallery { grid-template-columns: 1fr 1fr 0.5fr; align-items: start; gap: clamp(14px, 1.6vw, 28px); padding: clamp(16px, 2vw, 32px) clamp(16px, 2vw, 32px) clamp(10px, 1.2vw, 18px); }
+.gallery figure { gap: 14px; }
+.card .gallery img { width: 100%; height: min(44vh, 520px); max-height: none; object-fit: contain; border-radius: 12px; background: #0d0507;
+  border: 1px solid rgba(245, 240, 235, 0.12); box-shadow: 0 14px 34px rgba(0, 0, 0, 0.5); }
+.gallery span { white-space: nowrap; padding: 8px 18px; border-radius: 999px; background: rgba(132, 28, 38, 0.45); border: 1px solid rgba(255, 209, 102, 0.4);
+  color: var(--lime); font: 600 clamp(11px, 0.95vw, 16px)/1 var(--font-ui); letter-spacing: 0.14em; text-transform: uppercase; }
+.card.layout-gallery figcaption { background: transparent; color: var(--cream); border-top: 1px solid rgba(255, 209, 102, 0.18); }
+
+/* ---- tecnologías: mosaico de logos sobre vino tinto ---- */
+.card.has-logos { background: linear-gradient(160deg, #2a0d12, #140608); color: var(--cream); border: 1px solid rgba(255, 209, 102, 0.18); }
+.card.has-logos .logos { background: transparent; }
+.card.has-logos .logos li.grp { color: var(--lime); border-bottom: 1px solid rgba(255, 209, 102, 0.35); letter-spacing: 0.22em; padding-top: 6px; }
+.card.has-logos .logos li[data-i] { background: rgba(245, 240, 235, 0.05); border: 1px solid rgba(245, 240, 235, 0.08); border-radius: 14px; padding: 10px 4px 8px;
+  animation: tile-in 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) backwards; animation-delay: calc(var(--k, 0) * 22ms); }
+.card.has-logos .logos li[data-i] img { background: #f5f0eb; border-radius: 12px; padding: 7px; box-sizing: border-box; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35); }
+.card.has-logos .logos span { color: rgba(245, 240, 235, 0.92); }
+.card.has-logos .logos.few li[data-i] { padding: 22px 12px 18px; gap: 16px; }
+.card.has-logos .logos.few img { width: clamp(90px, 9vw, 160px); height: clamp(90px, 9vw, 160px); padding: 14px; border-radius: 22px; }
+.card.has-logos .logos li.on, .card.has-logos .logos li:focus-visible { background: rgba(132, 28, 38, 0.6); box-shadow: 0 0 0 2px var(--lime) inset; transform: scale(1.05); }
+.card.has-logos .logo-use { background: rgba(0, 0, 0, 0.28); color: rgba(245, 240, 235, 0.85); border-top: 1px solid rgba(255, 209, 102, 0.12); }
+.card.has-logos .logo-use b { color: var(--lime); }
+.card.has-logos figcaption { background: var(--burgundy); color: #fff; border-top: 0; text-align: center; font-family: var(--font-title); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.05em; font-size: clamp(18px, 1.9vw, 34px); }
+@keyframes tile-in { from { opacity: 0; transform: translateY(10px) scale(0.92); } to { opacity: 1; transform: none; } }
+
+/* ---- cierre: el QR como tarjeta de despedida ---- */
+.card.layout-large.has-qr { width: min(1000px, 82vw); display: grid; grid-template-columns: auto 1fr; align-items: center; gap: clamp(24px, 3.4vw, 56px);
+  padding: clamp(24px, 3vw, 48px); background: radial-gradient(ellipse at 0% 0%, #5a1520, transparent 60%), linear-gradient(135deg, #3a0b11, #160608 75%);
+  color: var(--cream); border: 1px solid rgba(255, 209, 102, 0.25); }
+.card.has-qr .qr { margin: 0; width: min(300px, 34vh); padding: 14px; background: #fff; border-radius: 18px;
+  box-shadow: 0 0 0 6px var(--burgundy), 0 0 0 8px rgba(255, 209, 102, 0.55), 0 22px 50px rgba(0, 0, 0, 0.55); }
+.card.has-qr figcaption { display: grid; gap: 16px; padding: 0; border: 0; background: none; text-align: left; color: var(--cream);
+  font: 700 clamp(36px, 4.6vw, 80px)/0.95 var(--font-title); letter-spacing: 0.01em; }
+.card.has-qr figcaption::before { content: "Visítanos"; font: 600 clamp(13px, 1.2vw, 20px)/1 var(--font-ui); letter-spacing: 0.32em; text-transform: uppercase; color: var(--lime); }
+.card.has-qr figcaption::after { content: "Escanea con la cámara de tu celular: catálogo, disponibilidad por sucursal y reservas.";
+  font: 500 clamp(14px, 1.3vw, 22px)/1.45 var(--font-ui); color: rgba(245, 240, 235, 0.8); max-width: 26em; }
+@media (prefers-reduced-motion: reduce) { .card.has-logos .logos li[data-i], .layout-objetivos .facts div.new { animation: none; } }

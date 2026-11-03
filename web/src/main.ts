@@ -12,6 +12,7 @@ import { Stage, type Quality } from "./stage";
 import { People } from "./people";
 import { Decor } from "./decor";
 import { Security } from "./security";
+import { Popups } from "./popups";
 import { Tour } from "./tour";
 import { Bubbles } from "./bubbles";
 import { BUBBLE_SPECS } from "./bubbleSpecs";
@@ -144,7 +145,8 @@ async function main(): Promise<void> {
   // si faltan los personajes, se quedan los maniquíes del modelo
   await people.load(root).catch((err: unknown) => console.warn("Personajes:", err));
   const decor = new Decor(stage.scene, root);
-  const security = new Security(stage.scene);
+  const popups = new Popups(stage.scene);
+  const security = new Security(stage.scene, (at) => popups.burst(at, Math.random() < 0.5 ? ["IP bloqueada", "×", "wine"] : ["Ataque bloqueado", "×", "wine"]));
   decor.setQuality(stage.quality === "high");
   const bubbles = new Bubbles(stage.scene, bubbleSpecs, tourData.spacing);
   overlay.setProgress(0.3);
@@ -416,6 +418,7 @@ async function main(): Promise<void> {
     people.update(dt);
     decor.update(aim);
     security.update(dt);
+    popups.update(dt, aim, e > 0.5);
     const { index, total } = tour.stepsInChapter();
     if (!map?.active) overlay.update({
       step: tour.step,

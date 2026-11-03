@@ -357,7 +357,7 @@ export class Overlay {
 
   /** Cada logo explica para qué se usó: al pasar el cursor, con el foco (Tab) o con la rueda del mouse. */
   private setupLogos(grid: HTMLElement, useEl: HTMLElement, logos: Logo[], groups?: { id: string; title: string }[]): void {
-    const li = (l: Logo, i: number) => `<li tabindex="0" data-i="${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`;
+    const li = (l: Logo, i: number) => `<li tabindex="0" data-i="${i}" style="--k:${i}"><img src="${esc(l.src)}" alt="" /><span>${esc(l.name)}</span></li>`;
     grid.innerHTML = groups?.length
       ? groups
           .map((g) => {
@@ -456,7 +456,7 @@ export class Overlay {
       const img = this.el.card.querySelector<HTMLImageElement>(":scope > img:not(.qr)")!;
       const qr = this.el.card.querySelector<HTMLImageElement>("img.qr")!;
       const facts = this.el.card.querySelector<HTMLElement>(".facts")!;
-      this.el.card.className = `card layout-${card.layout ?? "left"}`;
+      this.el.card.className = `card layout-${card.layout ?? "left"}${card.qr ? " has-qr" : ""}${card.logos ? " has-logos" : ""}`;
       img.hidden = !card.image;
       facts.hidden = !card.facts;
       qr.hidden = !card.qr;
@@ -473,7 +473,14 @@ export class Overlay {
       }
       if (card.logos) this.setupLogos(logos, useEl, card.logos, card.groups);
       if (card.image) img.setAttribute("src", card.image);
-      if (card.facts) facts.innerHTML = card.facts.map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join("");
+      if (card.facts) {
+        // en las tarjetas que se revelan por pasos, la cifra nueva entra resaltada y las anteriores quedan
+        const shown = card.shown ?? card.facts.length;
+        facts.innerHTML = card.facts
+          .slice(0, shown)
+          .map((f, i) => `<div class="${card.shown && i === shown - 1 ? "new" : ""}"><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`)
+          .join("");
+      }
       if (card.qr) void this.qrFor(card.qr).then((data) => qr.setAttribute("src", data));
       this.el.card.querySelector("figcaption")!.textContent = card.caption;
     }

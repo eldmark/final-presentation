@@ -120,6 +120,7 @@
           "at": 140,
           "dur": 13,
           "layout": "objetivos",
+          "reveal": true,
           "facts": [
             {
               "value": "≤ 5 min",
@@ -191,7 +192,7 @@
           "gallery": [
             { "src": "cards/ux-modo-oscuro.png", "label": "Modo oscuro" },
             { "src": "cards/ux-texto-200.png", "label": "Texto al 200 %" },
-            { "src": "cards/ux-movil.jpg", "label": "Versión móvil (y en inglés)" }
+            { "src": "cards/ux-movil.jpg", "label": "Móvil · en inglés" }
           ],
           "caption": "El mismo catálogo en modo oscuro, con texto al 200 % y en el celular"
         }
