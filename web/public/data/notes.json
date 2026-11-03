@@ -88,10 +88,11 @@
         "Metabase usaba 1.5 GB; Grafana 260 MB y Umami 107 MB: unas 4 veces menos",
         "1 · Qué dejar de comprar: capital detenido",
         "2 · Qué empezar a vender: búsquedas sin resultados",
-        "3 · Cuándo ofertar: festividades (Jorge puede presentar Festividades, 30 s)",
+        "3 · Cuándo ofertar: festividades (la cámara se acerca a la pantalla; Jorge presenta Festividades, 30 s)",
         "4 · Dónde se cae la compra: abandono de carrito",
         "5 · Qué reponer ya: stock crítico",
-        "Cada decisión termina en una acción: campaña, oferta o exporte"
+        "Cada decisión termina en una acción: campaña, oferta o exporte",
+        "Cierre, campañas de marketing: el editor de plantillas y el correo que recibe el cliente (solo a quienes aceptaron promociones)"
       ],
       "data": [
         "Festividades: Navidad 24 dic; Año Nuevo 29 dic al 4 ene; feria e Independencia 12 al 18 sep",
@@ -107,13 +108,14 @@
     "6": {
       "ideas": [
         "HOOK, el miedo: en las entrevistas dijeron extorsión, estafas y usurpación de la empresa",
-        "HOOK, 'intentaron vulnerar': esta es la petición de ataque (captura pendiente de recibir)",
+        "HOOK, 'intentaron vulnerar': lo notamos en la gráfica de costos de Google Cloud; las solicitudes llegaron en masa y el procesador del servidor subió automáticamente",
         "HILO, intento 1: pedido 'entregado' con fecha pasada; el servidor lo ignora, nace pendiente",
         "HILO, intento 2: un empleado se cambia el rol; solo el administrador edita usuarios",
         "HILO, intento 3: bitácora de solo lectura; logs sin datos personales",
         "HILO, intento 4: todo en tiempo real; la IP se bloquea con un clic (solo se guarda su huella cifrada)",
         "Sentry: los errores llegan con un identificador por solicitud para seguirles la pista",
-        "OWASP ZAP cierra: escaneo completo, 138 pruebas aprobadas, 0 fallos"
+        "OWASP ZAP cierra: escaneo completo, 138 pruebas aprobadas, 0 fallos",
+        "Antes de pasar a Valor e impacto: el stack tecnológico («Esto fue todo lo que utilizamos»), en dos grupos; el título de la escena 7 aparece después"
       ],
       "data": [
         "OWASP ZAP, escaneo completo: 138 pruebas aprobadas, 0 fallos",
@@ -124,18 +126,16 @@
         "Decir 'es imposible hackearlo': di 'lo atacamos nosotros primero'",
         "IPs reales, dominios internos o claves",
         "Pruebas contra producción",
-        "Inventar datos de la petición de ataque: describe solo lo que muestre la captura real"
+        "Inventar datos del ataque: describe solo lo que muestre la gráfica"
       ],
-      "handoff": "Todo esto tiene un valor medible. Julián."
+      "handoff": "Esto fue todo lo que utilizamos, y tiene un valor medible. Julián."
     },
     "7": {
       "ideas": [
-        "Antes del impacto, síntesis: «Esto fue todo lo que utilizamos», en dos grupos: usado en el proyecto y usado para esta presentación (la vista del presentador lista el porqué de cada tecnología)",
         "La métrica: minutos de personal liberados por semana",
-        "Piloto de 90 días: 79 visitantes, 122 visitas y 230 eventos de consulta",
+        "Piloto de septiembre de 2026: 79 visitantes, 122 visitas y 230 eventos de consulta",
         "Cota superior: de 3.8 a 38 horas, si cada evento hubiera sido una llamada de 1 a 10 minutos",
-        "Gana el cliente, el empleado y el administrador",
-        "Costo real de la infraestructura: USD 2.76 en Google Cloud del 26 de sept al 2 de oct (captura de facturación)"
+        "Gana el cliente, el empleado y el administrador"
       ],
       "data": [
         "Umami: 2 440 vistas de página, rebote 17 %, visita de 6 min 17 s"

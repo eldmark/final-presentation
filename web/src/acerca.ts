@@ -22,7 +22,7 @@ async function main(): Promise<void> {
     <main>
       <section><h2>Sobre el diseño</h2><p>${esc(content.disclaimer[0])}</p></section>
       <section><h2>Sobre los datos y la marca</h2><p>${esc(content.disclaimer[1])}</p>
-        <p>Las cifras de uso salen de un piloto de 90 días, con pruebas del equipo incluidas; no son tráfico de clientes.
+        <p>Las cifras de uso salen de el piloto de septiembre de 2026, con pruebas del equipo incluidas; no son tráfico de clientes.
         Las citas son textuales de las entrevistas del Corte 1 (enero de 2026), atribuidas por rol.</p></section>
       <section><h2>Sobre los modelos 3D</h2><p>${esc(content.disclaimer[2])}</p>
         <p>Las figuras ilustran lo que se narra: no representan a ninguna persona. El cliente, el empleado y el administrador
