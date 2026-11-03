@@ -138,10 +138,14 @@ reproduce los 13:30 sin intervención.
 | T | Muestra u oculta el cronómetro |
 | A | Texto grande (para la sala) |
 | F | Pantalla completa |
+| Q | Calidad alta ↔ básica (la alta añade luz de estudio, oclusión, brillo y acabado de maqueta) |
 | H · ? | Ayuda |
 | P | Vista del presentador |
 | I | Acerca de (diseño, datos y modelos 3D, en otra pestaña) |
 | Inicio | Volver al principio |
+
+Si el equipo no llega a 30 fps en los primeros segundos con la calidad alta, baja solo a la básica y avisa.
+La elección hecha con **Q** se recuerda en ese navegador.
 
 El control remoto de la sala suele mandar Av Pág / Re Pág: ya funcionan. Los controles se esconden solos
 a los pocos segundos sin mover el mouse. Respeta `prefers-reduced-motion`: los viajes largos entre
@@ -172,6 +176,7 @@ si una ventana queda minimizada o tapada, el navegador la pausa y la sincronizac
 | `?mode=auto` | Salta el inicio y reproduce solo |
 | `?timer=1` | Muestra el cronómetro |
 | `?large=1` | Texto grande |
+| `?quality=high` · `?quality=low` | Fija la calidad (sin medir el equipo) |
 
 ## Dónde se edita cada cosa
 

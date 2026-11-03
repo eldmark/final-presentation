@@ -116,6 +116,7 @@ export class Overlay {
           <dt>T</dt><dd>Mostrar u ocultar el cronómetro</dd>
           <dt>A</dt><dd>Texto grande</dd>
           <dt>F</dt><dd>Pantalla completa</dd>
+          <dt>Q</dt><dd>Calidad alta ↔ básica (si el equipo va lento)</dd>
           <dt>Inicio</dt><dd>Volver al principio</dd>
           <dt>H · ?</dt><dd>Esta ayuda</dd>
         </dl>
